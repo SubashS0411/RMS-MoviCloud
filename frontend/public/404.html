@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- SPA fallback: store the requested path, redirect to root.
+         index.html will read it back and let React Router handle the route. -->
+    <script>
+      var path = window.location.pathname + window.location.search;
+      sessionStorage.setItem('rms_redirect_path', path);
+      window.location.replace('/');
+    </script>
+  </head>
+  <body></body>
+</html>

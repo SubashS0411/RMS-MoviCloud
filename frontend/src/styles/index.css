@@ -1,0 +1,78 @@
+/* ── Font Imports ─── */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800;900&family=Great+Vibes&display=swap');
+
+/* ── Tailwind ─── */
+@import './tailwind.css';
+
+/* ── Theme tokens (admin + client) ─── */
+@import './admin-theme.css';
+@import './client-theme.css';
+
+/* ── Typography ─── */
+@import './admin-fonts.css';
+@import './client-fonts.css';
+@import './design-system.css';
+
+/* ── Module backgrounds ─── */
+@import './backgrounds.css';
+
+/* ── Animations ─── */
+@import './ui-animations.css';
+
+/* ── Client-specific ─── */
+@import './premium-loyalty.css';
+@import './datepicker.css';
+@import './reservation.css';
+
+/* ── Global utilities ─── */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+@layer components {
+  .order-tracking-title {
+    font-size: 22px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+  }
+
+  h2.order-status,
+  h2.order-items {
+    font-size: 22px !important;
+    font-weight: 600 !important;
+    line-height: 1.25 !important;
+  }
+
+  .status-title {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    line-height: 1.35 !important;
+  }
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-smooth-ios {
+  -webkit-overflow-scrolling: touch;
+}
+
+nav button,
+.no-tap-highlight {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Toast notifications */
+[data-sonner-toaster] { z-index: 9999 !important; }
+[data-sonner-toast] { background: #ffffff !important; border: 1px solid #e5e7eb !important; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15), 0 8px 10px -6px rgba(0,0,0,0.1) !important; }
+[data-sonner-toast][data-type="success"] { background: #f0fdf4 !important; border-color: #86efac !important; }
+[data-sonner-toast][data-type="error"] { background: #fef2f2 !important; border-color: #fca5a5 !important; }
+[data-sonner-toast][data-type="info"] { background: #eff6ff !important; border-color: #93c5fd !important; }
+[data-sonner-toast][data-type="warning"] { background: #fffbeb !important; border-color: #fcd34d !important; }

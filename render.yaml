@@ -1,0 +1,42 @@
+# Render Blueprint — deploys both backend (API) and frontend (static site)
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  # ── Backend: FastAPI ─────────────────────────────────────────────────────────
+  - type: web
+    name: rms-api
+    runtime: python
+    region: singapore
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: MONGODB_URI
+        sync: false          # set manually in Render dashboard
+      - key: CORS_ORIGINS
+        sync: false          # set to your frontend URL after first deploy
+      - key: SEED_SECRET
+        generateValue: true  # auto-generated random secret
+
+  # ── Frontend: Vite React (Static Site) ───────────────────────────────────────
+  - type: web
+    name: rms-frontend
+    runtime: static
+    region: singapore
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+    routes:
+      # SPA fallback — all paths serve index.html
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        sync: false          # set to your rms-api Render URL

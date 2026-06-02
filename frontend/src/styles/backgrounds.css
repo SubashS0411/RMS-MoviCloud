@@ -1,0 +1,149 @@
+/* Background images for different modules - cooking and kitchen themed */
+
+/* Login Page - Chef in kitchen background */
+.bg-login-module {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.6) 100%), 
+              url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920&q=80') center/cover no-repeat;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Admin Dashboard - Modern kitchen equipment */
+.bg-admin-module {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.4) 100%), 
+              url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80') center/cover no-repeat fixed;
+  min-height: 100%;
+  position: relative;
+}
+
+/* Kitchen Display System - Professional kitchen */
+.bg-kitchen-display-module {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.5) 100%), 
+              url('https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=1920&q=80') center/cover no-repeat fixed;
+  min-height: 100%;
+  position: relative;
+}
+
+/* Order Management - Busy restaurant kitchen */
+.bg-order-management-module {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.5) 100%), 
+              url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920&q=80') center/cover no-repeat fixed;
+  min-height: 100%;
+  position: relative;
+}
+
+/* Menu Management - Food presentation and plating */
+.bg-menu-management-module {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.45) 100%), 
+              url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80') center/cover no-repeat fixed;
+  min-height: 100%;
+  position: relative;
+}
+
+/* Inventory Management - Restaurant pantry */
+.bg-inventory-module {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.5) 100%), 
+              url('https://images.unsplash.com/photo-1542838132-92c53300491e?w=1920&q=80') center/cover no-repeat fixed;
+  min-height: 100%;
+  position: relative;
+}
+
+/* Delivery Management - Kitchen efficiency and delivery */
+.bg-delivery-module {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.5) 100%), 
+              url('https://images.unsplash.com/photo-1521305916504-4a1121188589?w=1920&q=80') center/cover no-repeat fixed;
+  min-height: 100%;
+  position: relative;
+}
+
+/* Billing Management - Restaurant counter/cash */
+.bg-billing-module {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.45) 100%), 
+              url('https://images.unsplash.com/photo-1421622548261-c45bfe178854?w=1920&q=80') center/cover no-repeat fixed;
+  min-height: 100%;
+  position: relative;
+}
+
+/* Staff Management - Restaurant team/staff photo */
+.bg-staff-module {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.55) 100%), 
+              url('https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=1920&q=80') center/cover no-repeat fixed;
+  min-height: 100%;
+  position: relative;
+}
+
+/* Table Management - Restaurant dining area */
+.bg-table-management-module {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.45) 100%), 
+              url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&q=80') center/cover no-repeat fixed;
+  min-height: 100%;
+  position: relative;
+}
+
+/* Customer Management - Restaurant hospitality */
+.bg-customer-module {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.45) 100%), 
+              url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920&q=80') center/cover no-repeat fixed;
+  min-height: 100%;
+  position: relative;
+}
+
+/* Analytics/Reports - Data visualization kitchen metrics */
+.bg-analytics-module {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.5) 100%), 
+              url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80') center/cover no-repeat fixed;
+  min-height: 100%;
+  position: relative;
+}
+
+/* Offers & Loyalty - Restaurant promotions */
+.bg-offers-module {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.45) 100%), 
+              url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920&q=80') center/cover no-repeat fixed;
+  min-height: 100%;
+  position: relative;
+}
+
+/* Settings - Restaurant administration */
+.bg-settings-module {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.72) 0%, rgba(30, 41, 59, 0.62) 100%), 
+              url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80') center/cover no-repeat fixed;
+  min-height: 100%;
+  position: relative;
+}
+
+/* Notifications - Alert bell / notification center theme */
+.bg-notifications-module {
+  background: linear-gradient(135deg, rgba(4, 6, 20, 0.72) 0%, rgba(10, 15, 40, 0.65) 50%, rgba(4, 6, 20, 0.75) 100%),
+              url('https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1920&q=80') center/cover no-repeat fixed;
+  min-height: 100%;
+  position: relative;
+}
+
+/* POS/Quick Order - Fast service counter */
+.bg-pos-module {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.5) 100%), 
+              url('https://images.unsplash.com/photo-1421622548261-c45bfe178854?w=1920&q=80') center/cover no-repeat fixed;
+  min-height: 100%;
+  position: relative;
+}
+
+/* Audit Logs - Kitchen records */
+.bg-audit-module {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.5) 100%), 
+              url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80') center/cover no-repeat fixed;
+  min-height: 100%;
+  position: relative;
+}
+
+/* Common container adjustments */
+.module-container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure proper stacking and visibility */
+.bg-module-base {
+  position: relative;
+  background-attachment: fixed;
+}
