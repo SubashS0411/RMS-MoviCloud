@@ -49,13 +49,22 @@ export default function TopDashboard({
   ];
 
   const rightSlot = !isLoggedIn ? (
-    <button
-      onClick={() => navigate('/admin')}
-      className="flex items-center gap-1.5 px-3 py-2 text-muted-foreground hover:text-foreground border border-border hover:border-border rounded-lg transition-all duration-200 text-[11px] font-medium uppercase tracking-wider bg-white/70 hover:bg-white flex-shrink-0"
-    >
-      <ShieldCheck className="w-4 h-4" />
-      <span>Staff</span>
-    </button>
+    <div className="flex items-center gap-2 flex-shrink-0">
+      <button
+        onClick={() => navigate('/admin')}
+        className="hidden sm:flex items-center gap-1.5 px-3 py-2 text-muted-foreground hover:text-foreground border border-border hover:border-border rounded-lg transition-all duration-200 text-[11px] font-medium uppercase tracking-wider bg-white/70 hover:bg-white flex-shrink-0"
+      >
+        <ShieldCheck className="w-4 h-4" />
+        <span>Staff</span>
+      </button>
+      <button
+        onClick={() => onModuleChange('login')}
+        className="flex items-center gap-1.5 px-4 py-2 bg-[#8B5A2B] text-white hover:bg-[#6D4C41] rounded-lg transition-all duration-200 text-sm font-medium flex-shrink-0 shadow-sm"
+      >
+        <User className="w-4 h-4" />
+        <span>Sign In</span>
+      </button>
+    </div>
   ) : (
     <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
       <button
@@ -111,7 +120,7 @@ export default function TopDashboard({
   );
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 app-header">
+    <div className="fixed top-0 left-0 right-0 z-50 w-full app-header shadow-sm transition-all">
       <AppNavbar
         title={restaurantName}
         mobileTitle="Urban Bites"
@@ -120,8 +129,8 @@ export default function TopDashboard({
         rightSlot={rightSlot}
       />
 
-      {/* Module Navigation Bar - Below Header, Only After Login */}
-      {isLoggedIn && showModuleNav && (
+      {/* Module Navigation Bar - Uniform across all roles */}
+      {showModuleNav && (
         <nav className="bg-white border-b border-border">
           <div className="app-navbar-inner">
             <div className="app-subnav-row flex items-center gap-0.5 sm:gap-1 overflow-x-auto scrollbar-hide">

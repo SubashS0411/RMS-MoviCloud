@@ -104,6 +104,8 @@ interface TableCardProps {
 
 function TableCard({ table, onClick, waiters, onAssignWaiter, onCheckout, onRequestOrder, onSeatGuests, onUpdateStatus, currentUser }: TableCardProps) {
   const isWaiter = currentUser?.role === 'waiter';
+  const isChef = currentUser?.role === 'chef';
+  const isCashier = currentUser?.role === 'cashier';
   const isAdminOrManager = currentUser?.role === 'admin' || currentUser?.role === 'manager';
   const isMyTable = isWaiter && table.waiterId === currentUser?.id;
   // Waiter can interact with their own table or unassigned occupied tables
@@ -285,7 +287,7 @@ function TableCard({ table, onClick, waiters, onAssignWaiter, onCheckout, onRequ
           {/* Bottom actions (fixed alignment) */}
           <div className="mt-auto pt-1 space-y-1" onClick={(e) => e.stopPropagation()}>
             {/* Waiter Assignment */}
-            {table.status === 'Occupied' && !table.waiterName && (
+            {table.status === 'Occupied' && !table.waiterName && !isCashier && !isChef && (
               isWaiter ? (
                 <Button
                   size="sm"
@@ -317,7 +319,7 @@ function TableCard({ table, onClick, waiters, onAssignWaiter, onCheckout, onRequ
               )
             )}
 
-            {table.status === 'Available' && (
+            {table.status === 'Available' && !isCashier && !isChef && (
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <Button variant="outline" size="icon" className="h-6 w-6 rounded-md" onClick={() => setSeatCount(Math.max(1, seatCount - 1))}>
@@ -339,7 +341,7 @@ function TableCard({ table, onClick, waiters, onAssignWaiter, onCheckout, onRequ
               </div>
             )}
 
-            {(table.status === 'Occupied' || table.status === 'Eating') && !table.currentOrderId && canInteract && (
+            {(table.status === 'Occupied' || table.status === 'Eating') && !table.currentOrderId && canInteract && !isCashier && !isChef && (
               <Button
                 size="sm"
                 className="w-full h-7 rounded-md text-xs bg-[#8b5e34] hover:bg-[#744a25] text-white"
@@ -636,8 +638,9 @@ export function TableManagementComprehensive() {
   const [statusDialogTable, setStatusDialogTable] = useState<any>(null);
 
   useEffect(() => {
+    // Fetch immediately, then every 15s
     fetchData();
-    const interval = setInterval(fetchData, 5000);
+    const interval = setInterval(fetchData, 15000);
     return () => clearInterval(interval);
   }, []);
 

@@ -277,38 +277,37 @@ export default function Profile({ user, onUpdateUser, onLogout, orders = [], onR
                   )}
                 </div>
               </div>
-
-              {/* Loyalty Points Card */}
-              <div className="bg-gradient-to-br from-primary to-accent text-white rounded-xl shadow-sm p-6 h-full">
+              {/* Right Column: Loyalty & Membership */}
+              <div className="flex flex-col gap-5 lg:gap-6">
+                {/* Loyalty Points Card */}
+              <div className="bg-[#F5F0E8] text-[#3E2723] rounded-xl shadow-sm p-6 h-full border border-[#E8DED0]">
                 <div className="flex items-center gap-2 mb-4">
-                  <Award className="w-6 h-6" />
+                  <Award className="w-6 h-6 text-[#8B5A2B]" />
                   <h2 className="!text-xl !font-semibold text-foreground">Loyalty Points</h2>
                 </div>
                 <div className="mb-6">
-                  <p className="text-5xl font-bold">{currentPoints}</p>
-                  <p className="text-white/80 text-sm mt-2">Points Available</p>
+                  <p className="text-5xl font-bold text-[#8B5A2B]">{currentPoints}</p>
+                  <p className="text-[#6D4C41] text-sm mt-2">Points Available</p>
                   <div className="mt-4 space-y-1">
-                    <p className="text-sm text-white/90">
-                      <span className="font-semibold">Tier:</span> {tier}
+                    <p className="text-sm text-[#6D4C41]">
+                      <span className="font-semibold text-[#3E2723]">Tier:</span> {tier}
                     </p>
                     {loyalty.config.autoExpiryEnabled && loyalty.expiringSoonPoints > 0 && (
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-[#6D4C41]/80">
                         {loyalty.expiringSoonPoints} points expiring within 30 days
                       </p>
                     )}
                   </div>
                 </div>
-                <div className="border-t border-white/20 pt-4">
-                  <p className="text-sm text-white/80">
+                <div className="border-t border-[#E8DED0] pt-4">
+                  <p className="text-sm text-[#6D4C41]">
                     Earn points with every order and redeem them for exclusive rewards!
                   </p>
                 </div>
-              </div>
-            </div>
+                </div>
 
-            {/* Membership Status Card */}
-            <div className="mt-6">
-              {user.membership && user.membership.plan !== 'none' ? (
+                {/* Membership Status Card */}
+                {user.membership && user.membership.plan !== 'none' ? (
                 <div className="loyalty-card membership-gradient p-6">
                   {/* Decorative elements */}
                   <div className="loyalty-card-decor-1"></div>
@@ -384,8 +383,8 @@ export default function Profile({ user, onUpdateUser, onLogout, orders = [], onR
                   </button>
                 </div>
               )}
+              </div>
             </div>
-
           </>
         )}
 

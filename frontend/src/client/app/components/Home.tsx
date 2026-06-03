@@ -7,9 +7,10 @@ import { fetchMenuItems } from "@/client/api/menu";
 import { ImageWithFallback } from "@/client/app/components/figma/ImageWithFallback";
 import { MenuItemImage } from "@/client/app/components/MenuItemImage";
 import { useSystemConfig } from "@/client/context/SystemConfigContext";
-import heroImage from '@/client/assets/8fa912dede0bd681dd44e46c538c6cbb3492342b.png';
-import quoteBgImage from '@/client/assets/11b317025b5248eac9baeb9967cf61a1383601ed.png';
-import aboutBgImage from '@/client/assets/451f83ee2533052ab60bf543996c6b8187cd16b6.png';
+
+const HERO_IMAGE_URL = "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=1920";
+const QUOTE_BG_URL = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=1920";
+const ABOUT_BG_URL = "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=1920";
 
 interface HomeProps {
   isLoggedIn: boolean;
@@ -47,24 +48,25 @@ export default function Home({
       <section className="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <ImageWithFallback
-            src={heroImage}
+            src={HERO_IMAGE_URL}
             alt="Royal Cuisine Indian Food"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/50"></div>
         </div>
         
-        <div className="relative z-10 max-w-5xl mx-auto text-center px-6">
-          <h1 
-            className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 text-white drop-shadow-2xl leading-tight" 
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
-            Urban Bites by Movicloud Labs
-          </h1>
-          <p className="text-base sm:text-xl md:text-2xl text-white/90 font-light mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed italic">
-            "Home of taste where food is prepared with care, quality ingredients, and attention to taste."
-          </p>
-          <div className="flex flex-col sm:flex-row items-center gap-4">
+        <div className="relative z-10 max-w-5xl mx-auto text-center px-4 sm:px-6 w-full">
+          <div className="bg-white/80 backdrop-blur-md border border-white/50 p-6 sm:p-12 rounded-3xl shadow-2xl mx-auto flex flex-col items-center">
+            <h1 
+              className="text-3xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 text-[#2D1B10] leading-tight" 
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              Urban Bites by Movicloud Labs
+            </h1>
+            <p className="text-base sm:text-xl md:text-2xl text-[#5C3A21] font-medium mb-8 sm:mb-12 max-w-3xl leading-relaxed italic">
+              "Home of taste where food is prepared with care, quality ingredients, and attention to taste."
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
             <button
               onClick={() => onNavigate(isLoggedIn ? "menu" : "login")}
               className="px-6 sm:px-12 py-3 sm:py-5 bg-gradient-to-r from-[#8B5A2B] to-[#C8A47A] text-white rounded-2xl hover:shadow-[0_15px_30px_-10px_rgba(200,164,122,0.6)] transition-all duration-300 text-sm sm:text-lg font-black uppercase tracking-[0.15em] inline-flex items-center gap-3 active:scale-95"
@@ -75,20 +77,21 @@ export default function Home({
             {isLoggedIn ? (
               <button
                 onClick={() => onNavigate("profile")}
-                className="px-6 sm:px-12 py-3 sm:py-5 bg-white/10 backdrop-blur-sm border-2 border-[#C8A47A] text-white rounded-2xl hover:bg-white/20 hover:shadow-[0_15px_30px_-10px_rgba(200,164,122,0.4)] transition-all duration-300 text-sm sm:text-lg font-black uppercase tracking-[0.15em] inline-flex items-center gap-3 active:scale-95"
+                className="px-6 sm:px-12 py-3 sm:py-5 bg-transparent backdrop-blur-sm border-2 border-[#8B5A2B] text-[#8B5A2B] rounded-2xl hover:bg-[#8B5A2B]/10 hover:shadow-[0_15px_30px_-10px_rgba(139,90,43,0.3)] transition-all duration-300 text-sm sm:text-lg font-black uppercase tracking-[0.15em] inline-flex items-center gap-3 active:scale-95"
               >
                 <Users className="w-6 h-6" />
                 View Profile
               </button>
             ) : (
-              <a
-                href="/kiosk"
-                className="px-6 sm:px-12 py-3 sm:py-5 bg-white/10 backdrop-blur-sm border-2 border-[#C8A47A] text-white rounded-2xl hover:bg-white/20 hover:shadow-[0_15px_30px_-10px_rgba(200,164,122,0.4)] transition-all duration-300 text-sm sm:text-lg font-black uppercase tracking-[0.15em] inline-flex items-center gap-3 active:scale-95"
+              <button
+                onClick={() => onNavigate("menu")}
+                className="px-6 sm:px-12 py-3 sm:py-5 bg-transparent backdrop-blur-sm border-2 border-[#8B5A2B] text-[#8B5A2B] rounded-2xl hover:bg-[#8B5A2B]/10 hover:shadow-[0_15px_30px_-10px_rgba(139,90,43,0.3)] transition-all duration-300 text-sm sm:text-lg font-black uppercase tracking-[0.15em] inline-flex items-center gap-3 active:scale-95"
               >
                 <ShoppingBag className="w-6 h-6" />
-                Order with Kiosk
-              </a>
+                View Menu
+              </button>
             )}
+            </div>
           </div>
         </div>
       </section>
@@ -97,11 +100,11 @@ export default function Home({
       <section className="relative w-full py-16 sm:py-32 overflow-hidden">
         <div className="absolute inset-0">
           <ImageWithFallback
-            src={aboutBgImage}
+            src={ABOUT_BG_URL}
             alt="Royal Cuisine Dining Experience"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#2D1B10]/95 via-[#2D1B10]/80 to-[#2D1B10]/40"></div>
+          <div className="absolute inset-0 bg-white/85 backdrop-blur-sm"></div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -109,19 +112,19 @@ export default function Home({
             <div className="hidden lg:block"></div>
 
             <div>
-              <div className="inline-block mb-4 sm:mb-6 px-5 py-2 bg-[#C8A47A]/20 backdrop-blur-sm rounded-full border border-[#C8A47A]/30">
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#C8A47A]">About Royal Cuisine</span>
+              <div className="inline-block mb-4 sm:mb-6 px-5 py-2 bg-[#8B5A2B]/10 backdrop-blur-sm rounded-full border border-[#8B5A2B]/20">
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#8B5A2B]">About Royal Cuisine</span>
               </div>
               <h2
-                className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-8 leading-tight"
+                className="text-3xl sm:text-5xl md:text-6xl font-bold text-[#3E2723] mb-4 sm:mb-8 leading-tight"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
                 Seamless Dining Experience
               </h2>
-              <p className="text-xl text-white/90 leading-relaxed font-light mb-6">
+              <p className="text-xl text-[#6D4C41] leading-relaxed font-light mb-6">
                 We provide a seamless restaurant experience with easy ordering and flexible customization based on user preferences.
               </p>
-              <p className="text-xl text-white/80 leading-relaxed font-light">
+              <p className="text-xl text-[#6D4C41] leading-relaxed font-light">
                 Our system is designed to deliver quality service while keeping the dining process simple and efficient.
               </p>
             </div>
@@ -133,7 +136,7 @@ export default function Home({
       <section className="relative w-full py-16 sm:py-32 overflow-hidden">
         <div className="absolute inset-0">
           <ImageWithFallback
-            src={quoteBgImage}
+            src={QUOTE_BG_URL}
             alt="Inspirational Food Quote"
             className="w-full h-full object-cover blur-[1px]"
           />
@@ -326,29 +329,29 @@ export default function Home({
         </div>
       </section>
 
-      {/* SECTION 6 G�� FOOTER */}
-      <footer className="bg-[#2D1B10] text-[#FAF7F2] py-10 sm:py-16 px-4 sm:px-6 border-t border-[#C8A47A]/20">
+      {/* SECTION 6 G FOOTER */}
+      <footer className="bg-[#F5F0E8] text-[#3E2723] py-10 sm:py-16 px-4 sm:px-6 border-t border-[#E8DED0]">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-12 mb-8 sm:mb-12">
             {/* Brand */}
             <div>
               <h3 
-                className="text-3xl font-bold mb-4 text-[#C8A47A]" 
+                className="text-3xl font-bold mb-4 text-[#8B5A2B]" 
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
                 {sysConfig.restaurantName || 'Royal Cuisine'}
               </h3>
-              <p className="text-[#EADBC8]/70 font-light leading-relaxed">
+              <p className="text-[#6D4C41] font-light leading-relaxed">
                 Experience authentic cuisine with royal hospitality and premium service.
               </p>
             </div>
 
             {/* Contact */}
             <div>
-              <h4 className="text-xl font-bold mb-4 text-[#C8A47A]" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h4 className="text-xl font-bold mb-4 text-[#8B5A2B]" style={{ fontFamily: "'Playfair Display', serif" }}>
                 Contact
               </h4>
-              <ul className="space-y-3 text-[#EADBC8]/70 font-light">
+              <ul className="space-y-3 text-[#6D4C41] font-light">
                 {sysConfig.contactNumber && <li>Phone: {sysConfig.contactNumber}</li>}
                 {sysConfig.email && <li>Email: {sysConfig.email}</li>}
                 {sysConfig.operatingHours && <li>Hours: {sysConfig.operatingHours}</li>}
@@ -357,10 +360,10 @@ export default function Home({
 
             {/* Address */}
             <div>
-              <h4 className="text-xl font-bold mb-4 text-[#C8A47A]" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h4 className="text-xl font-bold mb-4 text-[#8B5A2B]" style={{ fontFamily: "'Playfair Display', serif" }}>
                 Address
               </h4>
-              <p className="text-[#EADBC8]/70 font-light leading-relaxed">
+              <p className="text-[#6D4C41] font-light leading-relaxed">
                 {sysConfig.address ? (
                   <>
                     {sysConfig.address}{sysConfig.city || sysConfig.state ? ',' : ''}<br />
@@ -374,14 +377,14 @@ export default function Home({
 
             {/* Quick Links */}
             <div>
-              <h4 className="text-xl font-bold mb-4 text-[#C8A47A]" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h4 className="text-xl font-bold mb-4 text-[#8B5A2B]" style={{ fontFamily: "'Playfair Display', serif" }}>
                 Quick Links
               </h4>
               <ul className="space-y-3">
                 <li>
                   <button 
                     onClick={() => onNavigate('menu')}
-                    className="text-[#EADBC8]/70 hover:text-[#C8A47A] transition-colors font-light"
+                    className="text-[#6D4C41] hover:text-[#8B5A2B] transition-colors font-light"
                   >
                     Menu
                   </button>
@@ -389,18 +392,18 @@ export default function Home({
                 <li>
                   <button 
                     onClick={() => onNavigate('reservation')}
-                    className="text-[#EADBC8]/70 hover:text-[#C8A47A] transition-colors font-light"
+                    className="text-[#6D4C41] hover:text-[#8B5A2B] transition-colors font-light"
                   >
                     Reservations
                   </button>
                 </li>
                 <li>
-                  <a href="#" className="text-[#EADBC8]/70 hover:text-[#C8A47A] transition-colors font-light">
+                  <a href="#" className="text-[#6D4C41] hover:text-[#8B5A2B] transition-colors font-light">
                     Terms & Conditions
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-[#EADBC8]/70 hover:text-[#C8A47A] transition-colors font-light">
+                  <a href="#" className="text-[#6D4C41] hover:text-[#8B5A2B] transition-colors font-light">
                     Privacy Policy
                   </a>
                 </li>
@@ -408,9 +411,8 @@ export default function Home({
             </div>
           </div>
 
-          {/* Bottom Bar */}
-          <div className="pt-8 border-t border-[#C8A47A]/20 text-center">
-            <p className="text-[#EADBC8]/60 text-sm font-light">
+          <div className="pt-8 border-t border-[#E8DED0] text-center">
+            <p className="text-[#6D4C41]/80 text-sm font-light">
               &copy; {new Date().getFullYear()} {sysConfig.restaurantName || 'Restaurant'}. All rights reserved.
             </p>
           </div>

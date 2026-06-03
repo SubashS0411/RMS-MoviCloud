@@ -303,36 +303,34 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
 
         {/* Enhanced Loyalty Points Card */}
         {loyaltyAdmin.isEnabled ? (
-          <div className="bg-gradient-to-br from-[#3E2723] via-[#4E342E] to-[#6D4C41] text-white rounded-3xl shadow-2xl p-10 mb-12 relative overflow-hidden border-2 border-[#C8A47A]/20">
+          <div className="bg-[#F5F0E8] text-[#3E2723] rounded-3xl shadow-lg p-10 mb-12 relative overflow-hidden border border-[#E8DED0]">
           {/* Decorative elements */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#C8A47A]/10 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#8B5A2B]/10 rounded-full blur-3xl"></div>
           
           <div className="relative z-10">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-6">
-                    {Math.min(100, (currentPoints / loyaltyAdmin.minRedeemablePoints) * 100).toFixed(0)}%
-                <div className="w-16 h-16 bg-[#C8A47A]/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-[#C8A47A]/30">
-                  <Award className="w-8 h-8 text-[#C8A47A]" />
+                <div className="w-16 h-16 bg-[#8B5A2B]/10 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-[#8B5A2B]/20">
+                  <Award className="w-8 h-8 text-[#8B5A2B]" />
                 </div>
                 <div>
-                  <p className="text-[#FAF7F2]/70 text-sm font-medium mb-1">Your Loyalty Points</p>
-                  <p className="text-5xl font-black text-[#C8A47A]">{currentPoints}</p>
-                  <p className="text-[#FAF7F2]/60 text-xs mt-1 italic flex items-center gap-1">
+                  <p className="text-[#6D4C41] text-sm font-medium mb-1">Your Loyalty Points</p>
+                  <p className="text-5xl font-black text-[#8B5A2B]">{currentPoints}</p>
+                  <p className="text-[#6D4C41]/60 text-xs mt-1 italic flex items-center gap-1">
                     Earned based on ₹ spent and admin-defined rules
                     {remoteLoyaltyConfig.expiryMonths && (
-                      <span className="inline-flex items-center gap-1 ml-2 bg-[#C8A47A]/20 px-2 py-0.5 rounded-full">
+                      <span className="inline-flex items-center gap-1 ml-2 bg-[#8B5A2B]/10 px-2 py-0.5 rounded-full text-[#8B5A2B]">
                         <Clock className="w-3 h-3" />
                         Expires in {remoteLoyaltyConfig.expiryMonths} months
                       </span>
                     )}
                   </p>
                 </div>
-                      {loyaltyAdmin.minRedeemablePoints - currentPoints} more to redeem rewards
               
               <div className="flex flex-col items-end gap-2">
-                <div className="bg-[#C8A47A]/20 backdrop-blur-sm px-6 py-3 rounded-full border border-[#C8A47A]/30">
-                  <p className="text-xs text-[#FAF7F2]/70 uppercase tracking-wider font-bold">Member Status</p>
-                  <p className="text-lg font-bold text-[#C8A47A]">
+                <div className="bg-[#8B5A2B]/10 px-6 py-3 rounded-full border border-[#8B5A2B]/20">
+                  <p className="text-xs text-[#6D4C41] uppercase tracking-wider font-bold">Member Status</p>
+                  <p className="text-lg font-bold text-[#8B5A2B]">
                     {user.membership && user.membership.plan !== 'none' 
                       ? user.membership.plan.charAt(0).toUpperCase() + user.membership.plan.slice(1)
                       : 'Standard'}
@@ -342,33 +340,33 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
             </div>
 
             {/* Enhanced Progress Bar - Based on Minimum Redeemable Points */}
-            <div className="bg-[#2D1B10]/50 backdrop-blur-sm rounded-2xl p-6 border border-[#C8A47A]/20">
+            <div className="bg-white/60 rounded-2xl p-6 border border-[#E8DED0]">
               <div className="flex justify-between text-sm mb-3">
                 <div className="flex items-center gap-2">
-                  <TrendingUp className="w-4 h-4 text-[#C8A47A]" />
-                  <span className="text-[#FAF7F2]/90 font-semibold">Progress to redeemable points</span>
+                  <TrendingUp className="w-4 h-4 text-[#8B5A2B]" />
+                  <span className="text-[#3E2723] font-semibold">Progress to redeemable points</span>
                 </div>
-                <span className="font-bold text-[#C8A47A]">
+                <span className="font-bold text-[#8B5A2B]">
                   {Math.min(100, (currentPoints / loyaltyAdmin.minRedeemablePoints) * 100).toFixed(0)}%
                 </span>
               </div>
-              <div className="w-full bg-[#1A110D] rounded-full h-4 overflow-hidden mb-3 border border-[#C8A47A]/20">
+              <div className="w-full bg-[#EADBC8]/50 rounded-full h-4 overflow-hidden mb-3 border border-[#E8DED0]">
                 <div
-                  className={`bg-gradient-to-r from-[#C8A47A] to-[#8B5A2B] h-full rounded-full transition-all duration-500 relative ${toPercentClass(Math.min(100, (currentPoints / loyaltyAdmin.minRedeemablePoints) * 100))}`}
+                  className={`bg-[#8B5A2B] h-full rounded-full transition-all duration-500 relative ${toPercentClass(Math.min(100, (currentPoints / loyaltyAdmin.minRedeemablePoints) * 100))}`}
                 >
                   <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
                 </div>
               </div>
               <div className="flex justify-between items-center">
-                <p className="text-sm text-[#FAF7F2]/70">
-                  <span className="font-bold text-[#C8A47A]">{currentPoints}</span> / {loyaltyAdmin.minRedeemablePoints} points
+                <p className="text-sm text-[#6D4C41]">
+                  <span className="font-bold text-[#8B5A2B]">{currentPoints}</span> / {loyaltyAdmin.minRedeemablePoints} points
                 </p>
                 {currentPoints < loyaltyAdmin.minRedeemablePoints ? (
-                  <p className="text-xs text-[#FAF7F2]/60">
+                  <p className="text-xs text-[#6D4C41]/80">
                     {loyaltyAdmin.minRedeemablePoints - currentPoints} more to redeem rewards
                   </p>
                 ) : (
-                  <p className="text-xs text-green-400 font-bold flex items-center gap-1">
+                  <p className="text-xs text-green-600 font-bold flex items-center gap-1">
                     <CheckCircle className="w-4 h-4" />
                     Ready to redeem!
                   </p>
@@ -411,7 +409,7 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
           </div>
 
           {user.membership && user.membership.plan !== 'none' ? (
-            <div className="bg-gradient-to-br from-[#3E2723] via-[#4E342E] to-[#6D4C41] text-white rounded-3xl shadow-2xl overflow-hidden border-2 border-[#C8A47A]/20 relative">
+            <div className="bg-[#F5F0E8] text-[#3E2723] rounded-3xl shadow-lg overflow-hidden border border-[#E8DED0] relative">
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-48 h-48 bg-[#C8A47A]/10 rounded-full blur-3xl"></div>
               <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#8B5A2B]/10 rounded-full blur-3xl"></div>
@@ -419,31 +417,31 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
               <div className="relative z-10 p-10">
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
                   <div className="flex items-center gap-4">
-                    <div className="w-20 h-20 bg-gradient-to-br from-[#C8A47A] to-[#8B5A2B] rounded-2xl flex items-center justify-center border-4 border-white/20">
-                      <Crown className="w-10 h-10 text-white" />
+                    <div className="w-20 h-20 bg-[#8B5A2B]/10 rounded-2xl flex items-center justify-center border-4 border-white">
+                      <Crown className="w-10 h-10 text-[#8B5A2B]" />
                     </div>
                     <div>
-                      <p className="text-xs text-[#FAF7F2]/60 uppercase tracking-wider font-bold mb-1">Current Plan</p>
+                      <p className="text-xs text-[#6D4C41] uppercase tracking-wider font-bold mb-1">Current Plan</p>
                       <h3 
-                        className="text-xl font-semibold text-[#C8A47A] capitalize mb-1" 
+                        className="text-xl font-semibold text-[#8B5A2B] capitalize mb-1" 
                        
                       >
                         {user.membership.plan} Membership
                       </h3>
-                      <p className="text-[#FAF7F2]/70 text-sm">₹{user.membership.monthlyPrice}/month</p>
+                      <p className="text-[#6D4C41]/80 text-sm">₹{user.membership.monthlyPrice}/month</p>
                     </div>
                   </div>
 
                   <div className="flex flex-col gap-2">
                     <div className={`px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider ${
                       user.membership.status === 'active' 
-                        ? 'bg-green-500/20 text-green-300 border-2 border-green-500/50' 
-                        : 'bg-gray-500/20 text-gray-300 border-2 border-gray-500/50'
+                        ? 'bg-green-100 text-green-700 border border-green-300' 
+                        : 'bg-gray-200 text-gray-700 border border-gray-300'
                     }`}>
                       {user.membership.status === 'active' ? '✓ Active' : user.membership.status}
                     </div>
                     {user.membership.expiryDate && (
-                      <p className="text-[#FAF7F2]/60 text-xs text-right">
+                      <p className="text-[#6D4C41] text-xs text-right">
                         Valid until {new Date(user.membership.expiryDate).toLocaleDateString('en-GB', { 
                           day: 'numeric', 
                           month: 'short', 

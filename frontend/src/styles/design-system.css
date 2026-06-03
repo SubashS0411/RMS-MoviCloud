@@ -52,12 +52,13 @@
 
 @layer components {
   .app-shell {
-    @apply min-h-screen overflow-x-hidden;
+    @apply min-h-screen flex flex-col;
     background: var(--color-background);
+    color: var(--color-foreground);
   }
 
   .app-header {
-    @apply sticky top-0 z-50 border-b bg-white/80 backdrop-blur-md;
+    @apply fixed top-0 left-0 right-0 w-full z-50 border-b bg-white/90 backdrop-blur-md;
     border-color: var(--color-border);
   }
 
