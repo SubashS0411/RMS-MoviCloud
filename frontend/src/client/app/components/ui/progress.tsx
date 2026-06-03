@@ -13,8 +13,9 @@ const toPercentClass = (value?: number) => {
 function Progress({
   className,
   value,
+  indicatorClassName,
   ...props
-}: React.ComponentProps<typeof ProgressPrimitive.Root>) {
+}: React.ComponentProps<typeof ProgressPrimitive.Root> & { indicatorClassName?: string }) {
   return (
     <ProgressPrimitive.Root
       data-slot="progress"
@@ -26,7 +27,7 @@ function Progress({
     >
       <ProgressPrimitive.Indicator
         data-slot="progress-indicator"
-        className={cn("bg-primary h-full transition-all", toPercentClass(value))}
+        className={cn("bg-primary h-full transition-all", toPercentClass(value ?? undefined), indicatorClassName)}
       />
     </ProgressPrimitive.Root>
   );

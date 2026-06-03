@@ -60,7 +60,8 @@ def _get_users_collection():
         try:
             init_db()
             db = get_db()
-        except Exception:
+        except Exception as e:
+            logger.error(f"Error initializing database: {e}")
             raise HTTPException(status_code=503, detail="database_unavailable")
     return db.get_collection("users")
 

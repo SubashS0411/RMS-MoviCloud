@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
-from .db import init_db, get_db
+from .db import init_db, get_db, force_mock_db, is_using_mock_db
 from .scheduler import start_scheduler, shutdown_scheduler
 
 # ── Admin route modules ──
@@ -47,6 +47,11 @@ from .client.routes import stats as client_stats_router
 
 app = FastAPI(title='RMS Full Stack App')
 
+
+def _env_truthy(name: str, default: str = 'false') -> bool:
+    value = os.getenv(name, default).strip().lower()
+    return value in {'1', 'true', 'yes', 'on'}
+
 # ── CORS ──
 cors_env = os.getenv('CORS_ORIGINS', '*')
 origins = [o.strip() for o in cors_env.split(',') if o.strip()]
@@ -63,12 +68,28 @@ app.add_middleware(
 # -- Lifecycle --
 @app.on_event('startup')
 async def startup():
+    db_ready = False
     try:
         init_db()
+        database = get_db()
+        await database.command('ping')
         print("[Startup] MongoDB connected successfully")
-        await start_scheduler()
+        db_ready = True
     except Exception as e:
-        print(f"[Startup] MongoDB warning: {e}")
+        print(f"[Startup] MongoDB connection warning: {e}")
+
+        # Local/dev resilience: optionally fall back to in-memory MongoMock
+        if _env_truthy('MONGODB_AUTO_FALLBACK_TO_MOCK', 'true') and not is_using_mock_db():
+            if force_mock_db():
+                db_ready = True
+                print("[Startup] Falling back to MongoMock for local runtime")
+            else:
+                print("[Startup] MongoMock fallback unavailable")
+
+    if db_ready:
+        await start_scheduler()
+    else:
+        print("[Startup] Scheduler skipped because database is unavailable")
 
 @app.on_event('shutdown')
 async def shutdown():

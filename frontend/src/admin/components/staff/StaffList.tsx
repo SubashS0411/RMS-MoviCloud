@@ -575,7 +575,7 @@ export function StaffList({ globalSearch = '', globalRoleFilter = 'all', globalS
         </div>
       </div>
 
-      <Card className="border-none shadow-sm overflow-hidden bg-white rounded-2xl">
+      <Card className="overflow-hidden">
         <CardContent className="p-0">
           <div className="p-4 border-b border-gray-100 flex flex-col md:flex-row items-center gap-4">
             <div className="relative flex-1 w-full">

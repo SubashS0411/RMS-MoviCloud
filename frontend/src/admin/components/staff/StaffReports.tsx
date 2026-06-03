@@ -225,7 +225,7 @@ export function StaffReports() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2 border-none shadow-sm bg-white rounded-2xl overflow-hidden">
+        <Card className="lg:col-span-2 overflow-hidden">
           <CardHeader className="pb-0">
             <CardTitle className="text-base font-bold text-gray-800">Overtime Expenditure by Department</CardTitle>
           </CardHeader>
@@ -276,7 +276,7 @@ export function StaffReports() {
           </CardContent>
         </Card>
 
-        <Card className="border-none shadow-sm bg-white rounded-2xl flex flex-col items-center justify-center p-6">
+        <Card className="flex flex-col items-center justify-center p-6">
           <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-8">Payroll Split</p>
           {loading ? (
             <Loader2 className="h-8 w-8 animate-spin text-gray-300" />
@@ -311,7 +311,7 @@ export function StaffReports() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="border-none shadow-xl bg-[#1A1A1A] text-white rounded-2xl">
+        <Card className="border-none shadow-xl bg-[#1A1A1A] text-white">
           <CardContent className="p-8">
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Total Overtime Paid</p>
             {loading ? (
@@ -328,7 +328,7 @@ export function StaffReports() {
           </CardContent>
         </Card>
 
-        <Card className="border-none shadow-sm bg-white rounded-2xl">
+        <Card>
           <CardContent className="p-8">
             <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-4">Avg OT Per Employee</p>
             {loading ? (
@@ -342,7 +342,7 @@ export function StaffReports() {
           </CardContent>
         </Card>
 
-        <Card className="border-none shadow-sm bg-white rounded-2xl">
+        <Card>
           <CardContent className="p-8">
             <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-4">Policy Violations</p>
             {loading ? (
