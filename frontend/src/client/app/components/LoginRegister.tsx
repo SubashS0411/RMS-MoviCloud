@@ -53,7 +53,11 @@ export default function LoginRegister({ onLogin }: LoginRegisterProps) {
       onLogin(user);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unable to login.';
-      setErrorMessage(message);
+      setErrorMessage(
+        message === 'invalid_credentials'
+          ? 'Invalid customer credentials. Cashier or staff accounts must use the staff login page.'
+          : message,
+      );
       setIsProcessing(false);
     }
   };
