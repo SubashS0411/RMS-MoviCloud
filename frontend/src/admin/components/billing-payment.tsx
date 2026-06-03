@@ -183,7 +183,7 @@ export function BillingPayment() {
   const fetchInvoices = async () => {
     try {
       const res = await billingApi.listInvoices();
-      const raw: any[] = Array.isArray(res) ? res : [];
+      const raw: any[] = Array.isArray(res) ? res : (res?.data || []);
       const normalized: Invoice[] = raw.map((inv: any) => ({
         id: inv._id || inv.id,
         invoice_number: inv.invoiceNumber || inv.invoice_number || inv.id,
@@ -617,7 +617,7 @@ export function BillingPayment() {
         <TabsContent value="generate" className="space-y-4 sm:space-y-5">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5 items-stretch">
             {/* Order Selection */}
-            <Card className="h-full shadow-sm border border-[#ebe2d8] rounded-2xl bg-white flex flex-col">
+            <Card className="min-h-[440px] sm:min-h-[520px] h-full shadow-sm border border-[#ebe2d8] rounded-2xl bg-white flex flex-col">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg flex items-center gap-2">
                   Select Order
@@ -677,7 +677,7 @@ export function BillingPayment() {
             </Card>
 
             {/* Bill Items */}
-            <Card className="lg:col-span-2 h-full shadow-sm border border-[#ebe2d8] rounded-2xl bg-white flex flex-col">
+            <Card className="lg:col-span-2 min-h-[440px] sm:min-h-[520px] h-full shadow-sm border border-[#ebe2d8] rounded-2xl bg-white flex flex-col">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg">Bill Items</CardTitle>
                 <CardDescription>

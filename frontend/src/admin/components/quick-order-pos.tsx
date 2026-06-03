@@ -568,17 +568,25 @@ export function QuickOrderPOS({ open, onOpenChange, onOrderCreated, initialTable
     setTablesLoading(true);
     try {
       const result = await tablesApi.list();
-      const tables: TableData[] = result.data || [];
+      const tables: TableData[] = Array.isArray(result) ? result : (result?.data || []);
       // Show both available tables AND occupied tables (for waiters taking orders on their assigned tables)
       // Filter to only show available and occupied tables (not reserved or cleaning)
       const available = tables.filter(t => {
         const status = t.status?.toLowerCase();
-        return status === 'available' || status === 'occupied';
+        if (status !== 'available' && status !== 'occupied') return false;
+        if (user?.role === 'waiter' && status === 'occupied') {
+          return t.waiterId === user?.id;
+        }
+        return true;
       });
       // Sort by location and name
       available.sort((a, b) => {
-        if (a.location !== b.location) return a.location.localeCompare(b.location);
-        return a.name.localeCompare(b.name);
+        const locA = a.location || '';
+        const locB = b.location || '';
+        if (locA !== locB) return locA.localeCompare(locB);
+        const nameA = a.displayNumber || a.name || '';
+        const nameB = b.displayNumber || b.name || '';
+        return nameA.localeCompare(nameB);
       });
       setAvailableTables(available);
     } catch (error) {
@@ -1200,7 +1208,9 @@ export function QuickOrderPOS({ open, onOpenChange, onOrderCreated, initialTable
                           ) : (
                             <>
                               {/* Group tables by location */}
-                              {['VIP', 'Main Hall', 'AC Hall'].map(location => {
+                              {(Array.from(new Set(availableTables.map(t => t.location).filter(Boolean))) as string[])
+                                .sort()
+                                .map(location => {
                                 const locationTables = availableTables.filter(t => t.location === location);
                                 if (locationTables.length === 0) return null;
                                 return (

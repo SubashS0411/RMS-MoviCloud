@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/admin/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/admin/components/ui/card';
 import { Badge } from '@/admin/components/ui/badge';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/admin/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/admin/components/ui/select';
@@ -118,11 +119,11 @@ function TableCard({ table, onClick, waiters, onAssignWaiter, onCheckout, onRequ
       const interval = setInterval(() => {
         const remaining = Math.max(0, Math.floor((table.cleaningEndTime! - Date.now()) / 1000));
         setCleaningTimeLeft(remaining);
-        
+
         if (remaining === 0) {
           // Auto-reset to Available after timer ends - emit event for parent to handle
-          window.dispatchEvent(new CustomEvent('table:reset-status', { 
-            detail: { tableId: table.id } 
+          window.dispatchEvent(new CustomEvent('table:reset-status', {
+            detail: { tableId: table.id }
           }));
         }
       }, 1000);
@@ -138,9 +139,8 @@ function TableCard({ table, onClick, waiters, onAssignWaiter, onCheckout, onRequ
         setIsPulsing(prev => !prev);
       }, 500);
       return () => clearInterval(interval);
-    } else {
-      setIsPulsing(false);
     }
+    setIsPulsing(false);
   }, [table.kitchenStatus]);
 
   const getStatusColor = () => {
@@ -176,36 +176,85 @@ function TableCard({ table, onClick, waiters, onAssignWaiter, onCheckout, onRequ
 
   return (
     <motion.div
-      layout
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-      className="relative h-full"
-    >
-      <div
-        className={cn(
-          "bg-white cursor-pointer transition-all duration-200 border rounded-xl h-[272px] p-2.5 flex flex-col",
-          "border-[#ece5dc] shadow-[0_4px_10px_rgba(0,0,0,0.06)] hover:-translate-y-[3px] hover:shadow-[0_8px_16px_rgba(0,0,0,0.09)]",
-          isPulsing && "animate-pulse border-amber-500 shadow-xl"
-        )}
-        onClick={onClick}
-      >
-        <div className="space-y-1.5 flex-1 flex flex-col">
-          {/* Header */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className={cn("w-7 h-7 rounded-md flex items-center justify-center text-white text-xs font-bold flex-shrink-0", getStatusColor())}>
-                {table.displayNumber}
-              </div>
-            </div>
-            <span className={cn(
-              "inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-full border",
-              table.status === 'Available' && "bg-[#eef6f0] text-[#4f7f5b] border-[#cce3d2]",
-              table.status === 'Occupied' && "bg-[#eef2f5] text-[#5f7284] border-[#d4dee7]",
-              table.status === 'Eating' && "bg-[#f0f2f4] text-[#67737f] border-[#d8dce1]",
-              table.status === 'Reserved' && "bg-[#fbf3e6] text-[#92693e] border-[#ecd6b7]",
-              table.status === 'Cleaning' && "bg-[#f3f4f6] text-[#6b7280] border-[#e5e7eb]",
-            )}>
+        <div
+          className="grid w-full gap-2.5 sm:gap-4"
+          style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}
+        >
+          [
+            {
+              label: 'Available Tables',
+              count: tables.filter(t => t.status === 'Available').length,
+              icon: CheckCircle,
+              iconClass: 'text-green-600',
+            },
+            {
+              label: 'Occupied Tables',
+              count: tables.filter(t => t.status === 'Occupied' || t.status === 'Eating').length,
+              icon: Users,
+              iconClass: 'text-slate-600',
+            },
+            {
+              label: 'Reserved Tables',
+              count: tables.filter(t => t.status === 'Reserved').length,
+              icon: Calendar,
+              iconClass: 'text-amber-600',
+            },
+            {
+              label: 'Cleaning Tables',
+              count: tables.filter(t => t.status === 'Cleaning').length,
+              icon: Sparkles,
+              iconClass: 'text-gray-500',
+            },
+          ].map(({ label, count, icon: Icon, iconClass }) => (
+            <Card
+              key={label}
+              className="rounded-xl border border-[#ece5dc] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 transition-transform"
+            >
+              <CardHeader className="p-3 pb-1">
+                <CardTitle className="text-[14px] font-medium text-muted-foreground">
+                  [
+                    {
+                      label: 'Available Tables',
+                      count: tables.filter(t => t.status === 'Available').length,
+                      icon: CheckCircle,
+                      iconClass: 'text-green-600',
+                    },
+                    {
+                      label: 'Occupied Tables',
+                      count: tables.filter(t => t.status === 'Occupied' || t.status === 'Eating').length,
+                      icon: Users,
+                      iconClass: 'text-slate-600',
+                    },
+                    {
+                      label: 'Reserved Tables',
+                      count: tables.filter(t => t.status === 'Reserved').length,
+                      icon: Calendar,
+                      iconClass: 'text-amber-600',
+                    },
+                    {
+                      label: 'Cleaning Tables',
+                      count: tables.filter(t => t.status === 'Cleaning').length,
+                      icon: Sparkles,
+                      iconClass: 'text-gray-500',
+                    },
+                  ].map(({ label, count, icon: Icon, iconClass }) => (
+                    <Card
+                      key={label}
+                      className="rounded-xl border border-[#ece5dc] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 transition-transform"
+                    >
+                      <CardHeader className="p-3 pb-1">
+                        <CardTitle className="text-[14px] font-medium text-muted-foreground">
+                          {label}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-3 pt-0">
+                        <div className="flex h-[50px] items-center justify-between">
+                          <Icon className={`h-4 w-4 ${iconClass}`} />
+                          <span className="text-[20px] leading-none font-bold">{count}</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
               {getStatusIcon()}
               {table.status}
             </span>
@@ -355,169 +404,6 @@ function TableCard({ table, onClick, waiters, onAssignWaiter, onCheckout, onRequ
     </motion.div>
   );
 }
-
-function ReservationCard({ table, onCancel }: ReservationCardProps) {
-  return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 10 }}
-      className="bg-white border-2 border-stone-200 rounded-lg p-4 hover:shadow-md transition-shadow"
-    >
-      <div className="flex items-start justify-between">
-        <div className="space-y-2 flex-1">
-          {/* Table Number */}
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-stone-800 text-white rounded-lg flex items-center justify-center font-bold text-lg">
-              {table.displayNumber}
-            </div>
-            <div>
-              <p className="text-sm text-stone-500">Table • {table.capacity} Seats</p>
-              <p className="text-xs text-stone-400">{table.location}</p>
-            </div>
-          </div>
-
-          {/* Time Slot */}
-          {table.reservationSlot && (
-            <div className="flex items-center gap-2 text-amber-900">
-              <Clock className="w-4 h-4" />
-              <span className="font-medium text-sm">{table.reservationSlot}</span>
-            </div>
-          )}
-
-          {/* Guest Count */}
-          <div className="flex items-center gap-2 text-stone-700">
-            <Users className="w-4 h-4" />
-            <span className="text-sm">{table.guestCount} Guests</span>
-          </div>
-
-          {/* Status */}
-          <div className="inline-block">
-            <span className="text-xs font-medium text-stone-800 bg-stone-100 px-3 py-1 rounded-full border border-stone-300">
-              {table.reservationStatus}
-            </span>
-          </div>
-        </div>
-
-        {/* Cancel Button */}
-        <Button
-          variant="outline"
-          size="sm"
-          className="border-stone-300 text-stone-700 hover:bg-stone-100 hover:text-stone-900"
-          onClick={() => onCancel(table.id)}
-        >
-          <X className="w-4 h-4 mr-1" />
-          Cancel
-        </Button>
-      </div>
-    </motion.div>
-  );
-}
-
-// ============================================================================
-// WALK-IN MODAL COMPONENT
-// ============================================================================
-
-interface WalkInModalProps {
-  open: boolean;
-  onClose: () => void;
-  tables: any[];
-  onSelectTable: (tableId: string, guestCount: number, customerName: string) => void;
-}
-
-function WalkInModal({ open, onClose, tables, onSelectTable }: WalkInModalProps) {
-  const [guestCount, setGuestCount] = useState(2);
-  const [customerName, setCustomerName] = useState('');
-  const [location, setLocation] = useState<Location | 'All'>('All');
-  const [segment, setSegment] = useState<Segment | 'All'>('All');
-  const [timeSlot, setTimeSlot] = useState(TIME_SLOTS[0]);
-
-  const eligibleTables = tables.filter(t => {
-    if (t.status !== 'Available') return false;
-    if (t.capacity < guestCount) return false;
-    if (location !== 'All' && t.location !== location) return false;
-    if (segment !== 'All' && t.segment !== segment) return false;
-    return true;
-  });
-
-  return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Users className="h-5 w-5 text-[#8B5A2B]" />
-            New Walk-In Guest
-          </DialogTitle>
-          <DialogDescription>
-            Select guest count and preferences to find available tables
-          </DialogDescription>
-        </DialogHeader>
-
-        <div className="space-y-6">
-          {/* Guest Count */}
-          <div className="space-y-2">
-            <Label>Guest Count</Label>
-            <div className="flex items-center gap-3">
-              <Button variant="outline" size="lg" onClick={() => setGuestCount(Math.max(1, guestCount - 1))}>
-                <Minus className="w-4 h-4" />
-              </Button>
-              <div className="flex-1 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
-                <span className="text-4xl font-bold text-gray-900">{guestCount}</span>
-              </div>
-              <Button variant="outline" size="lg" onClick={() => setGuestCount(guestCount + 1)}>
-                <Plus className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
-
-          {/* Customer Name */}
-          <div className="space-y-2">
-            <Label>Customer Name</Label>
-            <Input
-              placeholder="Enter customer/guest name"
-              value={customerName}
-              onChange={(e) => setCustomerName(e.target.value)}
-              className="text-base"
-            />
-          </div>
-
-          {/* Location Filter */}
-          <div className="space-y-2">
-            <Label>Location Preference (Optional)</Label>
-            <Select value={location} onValueChange={(v) => setLocation(v as Location | 'All')}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="All">All Locations</SelectItem>
-                <SelectItem value="VIP Hall">VIP Hall</SelectItem>
-                <SelectItem value="Main Hall">Main Hall</SelectItem>
-                <SelectItem value="AC Hall">AC Hall</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Segment Filter */}
-          <div className="space-y-2">
-            <Label>Segment Preference (Optional)</Label>
-            <Select value={segment} onValueChange={(v) => setSegment(v as Segment | 'All')}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="All">All Segments</SelectItem>
-                <SelectItem value="Front">Front</SelectItem>
-                <SelectItem value="Middle">Middle</SelectItem>
-                <SelectItem value="Back">Back</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Time Slot */}
-          <div className="space-y-2">
-            <Label>Time Slot (Optional)</Label>
-            <Select value={timeSlot} onValueChange={setTimeSlot}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
-              <SelectContent>
-                {TIME_SLOTS.map(slot => (
-                  <SelectItem key={slot} value={slot}>{slot}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -1044,20 +930,32 @@ export function TableManagementComprehensive() {
     <div className="min-h-screen p-4 sm:p-5 space-y-2.5 bg-[#f8f6f3] max-w-full overflow-x-hidden text-[#2c2c2c]">
       {/* Header Row: KPI cards (left) + Actions (right) */}
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div
+          className="grid w-full gap-2.5 sm:gap-4"
+          style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}
+        >
           {[
             { label: 'Available Tables', count: tables.filter(t => t.status === 'Available').length, color: 'bg-[#6ea77a]', text: 'text-[#4f7f5b]' },
             { label: 'Occupied Tables', count: tables.filter(t => t.status === 'Occupied' || t.status === 'Eating').length, color: 'bg-[#6f8598]', text: 'text-[#5f7284]' },
             { label: 'Reserved Tables', count: tables.filter(t => t.status === 'Reserved').length, color: 'bg-[#c79b63]', text: 'text-[#92693e]' },
             { label: 'Cleaning Tables', count: tables.filter(t => t.status === 'Cleaning').length, color: 'bg-gray-400', text: 'text-gray-700' },
           ].map(({ label, count, color, text }) => (
-            <div key={label} className="h-[72px] w-[200px] flex items-center justify-center gap-2 rounded-xl border border-[#ece5dc] bg-white px-2.5 py-2 shadow-[0_4px_10px_rgba(0,0,0,0.06)]">
-              <div className={`w-3 h-3 rounded-full ${color}`} />
-              <div className="flex flex-col justify-center">
-                <p className="text-[16px] leading-none font-bold text-gray-900 mb-0.5">{count}</p>
-                <p className={`text-[12px] font-medium ${text}`}>{label}</p>
-              </div>
-            </div>
+            <Card
+              key={label}
+              className="rounded-xl border border-[#ece5dc] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 transition-transform"
+            >
+              <CardHeader className="p-3 pb-1">
+                <CardTitle className="text-[14px] font-medium text-muted-foreground">
+                  {label}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-3 pt-0">
+                <div className="flex h-[50px] items-center justify-between">
+                  <Icon className={`h-4 w-4 ${iconClass}`} />
+                  <span className="text-[20px] leading-none font-bold">{count}</span>
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
 

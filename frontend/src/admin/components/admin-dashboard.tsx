@@ -269,21 +269,21 @@ export function AdminDashboard() {
 
                 {/* Detailed Table */}
                 <div className="border border-[#ece5dc] rounded-lg overflow-x-auto">
-                  <table className="w-full min-w-[400px]">
+                  <table className="w-full table-fixed min-w-0">
                     <thead className="bg-[#F7F3EE]">
                       <tr>
-                        <th className="text-left p-3 text-sm font-semibold text-black">Item Name</th>
-                        <th className="text-center p-3 text-sm font-semibold text-black">Orders</th>
-                        <th className="text-center p-3 text-sm font-semibold text-black">Revenue</th>
-                        <th className="text-center p-3 text-sm font-semibold text-black">Avg Prep Time</th>
+                        <th className="text-left p-3 text-[11px] sm:text-sm font-semibold text-black">Item Name</th>
+                        <th className="text-center p-3 text-[11px] sm:text-sm font-semibold text-black">Orders</th>
+                        <th className="text-center p-3 text-[11px] sm:text-sm font-semibold text-black">Revenue</th>
+                        <th className="text-center p-3 text-[11px] sm:text-sm font-semibold text-black">Avg Prep Time</th>
                       </tr>
                     </thead>
                     <tbody>
                       {analytics.popularItems.map((item, index) => (
                         <tr key={index} className="border-t hover:bg-gray-50 transition-colors">
                           <td className="p-3">
-                            <div className="flex items-center gap-2">
-                              <span className="font-medium text-sm text-black">
+                            <div className="flex items-center gap-2 min-w-0">
+                              <span className="font-medium text-xs sm:text-sm text-black break-words">
                                 {index + 1}. {item.name}
                               </span>
                             </div>
@@ -297,7 +297,7 @@ export function AdminDashboard() {
                             ₹{(item.revenue ?? 0).toFixed(2)}
                           </td>
                           <td className="p-3 text-center">
-                            <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground">
+                            <div className="flex items-center justify-center gap-1 text-xs sm:text-sm text-muted-foreground">
                               <Clock className="h-3 w-3" />
                               {item.avgPrepTime || 0} min
                             </div>

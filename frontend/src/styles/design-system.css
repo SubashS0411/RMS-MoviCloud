@@ -61,6 +61,8 @@
     @apply sticky top-0 z-50 border-b;
     background: color-mix(in srgb, var(--ds-surface) 92%, #f6f1ea 8%);
     border-color: var(--ds-border);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   }
 
   .app-content-container {
@@ -68,15 +70,15 @@
   }
 
   .app-navbar-inner {
-    @apply w-full px-6;
+    @apply w-full px-4 sm:px-6;
   }
 
   .app-admin-navbar-inner {
-    @apply w-full px-6;
+    @apply w-full px-4 sm:px-6;
   }
 
   .app-admin-content {
-    @apply w-full px-6;
+    @apply w-full px-4 sm:px-6;
   }
 
   .app-navbar-row {

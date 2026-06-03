@@ -347,8 +347,8 @@ export function InventoryManagement({ triggerStockManagement }: { triggerStockMa
           <AddPurchaseDialog ingredients={ingredients} suppliers={suppliers} onSave={handleAddPurchase} />
         </div>
 
-        <div className="w-full overflow-x-auto pb-2">
-          <div className="bg-muted text-muted-foreground rounded-xl p-[3px] grid grid-cols-5 min-w-[560px]">
+        <div className="w-full pb-2">
+          <div className="bg-muted text-muted-foreground rounded-xl p-[3px] grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5">
             {[
               { id: 'dashboard', label: 'Dashboard', icon: Package },
               { id: 'inventory', label: 'Stock', icon: Package },
@@ -363,7 +363,7 @@ export function InventoryManagement({ triggerStockManagement }: { triggerStockMa
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
                   className={cn(
-                    'inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                    'inline-flex items-center justify-center gap-1.5 rounded-lg px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                     isActive
                       ? 'bg-background text-foreground shadow-sm'
                       : 'hover:bg-background/50 hover:text-foreground'
