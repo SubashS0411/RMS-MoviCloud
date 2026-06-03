@@ -281,7 +281,7 @@ export const menuData: MenuItem[] = [
     description: "Naan bread topped with garlic",
     price: 60,
     image:
-      "https://images.unsplash.com/photo-1626078501275-620d9a115c6f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      "https://images.unsplash.com/photo-1640625314547-aee9a7696589?crop=entropy&cs=tinysrgb&fit=max&q=80&w=1080",
     isVeg: true,
     category: "Breads",
     available: true,

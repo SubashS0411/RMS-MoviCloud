@@ -21,7 +21,6 @@ import {
   LayoutDashboard,
   UtensilsCrossed,
   ShoppingCart,
-  ChefHat,
   Users,
   Package,
   UserCog,
@@ -68,7 +67,6 @@ function triggerBackupDownload(data: any, filename: string) {
 const ALL_TABS = [
   { value: 'dashboard',     icon: LayoutDashboard, label: 'Dashboard'  },
   { value: 'orders',        icon: ShoppingCart,    label: 'Orders'     },
-  
   { value: 'tables',        icon: Users,           label: 'Tables'     },
   { value: 'menu',          icon: UtensilsCrossed, label: 'Menu'       },
   { value: 'inventory',     icon: Package,         label: 'Inventory'  },
@@ -206,7 +204,9 @@ function AppContent() {
     };
     const handleTab = (e: Event) => {
       const next = (e as CustomEvent<string>).detail;
-      if (typeof next === 'string' && hasPermission(next)) setActiveTab(next);
+      if (typeof next === 'string' && hasPermission(next) && ALL_TABS.some((t) => t.value === next)) {
+        setActiveTab(next);
+      }
     };
     const handleNotif = () => {
       // Re-fetch real count instead of blindly incrementing
@@ -251,9 +251,13 @@ function AppContent() {
   const navigateTab = (value: string) => {
     setActiveTab(value);
     navigate(`/admin/${value}`);
+    window.scrollTo(0, 0);
   };
 
-  // Chef landing behavior: keep default tab routing (no kitchen tab available)
+  // Chef skips dashboard cards and lands on the first permitted tab.
+  if (isChef && activeTab === 'dashboard') {
+    setActiveTab('orders');
+  }
 
   return (
     <div className="app-shell w-full">
@@ -338,10 +342,10 @@ function AppContent() {
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={(v) => hasPermission(v) && navigateTab(v)} className="app-admin-content">
 
-        {/* Desktop top nav � hidden on mobile */}
-        <div className="hidden sm:block sticky top-[68px] z-40">
-          <div className="my-3 app-nav-surface">
-            <TabsList className="w-full justify-start gap-1 flex-wrap h-auto p-2 bg-transparent border-0">
+        {/* Desktop top nav - hidden on mobile */}
+        <div className="hidden sm:block fixed top-16 sm:top-20 left-0 right-0 w-full z-40 bg-background/95 backdrop-blur-sm pb-1 pt-1 border-b shadow-sm">
+          <div className="app-nav-surface w-full max-w-full overflow-hidden">
+            <TabsList className="w-full justify-start gap-2 flex-nowrap overflow-x-auto scrollbar-hide h-auto p-2 bg-transparent border-0">
               {ALL_TABS.map(({ value, icon: Icon, label }) =>
                 hasPermission(value) ? (
                   <TabsTrigger key={value} value={value} className={TAB_CLASS}>
@@ -356,10 +360,10 @@ function AppContent() {
 
         {/* Content */}
         <Suspense fallback={null}>
+        <div className="pt-[64px] sm:pt-[136px]">
         <TabsContent value="dashboard"     className="mt-0 pb-24 sm:pb-6"><AdminDashboard /></TabsContent>
         <TabsContent value="menu"          className="mt-0 pb-24 sm:pb-6"><MenuManagement /></TabsContent>
         <TabsContent value="orders"        className="mt-0 pb-24 sm:pb-6"><OrderManagement /></TabsContent>
-        
         <TabsContent value="tables"        className="mt-0 pb-24 sm:pb-6"><TableManagementComprehensive /></TabsContent>
         <TabsContent value="inventory"     className="mt-0 pb-24 sm:pb-6"><InventoryManagement triggerStockManagement={triggerStockManagement} /></TabsContent>
         <TabsContent value="staff"         className="mt-0 pb-24 sm:pb-6"><StaffManagement /></TabsContent>
@@ -368,18 +372,19 @@ function AppContent() {
         <TabsContent value="reports"       className="mt-0 pb-24 sm:pb-6"><ReportsAnalytics /></TabsContent>
         <TabsContent value="notifications" className="mt-0 pb-24 sm:pb-6"><NotificationManagement /></TabsContent>
         <TabsContent value="settings"      className="mt-0 pb-24 sm:pb-6"><SecuritySettings /></TabsContent>
+        </div>
         </Suspense>
       </Tabs>
 
       {/* Footer � desktop only */}
-      <footer className="border-t mt-8 py-4 bg-white hidden sm:block">
+      <footer className="border-t mt-8 py-4 bg-card hidden sm:block">
         <div className="app-admin-content text-center">
           <p className="text-sm text-muted-foreground">{config.restaurantName}  Movicloud Labs</p>
         </div>
       </footer>
 
       {/* Mobile bottom navigation � scrollable, shows all tabs */}
-      <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] pb-[env(safe-area-inset-bottom)]">
+      <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border shadow-[0_-4px_20px_rgba(0,0,0,0.08)] pb-[env(safe-area-inset-bottom)]">
         <div className="flex overflow-x-auto scrollbar-hide">
           {permittedTabs.map(({ value, icon: Icon, label }) => {
             const isActive = activeTab === value;
@@ -388,13 +393,13 @@ function AppContent() {
                 key={value}
                 onClick={() => navigateTab(value)}
                 className={`[webkit-tap-highlight-color:transparent] min-w-16 app-mobile-nav-button flex flex-col items-center justify-center gap-0.5 transition-colors ${
-                  isActive ? 'text-[#8B5A2B]' : 'text-gray-500'
+                  isActive ? 'text-primary' : 'text-muted-foreground'
                 }`}
               >
-                <span className={`flex flex-col items-center justify-center rounded-full px-2 py-1 ${isActive ? 'bg-[#F5EDE5]' : ''}`}>
-                  <Icon className={`h-5 w-5 ${isActive ? 'text-[#8B5A2B]' : 'text-gray-500'}`} />
+                <span className={`flex flex-col items-center justify-center rounded-full px-2 py-1 ${isActive ? 'bg-primary/10' : ''}`}>
+                  <Icon className={`h-5 w-5 ${isActive ? 'text-primary' : 'text-muted-foreground'}`} />
                 </span>
-                <span className={`text-[10px] font-medium leading-none whitespace-nowrap ${isActive ? 'text-[#8B5A2B]' : 'text-gray-500'}`}>
+                <span className={`text-[10px] font-medium leading-none whitespace-nowrap ${isActive ? 'text-primary' : 'text-muted-foreground'}`}>
                   {label}
                 </span>
               </button>

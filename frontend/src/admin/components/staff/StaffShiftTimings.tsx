@@ -569,7 +569,7 @@ export function StaffShiftTimings({ globalSearch = '' }: StaffShiftTimingsProps)
         </div>
       </div>
 
-      <Card className="border-none shadow-sm overflow-hidden bg-white rounded-2xl">
+      <Card className="overflow-hidden">
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">

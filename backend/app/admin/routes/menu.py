@@ -64,8 +64,8 @@ async def list_menu_items(
         ]
 
     items = await db.menu_items.find(query).sort("name", 1).to_list(5000)
-    print(f"🔍 Menu query: {query}")
-    print(f"📊 Found {len(items)} menu items in database")
+    print(f"[Menu] Query: {query}")
+    print(f"[Menu] Found {len(items)} menu items in database")
     return [serialize_doc(item) for item in items]
 
 

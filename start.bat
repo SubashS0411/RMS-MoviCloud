@@ -7,10 +7,20 @@ echo    Restaurant Management System
 echo ============================================
 echo.
 
+set "PYTHON_CMD=python"
+
+:: Verify Python is available
+%PYTHON_CMD% --version >nul 2>&1
+if %errorlevel% neq 0 (
+    echo ERROR: Python is not available in PATH.
+    pause
+    exit /b 1
+)
+
 :: ── Backend setup ──
 echo [1/4] Installing backend dependencies...
 cd /d "%~dp0backend"
-pip install -r requirements.txt --quiet
+%PYTHON_CMD% -m pip install -r requirements.txt --quiet
 if %errorlevel% neq 0 (
     echo ERROR: Backend dependency install failed.
     pause
@@ -32,7 +42,7 @@ echo       Done.
 echo.
 echo [3/4] Starting backend (FastAPI)...
 cd /d "%~dp0backend"
-start "RMS Backend" cmd /k "uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"
+start "RMS Backend" cmd /k "%PYTHON_CMD% -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"
 
 :: Give backend a moment to boot
 timeout /t 3 /nobreak >nul

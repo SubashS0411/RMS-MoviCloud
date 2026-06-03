@@ -288,51 +288,49 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
     return totalDiscount;
   };
   return (
-    <div className="offers-loyalty-page min-h-screen bg-[#FAF7F2] py-12 px-6">
+    <div className="offers-loyalty-page min-h-screen bg-background py-12 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-12 text-center">
           <h1 
-            className="text-2xl font-semibold mb-2 text-[#3E2723]" 
+            className="text-2xl font-semibold mb-2 text-foreground" 
            
           >
             Offers & Loyalty Rewards
           </h1>
-          <p className="text-[#6D4C41]/80 text-sm sm:text-base">Earn points with every order and redeem exclusive rewards</p>
+          <p className="text-muted-foreground/80 text-sm sm:text-base">Earn points with every order and redeem exclusive rewards</p>
         </div>
 
         {/* Enhanced Loyalty Points Card */}
         {loyaltyAdmin.isEnabled ? (
-          <div className="bg-gradient-to-br from-[#3E2723] via-[#4E342E] to-[#6D4C41] text-white rounded-3xl shadow-2xl p-10 mb-12 relative overflow-hidden border-2 border-[#C8A47A]/20">
+          <div className="bg-[#F5F0E8] text-foreground rounded-3xl shadow-lg p-10 mb-12 relative overflow-hidden border border-border">
           {/* Decorative elements */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#C8A47A]/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#8B5A2B]/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary/10 rounded-full blur-3xl"></div>
           
           <div className="relative z-10">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-6">
-                    {Math.min(100, (currentPoints / loyaltyAdmin.minRedeemablePoints) * 100).toFixed(0)}%
-                <div className="w-16 h-16 bg-[#C8A47A]/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-[#C8A47A]/30">
-                  <Award className="w-8 h-8 text-[#C8A47A]" />
+                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-primary/20">
+                  <Award className="w-8 h-8 text-primary" />
                 </div>
                 <div>
-                  <p className="text-[#FAF7F2]/70 text-sm font-medium mb-1">Your Loyalty Points</p>
-                  <p className="text-5xl font-black text-[#C8A47A]">{currentPoints}</p>
-                  <p className="text-[#FAF7F2]/60 text-xs mt-1 italic flex items-center gap-1">
+                  <p className="text-muted-foreground text-sm font-medium mb-1">Your Loyalty Points</p>
+                  <p className="text-5xl font-black text-primary">{currentPoints}</p>
+                  <p className="text-muted-foreground/60 text-xs mt-1 italic flex items-center gap-1">
                     Earned based on ₹ spent and admin-defined rules
                     {remoteLoyaltyConfig.expiryMonths && (
-                      <span className="inline-flex items-center gap-1 ml-2 bg-[#C8A47A]/20 px-2 py-0.5 rounded-full">
+                      <span className="inline-flex items-center gap-1 ml-2 bg-primary/10 px-2 py-0.5 rounded-full text-primary">
                         <Clock className="w-3 h-3" />
                         Expires in {remoteLoyaltyConfig.expiryMonths} months
                       </span>
                     )}
                   </p>
                 </div>
-                      {loyaltyAdmin.minRedeemablePoints - currentPoints} more to redeem rewards
               
               <div className="flex flex-col items-end gap-2">
-                <div className="bg-[#C8A47A]/20 backdrop-blur-sm px-6 py-3 rounded-full border border-[#C8A47A]/30">
-                  <p className="text-xs text-[#FAF7F2]/70 uppercase tracking-wider font-bold">Member Status</p>
-                  <p className="text-lg font-bold text-[#C8A47A]">
+                <div className="bg-primary/10 px-6 py-3 rounded-full border border-primary/20">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider font-bold">Member Status</p>
+                  <p className="text-lg font-bold text-primary">
                     {user.membership && user.membership.plan !== 'none' 
                       ? user.membership.plan.charAt(0).toUpperCase() + user.membership.plan.slice(1)
                       : 'Standard'}
@@ -342,33 +340,33 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
             </div>
 
             {/* Enhanced Progress Bar - Based on Minimum Redeemable Points */}
-            <div className="bg-[#2D1B10]/50 backdrop-blur-sm rounded-2xl p-6 border border-[#C8A47A]/20">
+            <div className="bg-white/60 rounded-2xl p-6 border border-border">
               <div className="flex justify-between text-sm mb-3">
                 <div className="flex items-center gap-2">
-                  <TrendingUp className="w-4 h-4 text-[#C8A47A]" />
-                  <span className="text-[#FAF7F2]/90 font-semibold">Progress to redeemable points</span>
+                  <TrendingUp className="w-4 h-4 text-primary" />
+                  <span className="text-foreground font-semibold">Progress to redeemable points</span>
                 </div>
-                <span className="font-bold text-[#C8A47A]">
+                <span className="font-bold text-primary">
                   {Math.min(100, (currentPoints / loyaltyAdmin.minRedeemablePoints) * 100).toFixed(0)}%
                 </span>
               </div>
-              <div className="w-full bg-[#1A110D] rounded-full h-4 overflow-hidden mb-3 border border-[#C8A47A]/20">
+              <div className="w-full bg-[#EADBC8]/50 rounded-full h-4 overflow-hidden mb-3 border border-border">
                 <div
-                  className={`bg-gradient-to-r from-[#C8A47A] to-[#8B5A2B] h-full rounded-full transition-all duration-500 relative ${toPercentClass(Math.min(100, (currentPoints / loyaltyAdmin.minRedeemablePoints) * 100))}`}
+                  className={`bg-primary h-full rounded-full transition-all duration-500 relative ${toPercentClass(Math.min(100, (currentPoints / loyaltyAdmin.minRedeemablePoints) * 100))}`}
                 >
                   <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
                 </div>
               </div>
               <div className="flex justify-between items-center">
-                <p className="text-sm text-[#FAF7F2]/70">
-                  <span className="font-bold text-[#C8A47A]">{currentPoints}</span> / {loyaltyAdmin.minRedeemablePoints} points
+                <p className="text-sm text-muted-foreground">
+                  <span className="font-bold text-primary">{currentPoints}</span> / {loyaltyAdmin.minRedeemablePoints} points
                 </p>
                 {currentPoints < loyaltyAdmin.minRedeemablePoints ? (
-                  <p className="text-xs text-[#FAF7F2]/60">
+                  <p className="text-xs text-muted-foreground/80">
                     {loyaltyAdmin.minRedeemablePoints - currentPoints} more to redeem rewards
                   </p>
                 ) : (
-                  <p className="text-xs text-green-400 font-bold flex items-center gap-1">
+                  <p className="text-xs text-green-600 font-bold flex items-center gap-1">
                     <CheckCircle className="w-4 h-4" />
                     Ready to redeem!
                   </p>
@@ -396,54 +394,54 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
         {/* My Membership Section */}
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-[#8B5A2B]/10 rounded-xl flex items-center justify-center">
-              <Crown className="w-6 h-6 text-[#8B5A2B]" />
+            <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+              <Crown className="w-6 h-6 text-primary" />
             </div>
             <div>
               <h2 
-                className="text-lg font-semibold text-[#3E2723]" 
+                className="text-lg font-semibold text-foreground" 
                
               >
                 My Membership
               </h2>
-              <p className="text-sm text-[#6D4C41]">Unlock exclusive benefits and rewards</p>
+              <p className="text-sm text-muted-foreground">Unlock exclusive benefits and rewards</p>
             </div>
           </div>
 
           {user.membership && user.membership.plan !== 'none' ? (
-            <div className="bg-gradient-to-br from-[#3E2723] via-[#4E342E] to-[#6D4C41] text-white rounded-3xl shadow-2xl overflow-hidden border-2 border-[#C8A47A]/20 relative">
+            <div className="bg-[#F5F0E8] text-foreground rounded-3xl shadow-lg overflow-hidden border border-border relative">
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 w-48 h-48 bg-[#C8A47A]/10 rounded-full blur-3xl"></div>
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#8B5A2B]/10 rounded-full blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary/10 rounded-full blur-3xl"></div>
 
               <div className="relative z-10 p-10">
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
                   <div className="flex items-center gap-4">
-                    <div className="w-20 h-20 bg-gradient-to-br from-[#C8A47A] to-[#8B5A2B] rounded-2xl flex items-center justify-center border-4 border-white/20">
-                      <Crown className="w-10 h-10 text-white" />
+                    <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center border-4 border-white">
+                      <Crown className="w-10 h-10 text-primary" />
                     </div>
                     <div>
-                      <p className="text-xs text-[#FAF7F2]/60 uppercase tracking-wider font-bold mb-1">Current Plan</p>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider font-bold mb-1">Current Plan</p>
                       <h3 
-                        className="text-xl font-semibold text-[#C8A47A] capitalize mb-1" 
+                        className="text-xl font-semibold text-primary capitalize mb-1" 
                        
                       >
                         {user.membership.plan} Membership
                       </h3>
-                      <p className="text-[#FAF7F2]/70 text-sm">₹{user.membership.monthlyPrice}/month</p>
+                      <p className="text-muted-foreground/80 text-sm">₹{user.membership.monthlyPrice}/month</p>
                     </div>
                   </div>
 
                   <div className="flex flex-col gap-2">
                     <div className={`px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider ${
                       user.membership.status === 'active' 
-                        ? 'bg-green-500/20 text-green-300 border-2 border-green-500/50' 
-                        : 'bg-gray-500/20 text-gray-300 border-2 border-gray-500/50'
+                        ? 'bg-green-100 text-green-700 border border-green-300' 
+                        : 'bg-gray-200 text-gray-700 border border-gray-300'
                     }`}>
                       {user.membership.status === 'active' ? '✓ Active' : user.membership.status}
                     </div>
                     {user.membership.expiryDate && (
-                      <p className="text-[#FAF7F2]/60 text-xs text-right">
+                      <p className="text-muted-foreground text-xs text-right">
                         Valid until {new Date(user.membership.expiryDate).toLocaleDateString('en-GB', { 
                           day: 'numeric', 
                           month: 'short', 
@@ -466,7 +464,7 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
                   <div className="flex items-center gap-2">
                     <div className="flex-1 bg-[#1A110D] rounded-full h-2">
                       <div 
-                        className={`bg-gradient-to-r from-[#C8A47A] to-[#8B5A2B] h-full rounded-full ${toPercentClass(user.membership.pointsBoost)}`}
+                        className={`bg-gradient-to-r from-[#C8A47A] to-primary h-full rounded-full ${toPercentClass(user.membership.pointsBoost)}`}
                       ></div>
                     </div>
                     <span className="text-[#C8A47A] font-black text-xl">+{user.membership.pointsBoost}%</span>
@@ -497,17 +495,17 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
               </div>
             </div>
           ) : (
-            <div className="bg-white rounded-3xl border-2 border-[#E8DED0] shadow-lg p-10 text-center">
-              <div className="w-24 h-24 bg-[#8B5A2B]/10 rounded-3xl flex items-center justify-center mx-auto mb-6">
-                <Crown className="w-12 h-12 text-[#8B5A2B]/50" />
+            <div className="bg-white rounded-3xl border-2 border-border shadow-lg p-10 text-center">
+              <div className="w-24 h-24 bg-primary/10 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                <Crown className="w-12 h-12 text-primary/50" />
               </div>
               <h3 
-                className="text-lg font-semibold text-[#3E2723] mb-3" 
+                className="text-lg font-semibold text-foreground mb-3" 
                
               >
                 No Active Membership
               </h3>
-              <p className="text-[#6D4C41] mb-8 max-w-md mx-auto">
+              <p className="text-muted-foreground mb-8 max-w-md mx-auto">
                 Upgrade to a membership plan to unlock exclusive benefits, extra loyalty points, and special offers.
               </p>
               <button
@@ -528,7 +526,7 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
                       : DEFAULT_MEMBERSHIP,
                   });
                 }}
-                className="bg-gradient-to-r from-[#8B5A2B] to-[#C8A47A] text-white px-8 py-4 rounded-xl font-bold uppercase tracking-wider hover:shadow-2xl transition-all"
+                className="bg-gradient-to-r from-primary to-accent text-white px-8 py-4 rounded-xl font-bold uppercase tracking-wider hover:shadow-2xl transition-all"
               >
                 {membershipPlans.length > 0 ? `Get ${membershipPlans[0].name} Plan` : 'Activate Membership'}
               </button>
@@ -540,14 +538,14 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
         {membershipPlans.length > 0 && (
           <div className="mb-12">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-[#8B5A2B]/10 rounded-xl flex items-center justify-center">
-                <Crown className="w-6 h-6 text-[#8B5A2B]" />
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                <Crown className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-[#3E2723]">
+                <h2 className="text-lg font-semibold text-foreground">
                   Membership Plans
                 </h2>
-                <p className="text-sm text-[#6D4C41]">Admin-configured plans with exclusive perks</p>
+                <p className="text-sm text-muted-foreground">Admin-configured plans with exclusive perks</p>
               </div>
             </div>
 
@@ -555,15 +553,15 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
               {membershipPlans.map((plan) => {
                 const tierColors: Record<string, { bg: string; badge: string; icon: string }> = {
                   silver: { bg: 'from-gray-400 to-gray-600', badge: 'bg-gray-100 text-gray-700 border-gray-300', icon: '🥈' },
-                  gold:   { bg: 'from-[#8B5A2B] to-[#C8A47A]', badge: 'bg-amber-50 text-amber-700 border-amber-300', icon: '🥇' },
-                  platinum: { bg: 'from-[#3E2723] to-[#6D4C41]', badge: 'bg-purple-50 text-purple-700 border-purple-300', icon: '👑' },
+                  gold:   { bg: 'from-primary to-accent', badge: 'bg-amber-50 text-amber-700 border-amber-300', icon: '🥇' },
+                  platinum: { bg: 'from-foreground to-muted-foreground', badge: 'bg-purple-50 text-purple-700 border-purple-300', icon: '👑' },
                 };
                 const colors = tierColors[plan.tier] || tierColors.gold;
                 const isCurrentPlan = user.membership?.plan === plan.tier && user.membership?.status === 'active';
 
                 return (
                   <div key={plan.id} className={`bg-white rounded-2xl border-2 shadow-lg overflow-hidden transition-all ${
-                    isCurrentPlan ? 'border-[#8B5A2B] ring-4 ring-[#8B5A2B]/20' : 'border-[#E8DED0] hover:border-[#C8A47A] hover:shadow-xl'
+                    isCurrentPlan ? 'border-primary ring-4 ring-primary/20' : 'border-border hover:border-[#C8A47A] hover:shadow-xl'
                   }`}>
                     {/* Plan header */}
                     <div className={`bg-gradient-to-br ${colors.bg} p-6 text-white`}>
@@ -592,8 +590,8 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
                       {toBenefitsArray(plan.benefits).length > 0 && (
                         <ul className="space-y-2 mb-5">
                           {toBenefitsArray(plan.benefits).map((b, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-[#6D4C41]">
-                              <CheckCircle className="w-4 h-4 text-[#8B5A2B] flex-shrink-0 mt-0.5" />
+                            <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                              <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
                               <span>{b}</span>
                             </li>
                           ))}
@@ -616,8 +614,8 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
                         disabled={isCurrentPlan}
                         className={`w-full py-3 rounded-xl font-bold text-sm uppercase tracking-wider transition-all ${
                           isCurrentPlan
-                            ? 'bg-[#8B5A2B] text-white cursor-default'
-                            : 'bg-[#3E2723] text-[#C8A47A] hover:bg-[#8B5A2B] hover:text-white border-2 border-[#3E2723]'
+                            ? 'bg-primary text-white cursor-default'
+                            : 'bg-[#3E2723] text-[#C8A47A] hover:bg-primary hover:text-white border-2 border-[#3E2723]'
                         }`}
                       >
                         {isCurrentPlan ? '✓ Active Plan' : `Get ${plan.name}`}
@@ -633,31 +631,31 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
         {/* Admin-Hosted Offers Section */}
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-[#8B5A2B]/10 rounded-xl flex items-center justify-center">
-              <Tag className="w-6 h-6 text-[#8B5A2B]" />
+            <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+              <Tag className="w-6 h-6 text-primary" />
             </div>
             <div>
               <h2 
-                className="text-lg font-semibold text-[#3E2723]" 
+                className="text-lg font-semibold text-foreground" 
                
               >
                 Available Offers
               </h2>
-              <p className="text-sm text-[#6D4C41]">Admin-curated coupons for exclusive savings</p>
+              <p className="text-sm text-muted-foreground">Admin-curated coupons for exclusive savings</p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {loadingOffers ? (
               <div className="col-span-2 flex items-center justify-center py-12">
-                <Loader2 className="w-8 h-8 animate-spin text-[#8B5A2B]" />
-                <span className="ml-3 text-[#6D4C41] font-medium">Loading offers from admin…</span>
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                <span className="ml-3 text-muted-foreground font-medium">Loading offers from admin…</span>
               </div>
             ) : adminCoupons.length === 0 ? (
               <div className="col-span-2 text-center py-12">
                 <Tag className="w-12 h-12 text-[#C8A47A]/40 mx-auto mb-3" />
-                <p className="text-[#6D4C41] font-medium">No active offers configured by admin right now.</p>
-                <p className="text-xs text-[#6D4C41]/70 mt-1">Check back soon for exciting deals!</p>
+                <p className="text-muted-foreground font-medium">No active offers configured by admin right now.</p>
+                <p className="text-xs text-muted-foreground/70 mt-1">Check back soon for exciting deals!</p>
               </div>
             ) : (
               adminCoupons.map((coupon) => {
@@ -670,12 +668,12 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
                   key={coupon.id}
                   className={`bg-white rounded-2xl border-2 shadow-lg overflow-hidden transition-all duration-300 ${
                     isApplied 
-                      ? 'border-[#8B5A2B] shadow-[#8B5A2B]/20 scale-[1.02]' 
-                      : 'border-[#E8DED0] hover:border-[#C8A47A] hover:shadow-xl'
+                      ? 'border-primary shadow-[#8B5A2B]/20 scale-[1.02]' 
+                      : 'border-border hover:border-[#C8A47A] hover:shadow-xl'
                   } ${!canApply ? 'opacity-60' : ''}`}
                 >
                   {/* Coupon Header */}
-                  <div className={`p-6 ${isApplied ? 'bg-gradient-to-r from-[#8B5A2B] to-[#C8A47A]' : 'bg-gradient-to-r from-[#3E2723] to-[#6D4C41]'}`}>
+                  <div className={`p-6 ${isApplied ? 'bg-gradient-to-r from-primary to-accent' : 'bg-gradient-to-r from-foreground to-muted-foreground'}`}>
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
@@ -704,22 +702,22 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
                   <div className="p-6">
                     <div className="space-y-3 mb-4">
                       <div className="flex items-center gap-3 text-sm">
-                        <div className="w-8 h-8 bg-[#8B5A2B]/10 rounded-lg flex items-center justify-center">
-                          <ShoppingCart className="w-4 h-4 text-[#8B5A2B]" />
+                        <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                          <ShoppingCart className="w-4 h-4 text-primary" />
                         </div>
                         <div>
-                          <p className="text-[#6D4C41] font-medium">Minimum Order</p>
-                          <p className="text-[#3E2723] font-bold">₹{coupon.minOrderValue}</p>
+                          <p className="text-muted-foreground font-medium">Minimum Order</p>
+                          <p className="text-foreground font-bold">₹{coupon.minOrderValue}</p>
                         </div>
                       </div>
                       
                       <div className="flex items-center gap-3 text-sm">
-                        <div className="w-8 h-8 bg-[#8B5A2B]/10 rounded-lg flex items-center justify-center">
-                          <Calendar className="w-4 h-4 text-[#8B5A2B]" />
+                        <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                          <Calendar className="w-4 h-4 text-primary" />
                         </div>
                         <div>
-                          <p className="text-[#6D4C41] font-medium">Valid Until</p>
-                          <p className={`font-bold ${isExpired ? 'text-red-600' : 'text-[#3E2723]'}`}>
+                          <p className="text-muted-foreground font-medium">Valid Until</p>
+                          <p className={`font-bold ${isExpired ? 'text-red-600' : 'text-foreground'}`}>
                             {new Date(coupon.expiryDate).toLocaleDateString('en-GB', { 
                               day: 'numeric', 
                               month: 'short', 
@@ -731,12 +729,12 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
 
                       {coupon.maxUsage && (
                         <div className="flex items-center gap-3 text-sm">
-                          <div className="w-8 h-8 bg-[#8B5A2B]/10 rounded-lg flex items-center justify-center">
-                            <Clock className="w-4 h-4 text-[#8B5A2B]" />
+                          <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                            <Clock className="w-4 h-4 text-primary" />
                           </div>
                           <div>
-                            <p className="text-[#6D4C41] font-medium">Usage Limit</p>
-                            <p className="text-[#3E2723] font-bold">
+                            <p className="text-muted-foreground font-medium">Usage Limit</p>
+                            <p className="text-foreground font-bold">
                               {coupon.currentUsage || 0} / {coupon.maxUsage} used
                             </p>
                           </div>
@@ -750,9 +748,9 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
                       disabled={!canApply}
                       className={`w-full py-3 rounded-xl font-bold text-sm uppercase tracking-wider transition-all duration-300 ${
                         isApplied
-                          ? 'bg-[#8B5A2B] text-white'
+                          ? 'bg-primary text-white'
                           : canApply
-                          ? 'bg-[#3E2723] text-[#C8A47A] hover:bg-[#8B5A2B] hover:text-white border-2 border-[#3E2723]'
+                          ? 'bg-[#3E2723] text-[#C8A47A] hover:bg-primary hover:text-white border-2 border-[#3E2723]'
                           : 'bg-gray-200 text-gray-500 cursor-not-allowed border-2 border-gray-300'
                       }`}
                     >
@@ -774,7 +772,7 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
                     </button>
 
                     {!canApply && !isExpired && (
-                      <p className="text-xs text-center text-[#6D4C41] mt-2">
+                      <p className="text-xs text-center text-muted-foreground mt-2">
                         Order ₹{coupon.minOrderValue} or more to apply
                       </p>
                     )}
@@ -788,17 +786,17 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
         {/* Refined Rewards Catalog */}
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-[#8B5A2B]/10 rounded-xl flex items-center justify-center">
-              <Gift className="w-6 h-6 text-[#8B5A2B]" />
+            <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+              <Gift className="w-6 h-6 text-primary" />
             </div>
             <div>
               <h2 
-                className="text-lg font-semibold text-[#3E2723]" 
+                className="text-lg font-semibold text-foreground" 
                
               >
                 Rewards Catalog
               </h2>
-              <p className="text-sm text-[#6D4C41]">Redeem your points for exclusive rewards</p>
+              <p className="text-sm text-muted-foreground">Redeem your points for exclusive rewards</p>
             </div>
           </div>
 
@@ -814,14 +812,14 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
                   className={`bg-white rounded-2xl border-2 shadow-lg overflow-hidden transition-all duration-300 ${
                     isAvailable 
                       ? 'border-[#C8A47A] hover:shadow-2xl hover:-translate-y-1' 
-                      : 'border-[#E8DED0] opacity-70'
-                  } ${isRedeemed ? 'ring-4 ring-[#8B5A2B]/30' : ''}`}
+                      : 'border-border opacity-70'
+                  } ${isRedeemed ? 'ring-4 ring-primary/30' : ''}`}
                 >
-                  <div className={`p-6 text-center ${isAvailable ? 'bg-gradient-to-br from-[#8B5A2B]/10 to-[#C8A47A]/10' : 'bg-gray-50'}`}>
+                  <div className={`p-6 text-center ${isAvailable ? 'bg-gradient-to-br from-primary/10 to-accent/10' : 'bg-gray-50'}`}>
                     <div
                       className={`w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 text-4xl ${
                         isAvailable 
-                          ? 'bg-gradient-to-br from-[#8B5A2B] to-[#C8A47A]' 
+                          ? 'bg-gradient-to-br from-primary to-accent' 
                           : 'bg-gray-200'
                       }`}
                     >
@@ -832,22 +830,22 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
                       )}
                     </div>
                     <h3 
-                      className="font-bold text-lg mb-2 text-[#3E2723]" 
+                      className="font-bold text-lg mb-2 text-foreground" 
                      
                     >
                       {reward.name}
                     </h3>
                     <div className="flex items-center justify-center gap-2 mb-1">
-                      <Award className={`w-4 h-4 ${isAvailable ? 'text-[#8B5A2B]' : 'text-gray-400'}`} />
-                      <p className={`text-2xl font-black ${isAvailable ? 'text-[#8B5A2B]' : 'text-gray-400'}`}>
+                      <Award className={`w-4 h-4 ${isAvailable ? 'text-primary' : 'text-gray-400'}`} />
+                      <p className={`text-2xl font-black ${isAvailable ? 'text-primary' : 'text-gray-400'}`}>
                         {reward.points}
                       </p>
                     </div>
-                    <p className="text-xs text-[#6D4C41] uppercase tracking-wider font-bold">Points Required</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider font-bold">Points Required</p>
                   </div>
 
                   <div className="p-6">
-                    <p className="text-sm text-[#6D4C41] text-center mb-6 min-h-[3rem]">
+                    <p className="text-sm text-muted-foreground text-center mb-6 min-h-[3rem]">
                       {reward.description}
                     </p>
 
@@ -856,9 +854,9 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
                       disabled={!isAvailable || isRedeemed}
                       className={`w-full py-3 rounded-xl font-bold text-sm uppercase tracking-wider transition-all duration-300 ${
                         isRedeemed
-                          ? 'bg-[#8B5A2B] text-white'
+                          ? 'bg-primary text-white'
                           : isAvailable
-                          ? 'bg-[#3E2723] text-[#C8A47A] hover:bg-[#8B5A2B] hover:text-white border-2 border-[#3E2723]'
+                          ? 'bg-[#3E2723] text-[#C8A47A] hover:bg-primary hover:text-white border-2 border-[#3E2723]'
                           : 'bg-gray-200 text-gray-500 cursor-not-allowed border-2 border-gray-300'
                       }`}
                     >
@@ -878,7 +876,7 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
                     </button>
 
                     {!isAvailable && (
-                      <p className="text-xs text-center text-[#6D4C41] mt-3 font-medium">
+                      <p className="text-xs text-center text-muted-foreground mt-3 font-medium">
                         Need {pointsNeeded} more points
                       </p>
                     )}
@@ -890,42 +888,42 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
         </div>
 
         {/* Checkout Preview Block */}
-        <div className="bg-gradient-to-br from-[#8B5A2B]/10 to-[#C8A47A]/10 rounded-3xl border-2 border-[#C8A47A]/30 p-8 mb-12">
+        <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-3xl border-2 border-[#C8A47A]/30 p-8 mb-12">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-[#8B5A2B] rounded-xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
               <CreditCard className="w-6 h-6 text-white" />
             </div>
             <div>
               <h2 
-                className="text-lg font-semibold text-[#3E2723]" 
+                className="text-lg font-semibold text-foreground" 
                
               >
                 Checkout Preview - Example Order
               </h2>
-              <p className="text-sm text-[#6D4C41]">See how your rewards and points work together</p>
+              <p className="text-sm text-muted-foreground">See how your rewards and points work together</p>
             </div>
           </div>
 
           <div className="bg-white rounded-2xl p-8 shadow-lg">
             <div className="space-y-4">
               {/* Order Subtotal */}
-              <div className="flex justify-between items-center pb-4 border-b border-[#E8DED0]">
-                <span className="text-[#6D4C41] font-medium">Order Subtotal</span>
-                <span className="text-[#3E2723] font-bold text-lg">₹650.00</span>
+              <div className="flex justify-between items-center pb-4 border-b border-border">
+                <span className="text-muted-foreground font-medium">Order Subtotal</span>
+                <span className="text-foreground font-bold text-lg">₹650.00</span>
               </div>
 
               {/* Points Earned Calculation */}
-              <div className="bg-gradient-to-r from-[#8B5A2B]/5 to-[#C8A47A]/5 border-2 border-[#8B5A2B]/20 rounded-xl p-4">
+              <div className="bg-gradient-to-r from-primary/5 to-accent/5 border-2 border-primary/20 rounded-xl p-4">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <Award className="w-5 h-5 text-[#8B5A2B]" />
-                    <span className="text-[#3E2723] font-bold">Points You'll Earn</span>
+                    <Award className="w-5 h-5 text-primary" />
+                    <span className="text-foreground font-bold">Points You'll Earn</span>
                   </div>
-                  <span className="text-[#8B5A2B] font-black text-xl">
+                  <span className="text-primary font-black text-xl">
                     +{calculatePointsEarned(650)} pts
                   </span>
                 </div>
-                <div className="text-xs text-[#6D4C41] space-y-1 pl-7">
+                <div className="text-xs text-muted-foreground space-y-1 pl-7">
                   <p>• Base: {Math.floor(650 * loyaltyAdmin.pointsPerRupee)} points (₹650 × {loyaltyAdmin.pointsPerRupee})</p>
                   {getMembershipBonus() > 0 && (
                     <p>• Membership bonus: +{getMembershipBonus()}% = {Math.floor(650 * loyaltyAdmin.pointsPerRupee * (getMembershipBonus() / 100))} extra points</p>
@@ -940,10 +938,10 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
               {appliedCoupon && (() => {
                 const coupon = adminCoupons.find(c => c.code === appliedCoupon);
                 return coupon && (
-                  <div className="flex justify-between items-center py-3 bg-[#8B5A2B]/5 px-4 rounded-xl">
+                  <div className="flex justify-between items-center py-3 bg-primary/5 px-4 rounded-xl">
                     <div className="flex items-center gap-2">
-                      <Tag className="w-4 h-4 text-[#8B5A2B]" />
-                      <span className="text-[#3E2723] font-medium">
+                      <Tag className="w-4 h-4 text-primary" />
+                      <span className="text-foreground font-medium">
                         Coupon ({coupon.code})
                       </span>
                     </div>
@@ -960,10 +958,10 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <Gift className="w-5 h-5 text-purple-600" />
-                      <span className="text-[#3E2723] font-bold">Points Redemption Option</span>
+                      <span className="text-foreground font-bold">Points Redemption Option</span>
                     </div>
                   </div>
-                  <div className="text-xs text-[#6D4C41] space-y-1 pl-7">
+                  <div className="text-xs text-muted-foreground space-y-1 pl-7">
                     <p>• You have <strong>{currentPoints} points</strong> available</p>
                     <p>• Redeeming all points = <strong>₹{calculatePointsDiscount(currentPoints).toFixed(0)} discount</strong></p>
                     <p className="text-purple-600">• Conversion: {loyaltyAdmin.pointsToDiscountRatio} points = ₹1</p>
@@ -975,8 +973,8 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
               {redeemedRewards.length > 0 && (
                 <div className="flex justify-between items-center py-3 bg-[#C8A47A]/5 px-4 rounded-xl">
                   <div className="flex items-center gap-2">
-                    <Gift className="w-4 h-4 text-[#8B5A2B]" />
-                    <span className="text-[#3E2723] font-medium">
+                    <Gift className="w-4 h-4 text-primary" />
+                    <span className="text-foreground font-medium">
                       Loyalty Rewards Applied ({redeemedRewards.length})
                     </span>
                   </div>
@@ -986,20 +984,20 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
 
               {/* Taxes */}
               <div className="flex justify-between items-center text-sm">
-                <span className="text-[#6D4C41]">Taxes & Charges</span>
-                <span className="text-[#3E2723] font-medium">₹32.50</span>
+                <span className="text-muted-foreground">Taxes & Charges</span>
+                <span className="text-foreground font-medium">₹32.50</span>
               </div>
 
               {/* Total */}
-              <div className="flex justify-between items-center pt-4 border-t-2 border-[#8B5A2B]">
-                <span className="text-[#3E2723] font-bold text-xl">Final Payable Amount</span>
+              <div className="flex justify-between items-center pt-4 border-t-2 border-primary">
+                <span className="text-foreground font-bold text-xl">Final Payable Amount</span>
                 <div className="text-right">
                   {(appliedCoupon || redeemedRewards.length > 0) && (
                     <p className="text-sm text-gray-400 line-through">
                       ₹682.50
                     </p>
                   )}
-                  <p className="text-[#8B5A2B] font-black text-3xl">
+                  <p className="text-primary font-black text-3xl">
                     ₹{(650 - calculateDiscount(650) + 32.50).toFixed(2)}
                   </p>
                 </div>
@@ -1025,28 +1023,28 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
         </div>
 
         {/* Loyalty Points History */}
-        <div className="bg-white rounded-3xl border-2 border-[#E8DED0] shadow-lg p-8 mb-12">
+        <div className="bg-white rounded-3xl border-2 border-border shadow-lg p-8 mb-12">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-6">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-[#8B5A2B] rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
                 <Award className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-[#3E2723]">
+                <h2 className="text-lg font-semibold text-foreground">
                   Loyalty Points History
                 </h2>
-                <p className="text-sm text-[#6D4C41]">Track earned, redeemed, and expired points</p>
+                <p className="text-sm text-muted-foreground">Track earned, redeemed, and expired points</p>
               </div>
             </div>
 
-            <div className="bg-[#8B5A2B]/10 border border-[#8B5A2B]/20 rounded-2xl px-5 py-3">
-              <p className="text-xs text-[#6D4C41] font-bold uppercase tracking-wider">Current Balance</p>
-              <p className="text-[#3E2723] font-black text-2xl">{currentPoints} pts</p>
+            <div className="bg-primary/10 border border-primary/20 rounded-2xl px-5 py-3">
+              <p className="text-xs text-muted-foreground font-bold uppercase tracking-wider">Current Balance</p>
+              <p className="text-foreground font-black text-2xl">{currentPoints} pts</p>
             </div>
           </div>
 
           {/* Tabs */}
-          <div className="mb-6 border-b border-[#E8DED0]">
+          <div className="mb-6 border-b border-border">
             <div className="flex gap-4 overflow-x-auto scrollbar-hide">
               {([
                 { id: 'all' as const, label: 'All' },
@@ -1059,8 +1057,8 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
                   onClick={() => setHistoryTab(tab.id)}
                   className={`pb-4 px-2 font-medium transition-colors border-b-2 whitespace-nowrap ${
                     historyTab === tab.id
-                      ? 'border-[#8B5A2B] text-[#8B5A2B]'
-                      : 'border-transparent text-[#6D4C41] hover:text-[#3E2723]'
+                      ? 'border-primary text-primary'
+                      : 'border-transparent text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   {tab.label}
@@ -1072,8 +1070,8 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
           {/* Rows */}
           {filteredHistory.length === 0 ? (
             <div className="text-center py-10">
-              <p className="text-[#6D4C41] font-medium">No loyalty transactions yet.</p>
-              <p className="text-xs text-[#6D4C41]/80 mt-2">
+              <p className="text-muted-foreground font-medium">No loyalty transactions yet.</p>
+              <p className="text-xs text-muted-foreground/80 mt-2">
                 Earn points by completing orders, or redeem points in the cart.
               </p>
             </div>
@@ -1089,25 +1087,25 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
                     ? 'bg-purple-50 text-purple-700 border-purple-200'
                     : 'bg-gray-50 text-gray-600 border-gray-200';
 
-                const pointsClass = isEarn ? 'text-green-700' : 'text-[#3E2723]';
+                const pointsClass = isEarn ? 'text-green-700' : 'text-foreground';
                 const pointsSign = isEarn ? '+' : '-';
 
                 return (
                   <div
                     key={tx.id}
-                    className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-2xl border border-[#E8DED0] bg-[#FAF7F2]/40"
+                    className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-2xl border border-border bg-background/40"
                   >
                     <div className="min-w-0">
-                      <p className="text-sm font-bold text-[#3E2723] truncate">{tx.description}</p>
+                      <p className="text-sm font-bold text-foreground truncate">{tx.description}</p>
                       <div className="flex flex-wrap items-center gap-2 mt-1">
-                        <span className="text-xs text-[#6D4C41]">
+                        <span className="text-xs text-muted-foreground">
                           {new Date(tx.date).toLocaleDateString('en-IN', { dateStyle: 'medium' })}
                         </span>
                         {tx.orderId && (
-                          <span className="text-xs text-[#6D4C41]">• Order #{tx.orderId}</span>
+                          <span className="text-xs text-muted-foreground">• Order #{tx.orderId}</span>
                         )}
                         {tx.expiryDate && (
-                          <span className="text-xs text-[#6D4C41]">
+                          <span className="text-xs text-muted-foreground">
                             • Expires {new Date(tx.expiryDate).toLocaleDateString('en-IN', { dateStyle: 'medium' })}
                           </span>
                         )}
@@ -1126,31 +1124,31 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
         </div>
 
         {/* Enhanced How to Earn Points */}
-        <div className="bg-white rounded-3xl border-2 border-[#E8DED0] shadow-lg p-8">
+        <div className="bg-white rounded-3xl border-2 border-border shadow-lg p-8">
           <div className="text-center mb-8">
             <h2 
-              className="text-lg font-semibold text-[#3E2723] mb-2" 
+              className="text-lg font-semibold text-foreground mb-2" 
              
             >
               How to Earn Points
             </h2>
-            <p className="text-[#6D4C41]">Multiple ways to earn and maximize your rewards</p>
+            <p className="text-muted-foreground">Multiple ways to earn and maximize your rewards</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Order Food - Dynamic based on admin config */}
-            <div className="text-center p-6 bg-gradient-to-br from-[#8B5A2B]/5 to-[#C8A47A]/5 rounded-2xl border border-[#E8DED0]">
-              <div className="w-16 h-16 bg-gradient-to-br from-[#8B5A2B] to-[#C8A47A] rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <div className="text-center p-6 bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl border border-border">
+              <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <ShoppingCart className="w-8 h-8 text-white" />
               </div>
-              <p className="font-bold text-[#3E2723] mb-2 text-lg">
+              <p className="font-bold text-foreground mb-2 text-lg">
                 Order Food
               </p>
-              <p className="text-sm text-[#6D4C41] font-medium mb-2">
+              <p className="text-sm text-muted-foreground font-medium mb-2">
                 Earn <strong>{Math.floor(loyaltyAdmin.pointsPerRupee * 10)} point{Math.floor(loyaltyAdmin.pointsPerRupee * 10) !== 1 ? 's' : ''}</strong> for every <strong>₹10</strong> spent
               </p>
               {remoteLoyaltyConfig.maxPointsPerOrder && (
-                <p className="text-xs text-[#8B5A2B] bg-[#8B5A2B]/10 px-3 py-1 rounded-full inline-block">
+                <p className="text-xs text-primary bg-primary/10 px-3 py-1 rounded-full inline-block">
                   Max {remoteLoyaltyConfig.maxPointsPerOrder} pts/order
                 </p>
               )}
@@ -1161,10 +1159,10 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
               <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <MessageSquare className="w-8 h-8 text-white" />
               </div>
-              <p className="font-bold text-[#3E2723] mb-2 text-lg">
+              <p className="font-bold text-foreground mb-2 text-lg">
                 Submit Feedback
               </p>
-              <p className="text-sm text-[#6D4C41] font-medium">
+              <p className="text-sm text-muted-foreground font-medium">
                 Earn <strong>+{loyaltyAdmin.feedbackBonusPoints} bonus points</strong> after submitting feedback
               </p>
             </div>
@@ -1174,17 +1172,17 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
               <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Crown className="w-8 h-8 text-white" />
               </div>
-              <p className="font-bold text-[#3E2723] mb-2 text-lg">
+              <p className="font-bold text-foreground mb-2 text-lg">
                 Membership Bonus
               </p>
               {loyaltyAdmin.membershipBonusEnabled ? (
                 <>
                   {user.membership && user.membership.plan !== 'none' ? (
-                    <p className="text-sm text-[#6D4C41] font-medium">
+                    <p className="text-sm text-muted-foreground font-medium">
                       Your <strong className="capitalize">{user.membership.plan}</strong> membership gives <strong>+{user.membership.pointsBoost}% extra points</strong>
                     </p>
                   ) : (
-                    <p className="text-sm text-[#6D4C41] font-medium">
+                    <p className="text-sm text-muted-foreground font-medium">
                       Upgrade membership to earn <strong>bonus points</strong> on every order
                     </p>
                   )}
@@ -1204,8 +1202,8 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
                 <Info className="w-5 h-5 text-white" />
               </div>
               <div>
-                <p className="font-bold text-[#3E2723] mb-2">About Points</p>
-                <ul className="text-sm text-[#6D4C41] space-y-1">
+                <p className="font-bold text-foreground mb-2">About Points</p>
+                <ul className="text-sm text-muted-foreground space-y-1">
                   <li>• Minimum {remoteLoyaltyConfig.minRedeemablePoints} points required to redeem rewards</li>
                   <li>• {loyaltyAdmin.pointsToDiscountRatio} points = ₹1 discount</li>
                   {remoteLoyaltyConfig.expiryMonths ? (
@@ -1220,16 +1218,16 @@ export default function OffersLoyalty({ user, onUpdateUser }: OffersLoyaltyProps
         </div>
 
         {/* Info Note */}
-        <div className="bg-gradient-to-r from-[#8B5A2B]/10 to-[#C8A47A]/10 border-2 border-[#C8A47A]/30 rounded-2xl p-6 mt-8">
+        <div className="bg-gradient-to-r from-primary/10 to-accent/10 border-2 border-[#C8A47A]/30 rounded-2xl p-6 mt-8">
           <div className="flex items-start gap-4">
-            <div className="w-10 h-10 bg-[#8B5A2B] rounded-xl flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
               <Gift className="w-5 h-5 text-white" />
             </div>
             <div>
-              <p className="font-bold text-[#3E2723] mb-2 text-lg">
+              <p className="font-bold text-foreground mb-2 text-lg">
                 Automatic Offers Applied
               </p>
-              <p className="text-sm text-[#6D4C41] leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 All available offers and discounts are automatically applied during checkout based on admin-defined rules. 
                 Keep earning points with every order to unlock more exclusive rewards! Your points never expire.
               </p>

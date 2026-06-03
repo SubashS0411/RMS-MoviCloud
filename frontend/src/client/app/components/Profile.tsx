@@ -71,7 +71,7 @@ export default function Profile({ user, onUpdateUser, onLogout, orders = [], onR
           </div>
           <button
             onClick={onLogout}
-            className="inline-flex items-center justify-center gap-2 bg-[#8B5A2B] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#6D4C41] transition-colors"
+            className="inline-flex items-center justify-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#6D4C41] transition-colors"
           >
             <LogOut className="w-4 h-4" />
             Logout
@@ -277,38 +277,37 @@ export default function Profile({ user, onUpdateUser, onLogout, orders = [], onR
                   )}
                 </div>
               </div>
-
-              {/* Loyalty Points Card */}
-              <div className="bg-gradient-to-br from-primary to-accent text-white rounded-xl shadow-sm p-6 h-full">
+              {/* Right Column: Loyalty & Membership */}
+              <div className="flex flex-col gap-5 lg:gap-6">
+                {/* Loyalty Points Card */}
+              <div className="bg-[#F5F0E8] text-foreground rounded-xl shadow-sm p-6 h-full border border-border">
                 <div className="flex items-center gap-2 mb-4">
-                  <Award className="w-6 h-6" />
+                  <Award className="w-6 h-6 text-primary" />
                   <h2 className="!text-xl !font-semibold text-foreground">Loyalty Points</h2>
                 </div>
                 <div className="mb-6">
-                  <p className="text-5xl font-bold">{currentPoints}</p>
-                  <p className="text-white/80 text-sm mt-2">Points Available</p>
+                  <p className="text-5xl font-bold text-primary">{currentPoints}</p>
+                  <p className="text-muted-foreground text-sm mt-2">Points Available</p>
                   <div className="mt-4 space-y-1">
-                    <p className="text-sm text-white/90">
-                      <span className="font-semibold">Tier:</span> {tier}
+                    <p className="text-sm text-muted-foreground">
+                      <span className="font-semibold text-foreground">Tier:</span> {tier}
                     </p>
                     {loyalty.config.autoExpiryEnabled && loyalty.expiringSoonPoints > 0 && (
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-muted-foreground/80">
                         {loyalty.expiringSoonPoints} points expiring within 30 days
                       </p>
                     )}
                   </div>
                 </div>
-                <div className="border-t border-white/20 pt-4">
-                  <p className="text-sm text-white/80">
+                <div className="border-t border-border pt-4">
+                  <p className="text-sm text-muted-foreground">
                     Earn points with every order and redeem them for exclusive rewards!
                   </p>
                 </div>
-              </div>
-            </div>
+                </div>
 
-            {/* Membership Status Card */}
-            <div className="mt-6">
-              {user.membership && user.membership.plan !== 'none' ? (
+                {/* Membership Status Card */}
+                {user.membership && user.membership.plan !== 'none' ? (
                 <div className="loyalty-card membership-gradient p-6">
                   {/* Decorative elements */}
                   <div className="loyalty-card-decor-1"></div>
@@ -317,7 +316,7 @@ export default function Profile({ user, onUpdateUser, onLogout, orders = [], onR
                   <div className="relative z-10">
                     <div className="flex items-center justify-between mb-6">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-gradient-to-br from-[#C8A47A] to-[#8B5A2B] rounded-xl flex items-center justify-center border-2 border-white/20">
+                        <div className="w-12 h-12 bg-gradient-to-br from-[#C8A47A] to-primary rounded-xl flex items-center justify-center border-2 border-white/20">
                           <Crown className="w-6 h-6 text-white" />
                         </div>
                         <div>
@@ -384,8 +383,8 @@ export default function Profile({ user, onUpdateUser, onLogout, orders = [], onR
                   </button>
                 </div>
               )}
+              </div>
             </div>
-
           </>
         )}
 

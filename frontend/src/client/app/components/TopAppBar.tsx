@@ -33,7 +33,7 @@ export default function TopAppBar({
 
   return (
     <div ref={containerRef} className="relative z-30 max-w-7xl mx-auto">
-      <div className="bg-white/95 border border-[#E8DED0] rounded-xl shadow-sm px-3 py-2">
+      <div className="bg-white/95 border border-border rounded-xl shadow-sm px-3 py-2">
         <div className="flex items-center justify-between gap-2 sm:gap-3">
           {/* Left: Logo + Title */}
           <div className="flex items-center gap-2 min-w-0 shrink-0">
@@ -41,11 +41,11 @@ export default function TopAppBar({
               <img
                 src={sysConfig.logoUrl || '/favicon.png'}
                 alt="Logo"
-                className="w-8 h-8 rounded-md object-cover border border-[#E8DED0] bg-[#FAF1E6]"
+                className="w-8 h-8 rounded-md object-cover border border-border bg-[#FAF1E6]"
                 onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/favicon.png'; }}
               />
             )}
-            <span className="text-sm sm:text-base font-semibold text-[#3E2723] truncate">
+            <span className="text-sm sm:text-base font-semibold text-foreground truncate">
               {title || sysConfig.restaurantName || 'Urban Bites'}
             </span>
           </div>

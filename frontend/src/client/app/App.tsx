@@ -334,6 +334,7 @@ export default function App() {
     if (location.pathname !== target) {
       navigate(target);
     }
+    window.scrollTo(0, 0);
   };
 
   const handleLogin = (user: User) => {
@@ -479,6 +480,7 @@ export default function App() {
             user={appState.user || undefined}
             onUpdateQuantity={updateCartItem}
             onRemoveItem={removeFromCart}
+            onNavigate={(page: string) => handleModuleChange(page as Module)}
             onCheckout={(order) => {
               updateAppState({
                 currentOrder: order,
@@ -549,7 +551,7 @@ export default function App() {
         user={appState.user}
         showModuleNav={activeModule !== 'login'}
       />
-      <main className={appState.isLoggedIn && activeModule !== 'login' ? 'pt-[124px]' : 'pt-[68px]'}>
+      <main className={`flex-1 flex flex-col w-full relative ${appState.isLoggedIn && activeModule !== 'login' ? 'pt-[124px] sm:pt-[136px]' : 'pt-[64px] sm:pt-[80px]'}`}>
         {renderActiveModule()}
       </main>
     </div>

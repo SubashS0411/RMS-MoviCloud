@@ -39,7 +39,7 @@ async def run_automatic_backup():
     """Execute automatic backup - stores actual data for restore"""
     from .db import get_db
     
-    print(f"[Scheduler] 🔄 Starting automatic backup at {datetime.now()}")
+    print(f"[Scheduler] Starting automatic backup at {datetime.now()}")
     
     try:
         db = get_db()
@@ -116,7 +116,7 @@ async def run_automatic_backup():
         }
         
         result = await backups_coll.insert_one(backup_doc)
-        print(f"[Scheduler] ✅ Automatic backup created: {result.inserted_id} ({total_docs} documents, {size_str})")
+        print(f"[Scheduler] Automatic backup created: {result.inserted_id} ({total_docs} documents, {size_str})")
         
         # Clean up old backups based on retention period.
         # createdAt is stored as an ISO-8601 string, so compare as string too.
@@ -128,10 +128,10 @@ async def run_automatic_backup():
             'type': 'automatic'  # Only delete automatic backups
         })
         if delete_result.deleted_count > 0:
-            print(f"[Scheduler] 🗑️  Cleaned up {delete_result.deleted_count} old backups")
+            print(f"[Scheduler] Cleaned up {delete_result.deleted_count} old backups")
             
     except Exception as e:
-        print(f"[Scheduler] ❌ Backup failed: {e}")
+        print(f"[Scheduler] Backup failed: {e}")
         import traceback
         traceback.print_exc()
         # Log failed backup
@@ -231,13 +231,11 @@ async def update_backup_schedule():
         job = scheduler.get_job(backup_job_id)
         next_run = job.next_run_time if job else "unknown"
         
-        print(f"[Scheduler] 📅 Backup scheduled: {frequency} at {hour:02d}:{minute:02d}")
-        print(f"[Scheduler] 📅 Next backup: {next_run}")
+        print(f"[Scheduler] Backup scheduled: {frequency} at {hour:02d}:{minute:02d}")
+        print(f"[Scheduler] Next backup: {next_run}")
         
     except Exception as e:
         print(f"[Scheduler] Error updating schedule: {e}")
-        import traceback
-        traceback.print_exc()
 
 
 def init_scheduler():
@@ -246,7 +244,7 @@ def init_scheduler():
     
     scheduler = AsyncIOScheduler(timezone=LOCAL_TZ)
     scheduler.start()
-    print(f"[Scheduler] ✅ Scheduler initialized (timezone: {LOCAL_TZ})")
+    print(f"[Scheduler] Scheduler initialized (timezone: {LOCAL_TZ})")
 
 
 async def start_scheduler():

@@ -539,35 +539,36 @@ useEffect(() => {
   if (loading) return <LoadingMenu />;
 
   return (
-    <div className="min-h-screen bg-[#f8f6f3] flex justify-center p-4 sm:p-5">
+    <div className="min-h-screen bg-background flex justify-center p-4 sm:p-5">
       <div className="w-full max-w-[1200px] mx-auto">
 
         {/* Top Action Buttons */}
         <div className="flex justify-end gap-3 flex-wrap mb-3">
             <Button 
               onClick={() => { setEditingItem(null); setSelectedAddons([]); setIngredientRows([]); setDialogOpen(true); }}
-              className="h-11 px-6 bg-[#8B5A2B] hover:bg-[#6D421E] text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200"
+              className="h-11 px-6 shadow-md hover:shadow-lg transition-all duration-200"
             >
               <Plus className="mr-2 h-4 w-4" /> Add Item
             </Button>
             <Button 
+              variant="outline"
               onClick={() => { setEditingCombo(null); setSelectedComboItems([]); setComboDropdownOpen(false); setComboItemSearchQuery(""); setComboDialogOpen(true); }}
-              className="h-11 px-6 bg-white hover:bg-gray-50 text-[#8B5A2B] border-2 border-[#8B5A2B] rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200"
+              className="h-11 px-6 border-2 border-primary text-primary shadow-md hover:shadow-lg transition-all duration-200"
             >
               <Plus className="mr-2 h-4 w-4" /> Add Combo
             </Button>
           </div>
 
         {/* Search + Filters */}
-        <Card className="bg-white rounded-xl shadow-sm border border-[#ece5dc] overflow-hidden mb-4">
+        <Card className="shadow-sm border-border overflow-hidden mb-4">
           <div className="p-4 sm:p-5 space-y-4">
             
             {/* Search Bar */}
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input 
                 placeholder="Search menu items..." 
-                className="pl-12 h-14 text-base rounded-xl border-gray-300 bg-white focus:ring-2 focus:ring-[#8B5A2B] focus:border-[#8B5A2B] shadow-sm"
+                className="pl-12 h-14 text-base rounded-xl border-border focus:ring-2 focus:ring-primary shadow-sm"
                
                 value={searchQuery} 
                 onChange={(e) => setSearchQuery(e.target.value)} 
@@ -576,8 +577,8 @@ useEffect(() => {
 
             {/* Browse Cuisines Section */}
             <div>
-              <div className="flex items-center gap-2 text-[#6B6B6B] mb-4 text-sm">
-                <Pizza className="h-5 w-5 text-[#8B5A2B]" />
+              <div className="flex items-center gap-2 text-muted-foreground mb-4 text-sm">
+                <Pizza className="h-5 w-5 text-primary" />
                 <span className="font-semibold">Browse Cuisines</span>
               </div>
               
@@ -590,8 +591,8 @@ useEffect(() => {
                     className={cn(
                       "px-5 h-10 rounded-full text-sm font-medium transition-all duration-200 shadow-sm",
                       activeCuisine === cuisine.id
-                        ? "bg-[#2A1A05] text-white"
-                        : "bg-white text-[#6B6B6B] border border-gray-300 hover:bg-gray-50"
+                        ? "bg-foreground text-background"
+                        : "bg-background text-muted-foreground border border-border hover:bg-muted"
                     )}
                    
                   >
@@ -603,8 +604,8 @@ useEffect(() => {
 
             {/* Select Categories Section */}
             <div>
-              <div className="flex items-center gap-2 text-[#6B6B6B] mb-4 text-sm">
-                <ChevronRight className="h-5 w-5 text-[#8B5A2B]" />
+              <div className="flex items-center gap-2 text-muted-foreground mb-4 text-sm">
+                <ChevronRight className="h-5 w-5 text-primary" />
                 <span className="font-semibold">Select Categories</span>
               </div>
               
@@ -617,8 +618,8 @@ useEffect(() => {
                     className={cn(
                       "px-6 h-10 rounded-full font-medium text-sm transition-all duration-200 shadow-sm",
                       activeCategory === cat.id
-                        ? "bg-[#8B5A2B] text-white"
-                        : "bg-white text-[#6B6B6B] border border-gray-300 hover:border-[#8B5A2B]"
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-background text-muted-foreground border border-border hover:border-primary"
                     )}
                    
                   >
@@ -634,8 +635,8 @@ useEffect(() => {
                   className={cn(
                     "px-5 h-10 rounded-full text-sm font-medium transition-all duration-200 shadow-sm",
                     activeDiet === "all"
-                      ? "bg-[#2A1A05] text-white"
-                      : "bg-white text-[#6B6B6B] border border-gray-300 hover:bg-gray-50"
+                      ? "bg-foreground text-background"
+                      : "bg-background text-muted-foreground border border-border hover:bg-muted"
                   )}
                  
                 >
@@ -646,8 +647,8 @@ useEffect(() => {
                   className={cn(
                     "px-5 h-10 rounded-full text-sm font-medium transition-all duration-200 shadow-sm",
                     activeDiet === "veg"
-                      ? "bg-[#2A1A05] text-white"
-                      : "bg-white text-[#6B6B6B] border border-gray-300 hover:bg-gray-50"
+                      ? "bg-foreground text-background"
+                      : "bg-background text-muted-foreground border border-border hover:bg-muted"
                   )}
                  
                 >
@@ -658,8 +659,8 @@ useEffect(() => {
                   className={cn(
                     "px-5 h-10 rounded-full text-sm font-medium transition-all duration-200 shadow-sm",
                     activeDiet === "non-veg"
-                      ? "bg-[#2A1A05] text-white"
-                      : "bg-white text-[#6B6B6B] border border-gray-300 hover:bg-gray-50"
+                      ? "bg-foreground text-background"
+                      : "bg-background text-muted-foreground border border-border hover:bg-muted"
                   )}
                  
                 >
@@ -670,8 +671,8 @@ useEffect(() => {
                   className={cn(
                     "px-5 h-10 rounded-full text-sm font-medium transition-all duration-200 shadow-sm",
                     filterByOffer
-                      ? "bg-[#2A1A05] text-white"
-                      : "bg-white text-[#6B6B6B] border border-gray-300 hover:bg-gray-50"
+                      ? "bg-foreground text-background"
+                      : "bg-background text-muted-foreground border border-border hover:bg-muted"
                   )}
                  
                 >
@@ -682,8 +683,8 @@ useEffect(() => {
                   className={cn(
                     "px-5 h-10 rounded-full text-sm font-medium transition-all duration-200 shadow-sm",
                     filterByChefSpecial
-                      ? "bg-[#2A1A05] text-white"
-                      : "bg-white text-[#6B6B6B] border border-gray-300 hover:bg-gray-50"
+                      ? "bg-foreground text-background"
+                      : "bg-background text-muted-foreground border border-border hover:bg-muted"
                   )}
                  
                 >

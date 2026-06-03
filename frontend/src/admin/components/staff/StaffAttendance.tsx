@@ -514,7 +514,7 @@ export function StaffAttendance({ globalSearch = '' }: StaffAttendanceProps) {
       </div>
 
       {/* Currently Online Users */}
-      <Card className="border-none shadow-sm bg-white rounded-2xl">
+      <Card>
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
@@ -564,7 +564,7 @@ export function StaffAttendance({ globalSearch = '' }: StaffAttendanceProps) {
       </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="border-none shadow-sm bg-white">
+        <Card>
           <CardContent className="p-6">
             <div className="flex justify-between items-start mb-4">
               <div>
@@ -592,7 +592,7 @@ export function StaffAttendance({ globalSearch = '' }: StaffAttendanceProps) {
           </CardContent>
         </Card>
 
-        <Card className="border-none shadow-sm bg-white">
+        <Card>
           <CardContent className="p-6">
             <div className="flex justify-between items-start">
               <div>
@@ -609,7 +609,7 @@ export function StaffAttendance({ globalSearch = '' }: StaffAttendanceProps) {
           </CardContent>
         </Card>
 
-        <Card className="border-none shadow-sm bg-white">
+        <Card>
           <CardContent className="p-6">
             <div className="flex justify-between items-start">
               <div>
@@ -627,7 +627,7 @@ export function StaffAttendance({ globalSearch = '' }: StaffAttendanceProps) {
         </Card>
       </div>
 
-      <Card className="border-none shadow-sm overflow-hidden bg-white rounded-2xl">
+      <Card className="overflow-hidden">
         <CardContent className="p-0">
           <div className="p-4 border-b border-gray-100 flex flex-col md:flex-row items-center gap-4">
             <div className="flex items-center gap-2 w-full md:w-auto">

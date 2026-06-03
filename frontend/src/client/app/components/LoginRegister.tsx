@@ -97,7 +97,7 @@ export default function LoginRegister({ onLogin }: LoginRegisterProps) {
 
       {/* Login/Register Box */}
       <div className="relative z-10 max-w-lg w-full">
-        <div className="bg-white/95 backdrop-blur-sm rounded-xl border border-[#E8DED0] shadow-xl p-5 sm:p-6">
+        <div className="bg-white/95 backdrop-blur-sm rounded-xl border border-border shadow-xl p-5 sm:p-6">
           {/* Header */}
           <div className="text-center mb-5">
             <h2 className="text-2xl sm:text-3xl font-semibold mb-2 text-primary">

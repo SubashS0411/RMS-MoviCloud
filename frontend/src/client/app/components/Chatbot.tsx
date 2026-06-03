@@ -644,7 +644,7 @@ export default function Chatbot({ onNavigateToMenu, onAddToCart, isLoggedIn, onN
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 overflow-hidden border-4 border-[#8B5A2B]"
+          className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 overflow-hidden border-4 border-primary"
         >
           <img 
             src={chatbotIcon} 
@@ -656,9 +656,9 @@ export default function Chatbot({ onNavigateToMenu, onAddToCart, isLoggedIn, onN
 
       {/* Chatbot Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-96 h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col border-2 border-[#8B5A2B]">
+        <div className="fixed bottom-6 right-6 z-50 w-96 h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col border-2 border-primary">
           {/* Header */}
-          <div className="bg-gradient-to-r from-[#8B5A2B] to-[#6B4423] text-white p-4 rounded-t-2xl flex items-center justify-between">
+          <div className="bg-gradient-to-r from-primary to-[#6B4423] text-white p-4 rounded-t-2xl flex items-center justify-between">
             <div className="flex items-center gap-3">
               <img 
                 src={chatbotIcon} 
@@ -679,12 +679,12 @@ export default function Chatbot({ onNavigateToMenu, onAddToCart, isLoggedIn, onN
           </div>
 
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#FAF7F2]">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-background">
             {messages.map((message) => (
               <div key={message.id}>
                 {message.type === 'user' ? (
                   <div className="flex justify-end">
-                    <div className="bg-[#8B5A2B] text-white px-4 py-2 rounded-2xl rounded-tr-none max-w-[80%]">
+                    <div className="bg-primary text-white px-4 py-2 rounded-2xl rounded-tr-none max-w-[80%]">
                       {message.text}
                     </div>
                   </div>
@@ -692,7 +692,7 @@ export default function Chatbot({ onNavigateToMenu, onAddToCart, isLoggedIn, onN
                   <div className="flex justify-start">
                     <div className="space-y-2 max-w-[85%]">
                       {message.text && (
-                        <div className="bg-white px-4 py-3 rounded-2xl rounded-tl-none shadow-sm border border-[#8B5A2B]/20 whitespace-pre-line">
+                        <div className="bg-white px-4 py-3 rounded-2xl rounded-tl-none shadow-sm border border-primary/20 whitespace-pre-line">
                           {message.text}
                         </div>
                       )}
@@ -758,7 +758,7 @@ export default function Chatbot({ onNavigateToMenu, onAddToCart, isLoggedIn, onN
                                   handleButtonClick(button.action, button.data);
                                 }
                               }}
-                              className="bg-white hover:bg-[#8B5A2B] hover:text-white border border-[#8B5A2B] text-[#8B5A2B] px-4 py-2 rounded-full text-sm font-medium transition-colors shadow-sm"
+                              className="bg-white hover:bg-primary hover:text-white border border-primary text-primary px-4 py-2 rounded-full text-sm font-medium transition-colors shadow-sm"
                             >
                               {button.label}
                             </button>
@@ -774,7 +774,7 @@ export default function Chatbot({ onNavigateToMenu, onAddToCart, isLoggedIn, onN
           </div>
 
           {/* Footer */}
-          <div className="p-3 bg-white border-t border-[#8B5A2B]/20 rounded-b-2xl">
+          <div className="p-3 bg-white border-t border-primary/20 rounded-b-2xl">
             <div className="text-xs text-center text-gray-500">
               Powered by Suvai AI • All suggestions from our menu
             </div>

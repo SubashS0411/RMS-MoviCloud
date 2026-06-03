@@ -88,7 +88,7 @@ export function StaffOverview() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="border-none shadow-sm bg-white">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Total Staff</CardTitle>
             <Badge variant="outline" className="bg-green-50 text-green-700 border-green-100">+2%</Badge>
@@ -103,7 +103,7 @@ export function StaffOverview() {
             )}
           </CardContent>
         </Card>
-        <Card className="border-none shadow-sm bg-white">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Active Staff</CardTitle>
             <Badge variant="outline" className="bg-green-50 text-green-700 border-green-100">+5%</Badge>
@@ -118,7 +118,7 @@ export function StaffOverview() {
             )}
           </CardContent>
         </Card>
-        <Card className="border-none shadow-sm bg-white">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground uppercase tracking-wider">On Duty Today</CardTitle>
             <Badge variant="outline" className="bg-red-50 text-red-700 border-red-100">-1%</Badge>
@@ -133,7 +133,7 @@ export function StaffOverview() {
             )}
           </CardContent>
         </Card>
-        <Card className="border-none shadow-sm bg-white">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Attendance Rate</CardTitle>
             <Badge variant="outline" className="bg-green-50 text-green-700 border-green-100">+0.4%</Badge>
@@ -151,7 +151,7 @@ export function StaffOverview() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2 border-none shadow-sm bg-white">
+        <Card className="lg:col-span-2">
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-lg font-semibold text-[#2D2D2D]">Weekly Attendance Trends</CardTitle>

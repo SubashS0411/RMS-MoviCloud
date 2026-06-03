@@ -10,11 +10,11 @@ const ROLE_PERMISSIONS_STORAGE_KEY = 'rms_role_permissions';
 // Default role permissions - used only as a temporary fallback while the
 // backend-configured permissions are being fetched.
 const DEFAULT_ROLE_PERMISSIONS: Record<UserRole, string[]> = {
-  admin: ['dashboard', 'menu', 'orders', 'kitchen', 'tables', 'inventory', 'staff', 'billing', 'offers', 'reports', 'notifications', 'settings'],
-  manager: ['dashboard', 'menu', 'orders', 'kitchen', 'tables', 'inventory', 'staff', 'billing', 'offers', 'reports', 'notifications'],
+  admin: ['dashboard', 'menu', 'orders', 'tables', 'inventory', 'staff', 'billing', 'offers', 'reports', 'notifications', 'settings'],
+  manager: ['dashboard', 'menu', 'orders', 'tables', 'inventory', 'staff', 'billing', 'offers', 'reports', 'notifications'],
   waiter: ['orders', 'tables', 'menu', 'notifications'],
   cashier: ['orders', 'billing', 'tables', 'notifications'],
-  chef: ['kitchen', 'orders', 'notifications'],
+  chef: ['orders', 'notifications'],
 };
 
 // Get role permissions from localStorage (cached copy of backend data) or use defaults

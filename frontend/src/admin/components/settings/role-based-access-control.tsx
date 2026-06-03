@@ -21,7 +21,6 @@ interface Role {
     dashboard: boolean;
     menu: boolean;
     orders: boolean;
-    kitchen: boolean;
     tables: boolean;
     inventory: boolean;
     staff: boolean;
@@ -38,7 +37,6 @@ const moduleNames: Record<string, string> = {
   dashboard: 'Dashboard',
   menu: 'Menu Management',
   orders: 'Order Management',
-  kitchen: 'Kitchen Display',
   tables: 'Table Management',
   inventory: 'Inventory Management',
   staff: 'Staff Management',

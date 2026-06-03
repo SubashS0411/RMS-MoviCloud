@@ -46,149 +46,196 @@ def to_object_id(id_str: str):
         return id_str
 
 
-@router.on_event('startup')
-async def startup_db():
-    init_db()
+def get_safe_db():
+    """Get database instance with proper error handling for user settings"""
+    try:
+        db = get_db()
+        if db is None:
+            raise HTTPException(status_code=503, detail='Database connection failed')
+        return db
+    except RuntimeError as e:
+        raise HTTPException(status_code=503, detail=f'Database unavailable: {str(e)}')
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Database error: {str(e)}')
+
+
+def format_last_login(raw_last_login):
+    """Format last login timestamp for user response"""
+    if isinstance(raw_last_login, datetime):
+        return raw_last_login.isoformat() + 'Z'
+    elif raw_last_login:
+        return str(raw_last_login)
+    return 'Never'
 
 
 # ============ GENERAL SETTINGS ============
 @router.get('/', tags=['settings'])
 async def list_settings(category: Optional[str] = None):
     """List all settings with optional category filter"""
-    db = get_db()
-    coll = db.get_collection('settings')
-    filt = {}
-    if category:
-        filt['category'] = category
-    docs = await coll.find(filt).to_list(1000)
-    return serialize_doc(docs)
+    try:
+        db = get_safe_db()
+        coll = db.get_collection('settings')
+        filt = {}
+        if category:
+            filt['category'] = category
+        docs = await coll.find(filt).to_list(1000)
+        return serialize_doc(docs)
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Failed to list settings: {str(e)}')
 
 
 @router.get('/key/{key}', tags=['settings'])
 async def get_setting(key: str):
     """Get a specific setting by key"""
-    db = get_db()
-    coll = db.get_collection('settings')
-    doc = await coll.find_one({'key': key})
-    if not doc:
-        raise HTTPException(status_code=404, detail='Not found')
-    return serialize_doc(doc)
+    try:
+        db = get_safe_db()
+        coll = db.get_collection('settings')
+        doc = await coll.find_one({'key': key})
+        if not doc:
+            raise HTTPException(status_code=404, detail='Not found')
+        return serialize_doc(doc)
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Failed to get setting: {str(e)}')
 
 
 @router.post('/', tags=['settings'])
 async def upsert_setting(s: SettingIn, request: Request):
     """Create or update a setting"""
-    db = get_db()
-    coll = db.get_collection('settings')
-    result = await coll.update_one(
-        {'key': s.key},
-        {
-            '$set': {
-                'value': s.value,
-                'description': s.description,
-                'category': s.category,
-                'updatedBy': request.headers.get('x-user-name'),
-                'updatedAt': datetime.utcnow().isoformat()
+    try:
+        db = get_safe_db()
+        coll = db.get_collection('settings')
+        result = await coll.update_one(
+            {'key': s.key},
+            {
+                '$set': {
+                    'value': s.value,
+                    'description': s.description,
+                    'category': s.category,
+                    'updatedBy': request.headers.get('x-user-name'),
+                    'updatedAt': datetime.utcnow().isoformat()
+                },
+                '$setOnInsert': {
+                    'createdAt': datetime.utcnow().isoformat()
+                }
             },
-            '$setOnInsert': {
-                'createdAt': datetime.utcnow().isoformat()
-            }
-        },
-        upsert=True
-    )
-    await log_audit(
-        action='update_setting',
-        resource='setting',
-        resourceId=s.key,
-        userId=request.headers.get('x-user-id'),
-        userName=request.headers.get('x-user-name'),
-        details={'key': s.key, 'category': s.category},
-        ip=request.client.host if request.client else None
-    )
-    doc = await coll.find_one({'key': s.key})
-    return serialize_doc(doc)
+            upsert=True
+        )
+        await log_audit(
+            action='update_setting',
+            resource='setting',
+            resourceId=s.key,
+            userId=request.headers.get('x-user-id'),
+            userName=request.headers.get('x-user-name'),
+            details={'key': s.key, 'category': s.category},
+            ip=request.client.host if request.client else None
+        )
+        doc = await coll.find_one({'key': s.key})
+        return serialize_doc(doc)
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Failed to upsert setting: {str(e)}')
 
 
 @router.delete('/key/{key}', tags=['settings'])
 async def delete_setting(key: str, request: Request):
     """Delete a setting by key"""
-    db = get_db()
-    coll = db.get_collection('settings')
-    res = await coll.delete_one({'key': key})
-    if res.deleted_count == 0:
-        raise HTTPException(status_code=404, detail='Not found')
-    
-    await log_audit(
-        action='delete_setting',
-        resource='setting',
-        resourceId=key,
-        userId=request.headers.get('x-user-id'),
-        userName=request.headers.get('x-user-name'),
-        ip=request.client.host if request.client else None
-    )
-    return {'success': True}
+    try:
+        db = get_safe_db()
+        coll = db.get_collection('settings')
+        res = await coll.delete_one({'key': key})
+        if res.deleted_count == 0:
+            raise HTTPException(status_code=404, detail='Not found')
+        
+        await log_audit(
+            action='delete_setting',
+            resource='setting',
+            resourceId=key,
+            userId=request.headers.get('x-user-id'),
+            userName=request.headers.get('x-user-name'),
+            ip=request.client.host if request.client else None
+        )
+        return {'success': True}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Failed to delete setting: {str(e)}')
 
 
 # ============ SYSTEM CONFIGURATION ============
 @router.get('/system-config', tags=['system-config'])
 async def get_system_config():
     """Get all system configuration settings"""
-    db = get_db()
-    coll = db.get_collection('system_config')
-    doc = await coll.find_one({'_id': 'main_config'})
-    if not doc:
-        # Return default configuration
-        return {
-            '_id': 'main_config',
-            'restaurantName': 'Restaurant Management System',
-            'address': '',
-            'city': '',
-            'state': '',
-            'pincode': '',
-            'contactNumber': '',
-            'email': '',
-            'website': '',
-            'operatingHours': '',
-            'currency': 'INR',
-            'timezone': 'Asia/Kolkata',
-            'language': 'English',
-            'dateFormat': 'DD/MM/YYYY',
-            'timeFormat': '12-hour',
-            'logoUrl': '/favicon.png'
-        }
-    return serialize_doc(doc)
+    try:
+        db = get_safe_db()
+        coll = db.get_collection('system_config')
+        doc = await coll.find_one({'_id': 'main_config'})
+        if not doc:
+            # Return default configuration
+            return {
+                '_id': 'main_config',
+                'restaurantName': 'Restaurant Management System',
+                'address': '',
+                'city': '',
+                'state': '',
+                'pincode': '',
+                'contactNumber': '',
+                'email': '',
+                'website': '',
+                'operatingHours': '',
+                'currency': 'INR',
+                'timezone': 'Asia/Kolkata',
+                'language': 'English',
+                'dateFormat': 'DD/MM/YYYY',
+                'timeFormat': '12-hour',
+                'logoUrl': '/favicon.png'
+            }
+        return serialize_doc(doc)
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Failed to get system config: {str(e)}')
 
 
 @router.post('/system-config', tags=['system-config'])
 async def update_system_config(config: SystemConfigIn, request: Request):
     """Update system configuration"""
-    db = get_db()
-    coll = db.get_collection('system_config')
-    
-    update_data = config.model_dump(exclude_unset=True)
-    update_data['updatedAt'] = datetime.utcnow().isoformat()
-    update_data['updatedBy'] = request.headers.get('x-user-name')
-    
-    await coll.update_one(
-        {'_id': 'main_config'},
-        {
-            '$set': update_data,
-            '$setOnInsert': {'createdAt': datetime.utcnow().isoformat()}
-        },
-        upsert=True
-    )
-    
-    await log_audit(
-        action='update_system_config',
-        resource='system_config',
-        resourceId='main_config',
-        userId=request.headers.get('x-user-id'),
-        userName=request.headers.get('x-user-name'),
-        details={'updated_fields': list(update_data.keys())},
-        ip=request.client.host if request.client else None
-    )
-    
-    return serialize_doc(await coll.find_one({'_id': 'main_config'}))
+    try:
+        db = get_safe_db()
+        coll = db.get_collection('system_config')
+        
+        update_data = config.model_dump(exclude_unset=True)
+        update_data['updatedAt'] = datetime.utcnow().isoformat()
+        update_data['updatedBy'] = request.headers.get('x-user-name')
+        
+        await coll.update_one(
+            {'_id': 'main_config'},
+            {
+                '$set': update_data,
+                '$setOnInsert': {'createdAt': datetime.utcnow().isoformat()}
+            },
+            upsert=True
+        )
+        
+        await log_audit(
+            action='update_system_config',
+            resource='system_config',
+            resourceId='main_config',
+            userId=request.headers.get('x-user-id'),
+            userName=request.headers.get('x-user-name'),
+            details={'updated_fields': list(update_data.keys())},
+            ip=request.client.host if request.client else None
+        )
+        
+        return serialize_doc(await coll.find_one({'_id': 'main_config'}))
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Failed to update system config: {str(e)}')
 
 
 # ============ ROLES & PERMISSIONS ============
@@ -874,55 +921,65 @@ async def get_gdrive_status():
 @router.get('/tax-config', tags=['tax'])
 async def get_tax_config():
     """Get tax and service charge configuration"""
-    db = get_db()
-    coll = db.get_collection('tax_config')
-    doc = await coll.find_one({'_id': 'main_tax_config'})
-    if not doc:
-        # Return default tax configuration
-        return {
-            '_id': 'main_tax_config',
-            'gstEnabled': True,
-            'gstRate': 5.0,
-            'cgstRate': 2.5,
-            'sgstRate': 2.5,
-            'serviceChargeEnabled': True,
-            'serviceChargeRate': 10.0,
-            'packagingChargeEnabled': True,
-            'packagingChargeRate': 20.0
-        }
-    return serialize_doc(doc)
+    try:
+        db = get_safe_db()
+        coll = db.get_collection('tax_config')
+        doc = await coll.find_one({'_id': 'main_tax_config'})
+        if not doc:
+            # Return default tax configuration
+            return {
+                '_id': 'main_tax_config',
+                'gstEnabled': True,
+                'gstRate': 5.0,
+                'cgstRate': 2.5,
+                'sgstRate': 2.5,
+                'serviceChargeEnabled': True,
+                'serviceChargeRate': 10.0,
+                'packagingChargeEnabled': True,
+                'packagingChargeRate': 20.0
+            }
+        return serialize_doc(doc)
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Failed to get tax config: {str(e)}')
 
 
 @router.post('/tax-config', tags=['tax'])
 async def update_tax_config(config: TaxConfigIn, request: Request):
     """Update tax and service charge configuration"""
-    db = get_db()
-    coll = db.get_collection('tax_config')
-    
-    update_data = config.model_dump()
-    update_data['updatedAt'] = datetime.utcnow().isoformat()
-    update_data['updatedBy'] = request.headers.get('x-user-name')
-    
-    await coll.update_one(
-        {'_id': 'main_tax_config'},
-        {
-            '$set': update_data,
-            '$setOnInsert': {'createdAt': datetime.utcnow().isoformat()}
-        },
-        upsert=True
-    )
-    
-    await log_audit(
-        action='update_tax_config',
-        resource='tax_config',
-        resourceId='main_tax_config',
-        userId=request.headers.get('x-user-id'),
-        userName=request.headers.get('x-user-name'),
-        details={'updated_fields': list(update_data.keys())},
-        ip=request.client.host if request.client else None
-    )
-    
-    return serialize_doc(await coll.find_one({'_id': 'main_tax_config'}))
+    try:
+        db = get_safe_db()
+        coll = db.get_collection('tax_config')
+        
+        update_data = config.model_dump()
+        update_data['updatedAt'] = datetime.utcnow().isoformat()
+        update_data['updatedBy'] = request.headers.get('x-user-name')
+        
+        await coll.update_one(
+            {'_id': 'main_tax_config'},
+            {
+                '$set': update_data,
+                '$setOnInsert': {'createdAt': datetime.utcnow().isoformat()}
+            },
+            upsert=True
+        )
+        
+        await log_audit(
+            action='update_tax_config',
+            resource='tax_config',
+            resourceId='main_tax_config',
+            userId=request.headers.get('x-user-id'),
+            userName=request.headers.get('x-user-name'),
+            details={'updated_fields': list(update_data.keys())},
+            ip=request.client.host if request.client else None
+        )
+        
+        return serialize_doc(await coll.find_one({'_id': 'main_tax_config'}))
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Failed to update tax config: {str(e)}')
 
 
 # ============ DISCOUNT RULES ============
@@ -1109,214 +1166,221 @@ async def toggle_discount_rule(discount_id: str, request: Request):
 @router.get('/users', tags=['users'])
 async def list_users():
     """List all user accounts (from staff collection)"""
-    db = get_db()
-    coll = db.get_collection('staff')
-    docs = await coll.find().to_list(100)
-    
-    # Map staff to user format
-    users = []
-    for doc in docs:
-        # last_login (snake_case) is written by the login endpoint;
-        # lastLogin (camelCase) is the legacy field used by create_user.
-        raw_last_login = doc.get('last_login') or doc.get('lastLogin')
-        if isinstance(raw_last_login, datetime):
-            last_login_str = raw_last_login.isoformat() + 'Z'
-        elif raw_last_login:
-            last_login_str = str(raw_last_login)
-        else:
-            last_login_str = 'Never'
-        users.append({
-            '_id': str(doc.get('_id')),
-            'name': doc.get('name'),
-            'email': doc.get('email'),
-            'role': doc.get('role', 'Staff'),
-            'status': 'active' if doc.get('active', True) else 'inactive',
-            'lastLogin': last_login_str,
-            'createdAt': doc.get('createdAt')
-        })
-    
-    return users
+    try:
+        db = get_safe_db()
+        coll = db.get_collection('staff')
+        docs = await coll.find().to_list(100)
+        
+        # Map staff to user format
+        users = []
+        for doc in docs:
+            # last_login (snake_case) is written by the login endpoint;
+            # lastLogin (camelCase) is the legacy field used by create_user.
+            raw_last_login = doc.get('last_login') or doc.get('lastLogin')
+            users.append({
+                '_id': str(doc.get('_id')),
+                'name': doc.get('name'),
+                'email': doc.get('email'),
+                'role': doc.get('role', 'Staff'),
+                'status': 'active' if doc.get('active', True) else 'inactive',
+                'lastLogin': format_last_login(raw_last_login),
+                'createdAt': doc.get('createdAt')
+            })
+        
+        return users
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Failed to list users: {str(e)}')
 
 
 @router.post('/users', tags=['users'])
 async def create_user(user: UserAccountIn, request: Request):
     """Create a new user account"""
-    db = get_db()
-    coll = db.get_collection('staff')
-    
-    # Check if email already exists
-    existing = await coll.find_one({'email': user.email})
-    if existing:
-        raise HTTPException(status_code=409, detail='Email already exists')
+    try:
+        db = get_safe_db()
+        coll = db.get_collection('staff')
+        
+        # Check if email already exists
+        existing = await coll.find_one({'email': user.email})
+        if existing:
+            raise HTTPException(status_code=409, detail='Email already exists')
 
-    # Enforce only one admin account
-    if user.role and user.role.lower() == 'admin':
-        admin_exists = await coll.find_one({'role': 'admin'})
-        if admin_exists:
-            raise HTTPException(status_code=400, detail='An admin account already exists. Only one admin is allowed.')
+        # Enforce only one admin account
+        if user.role and user.role.lower() == 'admin':
+            admin_exists = await coll.find_one({'role': 'admin'})
+            if admin_exists:
+                raise HTTPException(status_code=400, detail='An admin account already exists. Only one admin is allowed.')
 
-    # Validate role
-    allowed_roles = {'admin', 'manager', 'chef', 'waiter', 'cashier'}
-    if user.role and user.role.lower() not in allowed_roles:
-        raise HTTPException(status_code=400, detail=f'Invalid role. Allowed roles: {", ".join(sorted(allowed_roles))}')
-    
-    doc = {
-        'name': user.name,
-        'email': user.email,
-        'role': user.role,
-        'password_hash': hash_password(user.password),
-        'active': True,
-        'lastLogin': 'Never',
-        'createdAt': datetime.utcnow().isoformat()
-    }
-    
-    res = await coll.insert_one(doc)
-    
-    await log_audit(
-        action='create_user',
-        resource='user',
-        resourceId=str(res.inserted_id),
-        userId=request.headers.get('x-user-id'),
-        userName=request.headers.get('x-user-name'),
-        details={'name': user.name, 'email': user.email, 'role': user.role},
-        ip=request.client.host if request.client else None
-    )
-    
-    created = await coll.find_one({'_id': res.inserted_id})
-    return {
-        '_id': str(created.get('_id')),
-        'name': created.get('name'),
-        'email': created.get('email'),
-        'role': created.get('role'),
-        'status': 'active',
-        'lastLogin': 'Never',
-        'createdAt': created.get('createdAt')
-    }
+        # Validate role
+        allowed_roles = {'admin', 'manager', 'chef', 'waiter', 'cashier'}
+        if user.role and user.role.lower() not in allowed_roles:
+            raise HTTPException(status_code=400, detail=f'Invalid role. Allowed roles: {", ".join(sorted(allowed_roles))}')
+        
+        doc = {
+            'name': user.name,
+            'email': user.email,
+            'role': user.role,
+            'password_hash': hash_password(user.password),
+            'active': True,
+            'lastLogin': 'Never',
+            'createdAt': datetime.utcnow().isoformat()
+        }
+        
+        res = await coll.insert_one(doc)
+        
+        await log_audit(
+            action='create_user',
+            resource='user',
+            resourceId=str(res.inserted_id),
+            userId=request.headers.get('x-user-id'),
+            userName=request.headers.get('x-user-name'),
+            details={'name': user.name, 'email': user.email, 'role': user.role},
+            ip=request.client.host if request.client else None
+        )
+        
+        created = await coll.find_one({'_id': res.inserted_id})
+        return {
+            '_id': str(created.get('_id')),
+            'name': created.get('name'),
+            'email': created.get('email'),
+            'role': created.get('role'),
+            'status': 'active',
+            'lastLogin': 'Never',
+            'createdAt': created.get('createdAt')
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Failed to create user: {str(e)}')
 
 
 @router.put('/users/{user_id}', tags=['users'])
 async def update_user(user_id: str, user: UserAccountUpdate, request: Request):
     """Update a user account"""
-    db = get_db()
-    coll = db.get_collection('staff')
-    
-    existing = await coll.find_one({'_id': to_object_id(user_id)})
-    if not existing:
-        raise HTTPException(status_code=404, detail='User not found')
-    
-    update_data = {}
-    if user.name is not None:
-        update_data['name'] = user.name
-    if user.email is not None:
-        update_data['email'] = user.email
-    if user.role is not None:
-        update_data['role'] = user.role
-    if user.status is not None:
-        update_data['active'] = user.status == 'active'
-    if user.password is not None:
-        update_data['password_hash'] = hash_password(user.password)
-    
-    update_data['updatedAt'] = datetime.utcnow().isoformat()
-    
-    await coll.update_one({'_id': to_object_id(user_id)}, {'$set': update_data})
-    
-    await log_audit(
-        action='update_user',
-        resource='user',
-        resourceId=user_id,
-        userId=request.headers.get('x-user-id'),
-        userName=request.headers.get('x-user-name'),
-        details={'updated_fields': list(update_data.keys())},
-        ip=request.client.host if request.client else None
-    )
-    
-    updated = await coll.find_one({'_id': to_object_id(user_id)})
-    raw_ll = updated.get('last_login') or updated.get('lastLogin')
-    if isinstance(raw_ll, datetime):
-        ll_str = raw_ll.isoformat() + 'Z'
-    elif raw_ll:
-        ll_str = str(raw_ll)
-    else:
-        ll_str = 'Never'
-    return {
-        '_id': str(updated.get('_id')),
-        'name': updated.get('name'),
-        'email': updated.get('email'),
-        'role': updated.get('role'),
-        'status': 'active' if updated.get('active', True) else 'inactive',
-        'lastLogin': ll_str,
-        'createdAt': updated.get('createdAt')
-    }
+    try:
+        db = get_safe_db()
+        coll = db.get_collection('staff')
+        
+        existing = await coll.find_one({'_id': to_object_id(user_id)})
+        if not existing:
+            raise HTTPException(status_code=404, detail='User not found')
+        
+        update_data = {}
+        if user.name is not None:
+            update_data['name'] = user.name
+        if user.email is not None:
+            update_data['email'] = user.email
+        if user.role is not None:
+            update_data['role'] = user.role
+        if user.status is not None:
+            update_data['active'] = user.status == 'active'
+        if user.password is not None:
+            update_data['password_hash'] = hash_password(user.password)
+        
+        update_data['updatedAt'] = datetime.utcnow().isoformat()
+        
+        await coll.update_one({'_id': to_object_id(user_id)}, {'$set': update_data})
+        
+        await log_audit(
+            action='update_user',
+            resource='user',
+            resourceId=user_id,
+            userId=request.headers.get('x-user-id'),
+            userName=request.headers.get('x-user-name'),
+            details={'updated_fields': list(update_data.keys())},
+            ip=request.client.host if request.client else None
+        )
+        
+        updated = await coll.find_one({'_id': to_object_id(user_id)})
+        raw_ll = updated.get('last_login') or updated.get('lastLogin')
+        return {
+            '_id': str(updated.get('_id')),
+            'name': updated.get('name'),
+            'email': updated.get('email'),
+            'role': updated.get('role'),
+            'status': 'active' if updated.get('active', True) else 'inactive',
+            'lastLogin': format_last_login(raw_ll),
+            'createdAt': updated.get('createdAt')
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Failed to update user: {str(e)}')
 
 
 @router.delete('/users/{user_id}', tags=['users'])
 async def delete_user(user_id: str, request: Request):
     """Delete a user account"""
-    db = get_db()
-    coll = db.get_collection('staff')
-    
-    # Check if trying to delete admin
-    existing = await coll.find_one({'_id': to_object_id(user_id)})
-    if existing and existing.get('role', '').lower() == 'admin':
-        raise HTTPException(status_code=400, detail='Cannot delete admin user')
-    
-    res = await coll.delete_one({'_id': to_object_id(user_id)})
-    if res.deleted_count == 0:
-        raise HTTPException(status_code=404, detail='User not found')
-    
-    await log_audit(
-        action='delete_user',
-        resource='user',
-        resourceId=user_id,
-        userId=request.headers.get('x-user-id'),
-        userName=request.headers.get('x-user-name'),
-        ip=request.client.host if request.client else None
-    )
-    
-    return {'success': True}
+    try:
+        db = get_safe_db()
+        coll = db.get_collection('staff')
+        
+        # Check if trying to delete admin
+        existing = await coll.find_one({'_id': to_object_id(user_id)})
+        if existing and existing.get('role', '').lower() == 'admin':
+            raise HTTPException(status_code=400, detail='Cannot delete admin user')
+        
+        res = await coll.delete_one({'_id': to_object_id(user_id)})
+        if res.deleted_count == 0:
+            raise HTTPException(status_code=404, detail='User not found')
+        
+        await log_audit(
+            action='delete_user',
+            resource='user',
+            resourceId=user_id,
+            userId=request.headers.get('x-user-id'),
+            userName=request.headers.get('x-user-name'),
+            ip=request.client.host if request.client else None
+        )
+        
+        return {'success': True}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Failed to delete user: {str(e)}')
 
 
 @router.post('/users/{user_id}/toggle-status', tags=['users'])
 async def toggle_user_status(user_id: str, request: Request):
     """Toggle a user's active status"""
-    db = get_db()
-    coll = db.get_collection('staff')
-    
-    existing = await coll.find_one({'_id': to_object_id(user_id)})
-    if not existing:
-        raise HTTPException(status_code=404, detail='User not found')
-    
-    new_status = not existing.get('active', True)
-    
-    await coll.update_one(
-        {'_id': to_object_id(user_id)},
-        {'$set': {'active': new_status, 'updatedAt': datetime.utcnow().isoformat()}}
-    )
-    
-    await log_audit(
-        action='toggle_user_status',
-        resource='user',
-        resourceId=user_id,
-        userId=request.headers.get('x-user-id'),
-        userName=request.headers.get('x-user-name'),
-        details={'active': new_status},
-        ip=request.client.host if request.client else None
-    )
-    
-    updated = await coll.find_one({'_id': to_object_id(user_id)})
-    raw_ll3 = updated.get('last_login') or updated.get('lastLogin')
-    if isinstance(raw_ll3, datetime):
-        ll_str3 = raw_ll3.isoformat() + 'Z'
-    elif raw_ll3:
-        ll_str3 = str(raw_ll3)
-    else:
-        ll_str3 = 'Never'
-    return {
-        '_id': str(updated.get('_id')),
-        'name': updated.get('name'),
-        'email': updated.get('email'),
-        'role': updated.get('role'),
-        'status': 'active' if updated.get('active', True) else 'inactive',
-        'lastLogin': ll_str3,
-        'createdAt': updated.get('createdAt')
-    }
+    try:
+        db = get_safe_db()
+        coll = db.get_collection('staff')
+        
+        existing = await coll.find_one({'_id': to_object_id(user_id)})
+        if not existing:
+            raise HTTPException(status_code=404, detail='User not found')
+        
+        new_status = not existing.get('active', True)
+        
+        await coll.update_one(
+            {'_id': to_object_id(user_id)},
+            {'$set': {'active': new_status, 'updatedAt': datetime.utcnow().isoformat()}}
+        )
+        
+        await log_audit(
+            action='toggle_user_status',
+            resource='user',
+            resourceId=user_id,
+            userId=request.headers.get('x-user-id'),
+            userName=request.headers.get('x-user-name'),
+            details={'active': new_status},
+            ip=request.client.host if request.client else None
+        )
+        
+        updated = await coll.find_one({'_id': to_object_id(user_id)})
+        raw_ll = updated.get('last_login') or updated.get('lastLogin')
+        return {
+            '_id': str(updated.get('_id')),
+            'name': updated.get('name'),
+            'email': updated.get('email'),
+            'role': updated.get('role'),
+            'status': 'active' if updated.get('active', True) else 'inactive',
+            'lastLogin': format_last_login(raw_ll),
+            'createdAt': updated.get('createdAt')
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Failed to toggle user status: {str(e)}')

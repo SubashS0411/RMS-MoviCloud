@@ -36,11 +36,6 @@ def to_object_id(id_str: str):
         return id_str
 
 
-@router.on_event('startup')
-async def startup_db():
-    init_db()
-
-
 @router.get('/', tags=['audit'])
 async def list_audit(
     action: str = None,

@@ -166,7 +166,7 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2]">
+    <div className="min-h-screen bg-background">
       {/* SECTION 1 — HERO HEADER */}
       <section className="relative w-full min-h-[80vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
@@ -177,20 +177,19 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
           />
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
-        <div className="relative z-10 max-w-4xl mx-auto text-center px-6">
-          <h1 
-            className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 text-white" 
-           
-          >
-            A Menu Crafted for True Food Lovers
-          </h1>
-          <p className="text-xl md:text-2xl text-white/90 font-light mb-4">
-            Where every dish tells a story of flavor, passion, and authenticity.
-          </p>
-          <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto italic font-light">
-            “From carefully selected ingredients to thoughtfully prepared meals, 
-            our menu is designed to offer an unforgettable dining experience.”
-          </p>
+        <div className="relative z-10 max-w-4xl mx-auto text-center px-4 sm:px-6 w-full">
+          <div className="bg-white/80 backdrop-blur-md border border-white/50 p-6 sm:p-12 rounded-3xl shadow-2xl mx-auto flex flex-col items-center">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 text-[#2D1B10] leading-tight">
+              A Menu Crafted for True Food Lovers
+            </h1>
+            <p className="text-xl md:text-2xl text-[#5C3A21] font-medium mb-4">
+              Where every dish tells a story of flavor, passion, and authenticity.
+            </p>
+            <p className="text-lg md:text-xl text-[#5C3A21]/80 max-w-2xl mx-auto italic font-medium">
+              “From carefully selected ingredients to thoughtfully prepared meals, 
+              our menu is designed to offer an unforgettable dining experience.”
+            </p>
+          </div>
         </div>
       </section>
 
@@ -204,15 +203,15 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
             className="w-full h-full object-cover"
           />
           {/* Subtle gradient overlay to blend with the theme and ensure readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#3E2723]/90 via-[#3E2723]/70 to-transparent"></div>
+          <div className="absolute inset-0 bg-white/85 backdrop-blur-sm"></div>
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto text-left md:text-center md:mx-auto">
-          <div className="inline-block mb-6 p-1 bg-[#C8A47A] rounded-full px-4">
-             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#3E2723]">Culinary Philosophy</span>
+          <div className="inline-block mb-6 p-1 bg-primary/10 rounded-full px-4 border border-primary/20">
+             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Culinary Philosophy</span>
           </div>
           <h2 
-            className="text-2xl sm:text-4xl md:text-5xl italic text-white mb-4 sm:mb-6 leading-tight drop-shadow-lg" 
+            className="text-2xl sm:text-4xl md:text-5xl italic text-foreground mb-4 sm:mb-6 leading-tight drop-shadow-sm" 
            
           >
             “People who love to eat are always the best people.”
@@ -234,7 +233,7 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
       <section className="relative py-6 sm:py-10 px-3 sm:px-6 min-h-screen overflow-hidden">
         {/* IMPROVED BACKGROUND VISIBILITY */}
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute inset-0 bg-[#FAF7F2]"></div>
+          <div className="absolute inset-0 bg-background"></div>
           
           <div className="absolute inset-0 opacity-15 saturate-[1.2]">
             <ImageWithFallback
@@ -262,18 +261,18 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
               onFilterCuisineChange={setFilterCuisine}
               centerSlot={
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8B5A2B]/60" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/60" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search for your favorite dish..."
-                    className="w-full pl-9 pr-9 py-2 border border-[#E8DED0] bg-white rounded-lg focus:outline-none focus:border-[#8B5A2B] focus:ring-2 focus:ring-[#8B5A2B]/10 transition-all text-sm"
+                    className="w-full pl-9 pr-9 py-2 border border-border bg-white rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-sm"
                   />
                   {searchQuery && (
                     <button
                       onClick={() => setSearchQuery('')}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8B5A2B]/60 hover:text-[#8B5A2B]"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-primary/60 hover:text-primary"
                     >
                       <X className="w-4 h-4" />
                     </button>
@@ -287,7 +286,7 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
                   className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border font-semibold text-[10px] sm:text-xs transition-all whitespace-nowrap ${
                     cart.length > 0
                       ? 'bg-[#3E2723] text-white border-[#3E2723] hover:bg-[#5D4037]'
-                      : 'bg-[#FAF7F2] text-[#8B5A2B]/50 border-[#E8DED0] cursor-not-allowed'
+                      : 'bg-background text-primary/50 border-border cursor-not-allowed'
                   }`}
                 >
                   <ShoppingBag className="w-3.5 h-3.5" />
@@ -306,7 +305,7 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
                 key={item.id}
                 className="group relative bg-[#2D1B10] rounded-2xl overflow-hidden border border-[#C8A47A]/30 shadow-xl hover:shadow-[#C8A47A]/20 transition-all duration-300 flex flex-col min-h-[420px] hover:-translate-y-1"
               >
-                <div className="absolute inset-0 bg-gradient-to-b from-[#3E2723] to-[#2D1B10] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-foreground to-[#2D1B10] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
                 <div className="relative h-52 bg-[#1A110D] overflow-hidden">
                   <MenuItemImage
@@ -444,7 +443,7 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
                         <button
                           onClick={() => setSelectedItem(item)}
                           disabled={!item.available}
-                          className="flex-1 min-w-0 px-2 py-1.5 bg-gradient-to-r from-[#8B5A2B] to-[#C8A47A] text-[#FAF7F2] rounded-xl hover:shadow-[0_10px_20px_-10px_rgba(200,164,122,0.5)] transition-all duration-300 disabled:opacity-30 text-[10px] font-bold uppercase tracking-wide active:scale-95 truncate"
+                          className="flex-1 min-w-0 px-2 py-1.5 bg-gradient-to-r from-primary to-accent text-[#FAF7F2] rounded-xl hover:shadow-[0_10px_20px_-10px_rgba(200,164,122,0.5)] transition-all duration-300 disabled:opacity-30 text-[10px] font-bold uppercase tracking-wide active:scale-95 truncate"
                         >
                           Customize
                         </button>
@@ -464,11 +463,11 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
               </div>
 
               {filteredItems.length === 0 && (
-                <div className="text-center py-20 bg-white/10 backdrop-blur-md rounded-[28px] border-2 border-dashed border-[#E8DED0] mt-10 relative overflow-hidden group">
+                <div className="text-center py-20 bg-white/10 backdrop-blur-md rounded-[28px] border-2 border-dashed border-border mt-10 relative overflow-hidden group">
                   <div className="relative z-10 flex flex-col items-center">
-                    <Search className="w-10 h-10 text-[#8B5A2B] mb-8" />
-                    <h3 className="text-4xl font-bold text-[#3E2723] mb-4">A Quiet Kitchen</h3>
-                    <p className="text-[#6D4C41] text-xl font-light mb-10 max-w-md mx-auto">We couldn't find any dishes matching your selection.</p>
+                    <Search className="w-10 h-10 text-primary mb-8" />
+                    <h3 className="text-4xl font-bold text-foreground mb-4">A Quiet Kitchen</h3>
+                    <p className="text-muted-foreground text-xl font-light mb-10 max-w-md mx-auto">We couldn't find any dishes matching your selection.</p>
                     <button 
                       onClick={() => {
                         setSelectedCategory('All');
@@ -476,7 +475,7 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
                         setFilterCuisine('all');
                         setSearchQuery('');
                       }}
-                      className="px-10 py-4 bg-[#8B5A2B] text-white rounded-full font-black uppercase tracking-widest hover:bg-[#3E2723] transition-all shadow-2xl"
+                      className="px-10 py-4 bg-primary text-white rounded-full font-black uppercase tracking-widest hover:bg-[#3E2723] transition-all shadow-2xl"
                     >
                       View Full Collection
                     </button>
@@ -491,7 +490,7 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
       {/* Customization Modal */}
       {selectedItem && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-lg flex items-end sm:items-center justify-center z-50 p-0 sm:p-4">
-          <div className="bg-[#FAF7F2] rounded-t-[32px] sm:rounded-[40px] max-w-3xl w-full max-h-[92vh] sm:max-h-[90vh] overflow-hidden border border-[#C8A47A]/30 shadow-2xl flex flex-col">
+          <div className="bg-background rounded-t-[32px] sm:rounded-[40px] max-w-3xl w-full max-h-[92vh] sm:max-h-[90vh] overflow-hidden border border-[#C8A47A]/30 shadow-2xl flex flex-col">
             <div className="bg-[#3E2723] px-5 sm:px-10 py-5 sm:py-8 flex items-center justify-between">
               <div>
                 <h2 className="text-2xl sm:text-4xl font-bold text-[#C8A47A]">Tailor Your Taste</h2>
@@ -511,15 +510,15 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
                   <ImageWithFallback src={selectedItem.image} alt={selectedItem.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex flex-col justify-center">
-                  <h3 className="text-2xl sm:text-4xl font-bold text-[#3E2723] mb-2 sm:mb-3">{selectedItem.name}</h3>
-                  <p className="text-[#6D4C41] mb-3 sm:mb-6 leading-relaxed font-light text-base sm:text-lg italic">"{selectedItem.description}"</p>
-                  <p className="text-3xl sm:text-5xl font-black text-[#3E2723]">₹{selectedItem.price}</p>
+                  <h3 className="text-2xl sm:text-4xl font-bold text-foreground mb-2 sm:mb-3">{selectedItem.name}</h3>
+                  <p className="text-muted-foreground mb-3 sm:mb-6 leading-relaxed font-light text-base sm:text-lg italic">"{selectedItem.description}"</p>
+                  <p className="text-3xl sm:text-5xl font-black text-foreground">₹{selectedItem.price}</p>
                 </div>
               </div>
 
               {/* Spice Level */}
-              <div className="bg-white/60 p-4 sm:p-8 rounded-[32px] border border-[#E8DED0]">
-                <label className="block text-base sm:text-xl font-bold mb-3 sm:mb-6 text-[#3E2723]">Select Heat Level</label>
+              <div className="bg-white/60 p-4 sm:p-8 rounded-[32px] border border-border">
+                <label className="block text-base sm:text-xl font-bold mb-3 sm:mb-6 text-foreground">Select Heat Level</label>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {['mild', 'medium', 'hot', 'extra-hot'].map((level) => (
                     <button
@@ -528,7 +527,7 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
                       className={`px-4 py-4 rounded-2xl border-2 transition-all capitalize font-black text-xs tracking-widest ${
                         customization.spiceLevel === level
                           ? 'bg-[#3E2723] text-[#C8A47A] border-[#3E2723]'
-                          : 'bg-white text-[#6D4C41] border-[#E8DED0]'
+                          : 'bg-white text-muted-foreground border-border'
                       }`}
                     >
                       {level.replace('-', ' ')}
@@ -539,8 +538,8 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
 
               {/* Add-ons */}
               {addons.length > 0 && (
-              <div className="bg-white/60 p-4 sm:p-8 rounded-[32px] border border-[#E8DED0]">
-                <label className="block text-base sm:text-xl font-bold mb-3 sm:mb-6 text-[#3E2723]">Exquisite Enhancements</label>
+              <div className="bg-white/60 p-4 sm:p-8 rounded-[32px] border border-border">
+                <label className="block text-base sm:text-xl font-bold mb-3 sm:mb-6 text-foreground">Exquisite Enhancements</label>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   {addons.map((addon) => {
                     const isSelected = customization.addons.includes(addon.id);
@@ -558,17 +557,17 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
                         className={`p-3 sm:p-6 rounded-[24px] border-2 text-left transition-all flex items-center justify-between ${
                           isSelected
                             ? 'bg-[#3E2723] text-[#C8A47A] border-[#3E2723]'
-                            : 'bg-white text-[#3E2723] border-[#E8DED0]'
+                            : 'bg-white text-foreground border-border'
                         }`}
                       >
                         <div>
                           <p className="font-black uppercase tracking-widest text-xs mb-1">{addon.name}</p>
-                          <p className={`text-base sm:text-lg font-black ${isSelected ? 'text-[#FAF7F2]' : 'text-[#8B5A2B]'}`}>
+                          <p className={`text-base sm:text-lg font-black ${isSelected ? 'text-[#FAF7F2]' : 'text-primary'}`}>
                             +₹{addon.price}
                           </p>
                         </div>
-                        <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl border-2 flex items-center justify-center ${isSelected ? 'bg-[#C8A47A] border-[#C8A47A]' : 'border-[#E8DED0]'}`}>
-                          {isSelected ? <X className="w-4 h-4 sm:w-5 sm:h-5 text-[#2D1B10]" /> : <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-[#8B5A2B]" />}
+                        <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl border-2 flex items-center justify-center ${isSelected ? 'bg-[#C8A47A] border-[#C8A47A]' : 'border-border'}`}>
+                          {isSelected ? <X className="w-4 h-4 sm:w-5 sm:h-5 text-[#2D1B10]" /> : <Plus className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />}
                         </div>
                       </button>
                     );
@@ -579,35 +578,35 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-10 items-center bg-[#3E2723]/5 p-5 sm:p-10 rounded-[32px]">
                 <div className="flex flex-col items-center md:items-start">
-                  <label className="block text-sm font-black uppercase tracking-widest mb-3 sm:mb-6 text-[#3E2723]">Quantity</label>
-                  <div className="flex items-center gap-5 sm:gap-8 bg-white p-2 sm:p-3 rounded-full border border-[#E8DED0]">
+                  <label className="block text-sm font-black uppercase tracking-widest mb-3 sm:mb-6 text-foreground">Quantity</label>
+                  <div className="flex items-center gap-5 sm:gap-8 bg-white p-2 sm:p-3 rounded-full border border-border">
                     <button
                       onClick={() => setCustomization({ ...customization, quantity: Math.max(1, customization.quantity - 1) })}
-                      className="w-11 h-11 sm:w-14 sm:h-14 bg-[#FAF7F2] text-[#3E2723] rounded-full shadow-lg font-black text-xl sm:text-2xl flex items-center justify-center active:scale-90"
+                      className="w-11 h-11 sm:w-14 sm:h-14 bg-background text-foreground rounded-full shadow-lg font-black text-xl sm:text-2xl flex items-center justify-center active:scale-90"
                     >
                       -
                     </button>
-                    <span className="text-2xl sm:text-3xl font-black w-10 sm:w-12 text-center text-[#3E2723]">
+                    <span className="text-2xl sm:text-3xl font-black w-10 sm:w-12 text-center text-foreground">
                       {customization.quantity}
                     </span>
                     <button
                       onClick={() => setCustomization({ ...customization, quantity: customization.quantity + 1 })}
-                      className="w-11 h-11 sm:w-14 sm:h-14 bg-[#FAF7F2] text-[#3E2723] rounded-full shadow-lg font-black text-xl sm:text-2xl flex items-center justify-center active:scale-90"
+                      className="w-11 h-11 sm:w-14 sm:h-14 bg-background text-foreground rounded-full shadow-lg font-black text-xl sm:text-2xl flex items-center justify-center active:scale-90"
                     >
                       +
                     </button>
                   </div>
                 </div>
 
-                <div className="text-center md:text-right border-l-0 md:border-l-2 border-[#8B5A2B]/20 md:pl-10">
-                  <span className="text-xs text-[#8B5A2B] uppercase tracking-widest font-black block mb-2">Final Total</span>
-                  <p className="text-4xl sm:text-6xl font-black text-[#3E2723]">₹{selectedItem.price * customization.quantity}</p>
+                <div className="text-center md:text-right border-l-0 md:border-l-2 border-primary/20 md:pl-10">
+                  <span className="text-xs text-primary uppercase tracking-widest font-black block mb-2">Final Total</span>
+                  <p className="text-4xl sm:text-6xl font-black text-foreground">₹{selectedItem.price * customization.quantity}</p>
                 </div>
               </div>
 
               <button
                 onClick={handleAddToCart}
-                className="w-full bg-gradient-to-r from-[#3E2723] to-[#8B5A2B] text-white py-5 sm:py-8 rounded-[32px] font-black text-base sm:text-xl uppercase tracking-widest hover:shadow-2xl transition-all"
+                className="w-full bg-gradient-to-r from-foreground to-primary text-white py-5 sm:py-8 rounded-[32px] font-black text-base sm:text-xl uppercase tracking-widest hover:shadow-2xl transition-all"
               >
                 Confirm Selection
               </button>
