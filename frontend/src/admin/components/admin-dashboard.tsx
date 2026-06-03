@@ -89,10 +89,10 @@ export function AdminDashboard() {
   return (
     <div className="app-admin-content py-6 space-y-6">
       {/* Header with Live Indicator */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 sm:p-6 bg-white/70 backdrop-blur-md rounded-2xl border border-white/40 shadow-sm">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-muted-foreground">Restaurant management overview</p>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">Admin Dashboard</h1>
+          <p className="text-slate-700 font-medium mt-1">Restaurant management overview</p>
         </div>
         
         <div className="flex items-center gap-2 px-3 py-1.5 bg-white rounded-lg border shadow-sm self-start">
@@ -100,7 +100,7 @@ export function AdminDashboard() {
           <div className="text-sm">
             <span className="font-medium text-success">Live status</span>
             <span className="mx-2 text-border">|</span>
-            <span className="text-muted-foreground">Updated {lastUpdated.toLocaleTimeString()}</span>
+            <span className="text-slate-600 font-medium">Updated {lastUpdated.toLocaleTimeString()}</span>
           </div>
         </div>
       </div>

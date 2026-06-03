@@ -719,19 +719,19 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
               alt="Restaurant Reservation"
               className="reservation-hero-bg w-full h-full object-cover object-center"
             />
-            {/* Dark Overlay for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
+            {/* Light Overlay for better text readability */}
+            <div className="absolute inset-0 bg-white/85 backdrop-blur-sm"></div>
           </div>
 
           {/* Content - Positioned in the center with animations */}
           <div className="relative z-10 max-w-4xl mx-auto text-center px-6">
             <h1
-              className="reservation-hero-title text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 text-white drop-shadow-2xl"
+              className="reservation-hero-title text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 text-[#3E2723] drop-shadow-2xl"
              
             >
               Table Reservation
             </h1>
-            <p className="reservation-hero-subtitle text-base sm:text-xl md:text-2xl text-white/90 font-light leading-relaxed">
+            <p className="reservation-hero-subtitle text-base sm:text-xl md:text-2xl text-[#6D4C41] font-light leading-relaxed">
               No waiting, No worries - just great dining.<br />
               Reserve your table and enjoy every moment.
             </p>

@@ -177,20 +177,19 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
           />
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
-        <div className="relative z-10 max-w-4xl mx-auto text-center px-6">
-          <h1 
-            className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 text-white" 
-           
-          >
-            A Menu Crafted for True Food Lovers
-          </h1>
-          <p className="text-xl md:text-2xl text-white/90 font-light mb-4">
-            Where every dish tells a story of flavor, passion, and authenticity.
-          </p>
-          <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto italic font-light">
-            “From carefully selected ingredients to thoughtfully prepared meals, 
-            our menu is designed to offer an unforgettable dining experience.”
-          </p>
+        <div className="relative z-10 max-w-4xl mx-auto text-center px-4 sm:px-6 w-full">
+          <div className="bg-white/80 backdrop-blur-md border border-white/50 p-6 sm:p-12 rounded-3xl shadow-2xl mx-auto flex flex-col items-center">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 text-[#2D1B10] leading-tight">
+              A Menu Crafted for True Food Lovers
+            </h1>
+            <p className="text-xl md:text-2xl text-[#5C3A21] font-medium mb-4">
+              Where every dish tells a story of flavor, passion, and authenticity.
+            </p>
+            <p className="text-lg md:text-xl text-[#5C3A21]/80 max-w-2xl mx-auto italic font-medium">
+              “From carefully selected ingredients to thoughtfully prepared meals, 
+              our menu is designed to offer an unforgettable dining experience.”
+            </p>
+          </div>
         </div>
       </section>
 
@@ -204,15 +203,15 @@ export default function Menu({ isLoggedIn, user, cart, onAddToCart, onUpdateQuan
             className="w-full h-full object-cover"
           />
           {/* Subtle gradient overlay to blend with the theme and ensure readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#3E2723]/90 via-[#3E2723]/70 to-transparent"></div>
+          <div className="absolute inset-0 bg-white/85 backdrop-blur-sm"></div>
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto text-left md:text-center md:mx-auto">
-          <div className="inline-block mb-6 p-1 bg-[#C8A47A] rounded-full px-4">
-             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#3E2723]">Culinary Philosophy</span>
+          <div className="inline-block mb-6 p-1 bg-[#8B5A2B]/10 rounded-full px-4 border border-[#8B5A2B]/20">
+             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#8B5A2B]">Culinary Philosophy</span>
           </div>
           <h2 
-            className="text-2xl sm:text-4xl md:text-5xl italic text-white mb-4 sm:mb-6 leading-tight drop-shadow-lg" 
+            className="text-2xl sm:text-4xl md:text-5xl italic text-[#3E2723] mb-4 sm:mb-6 leading-tight drop-shadow-sm" 
            
           >
             “People who love to eat are always the best people.”

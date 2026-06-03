@@ -255,8 +255,8 @@ export function InventoryManagement({ triggerStockManagement }: { triggerStockMa
     };
 
     fetchIngredients();
-    // Auto-refresh every 10 seconds
-    const interval = setInterval(fetchIngredients, 10000);
+    // Auto-refresh every 15 seconds
+    const interval = setInterval(fetchIngredients, 15000);
     return () => clearInterval(interval);
   }, []);
 

@@ -178,9 +178,17 @@ export default function Queue({
 
         // 5-minute notification
         if (newEstimatedWaitMinutes <= 5 && newEstimatedWaitMinutes > 0 && !prev.notifiedAt5Min) {
-          alert(
-            `🔔 Your table will be ready shortly!\n\n${prev.tableName ? `Table: ${prev.tableName}` : ""}\nGuests: ${prev.guests}\n\nPlease head to the restaurant now.`
-          );
+          // Use non-blocking notification instead of alert() to prevent freezing the UI thread
+          setTimeout(() => {
+            window.dispatchEvent(new CustomEvent('new-admin-notification', { 
+              detail: { message: `Your table will be ready shortly! ${prev.tableName ? `Table: ${prev.tableName}` : ""}` }
+            }));
+            
+            // If the environment has a toast available (like from sonner/react-hot-toast), we dispatch an event
+            window.dispatchEvent(new CustomEvent('queue-ready', {
+              detail: { prev }
+            }));
+          }, 0);
           return { ...prev, estimatedWaitMinutes: newEstimatedWaitMinutes, notifiedAt5Min: true };
         }
 
@@ -374,17 +382,17 @@ export default function Queue({
             alt="Fine Dining Restaurant"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#3E2723]/70 via-[#3E2723]/50 to-[#3E2723]/70" />
+          <div className="absolute inset-0 bg-white/85 backdrop-blur-sm" />
         </div>
 
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
           <h1
-            className="text-5xl md:text-7xl mb-6 text-white"
+            className="text-5xl md:text-7xl mb-6 text-[#3E2723]"
            
           >
             "Good food is always worth the wait."
           </h1>
-          <p className="text-xl md:text-2xl text-[#EADBC8] mb-12">
+          <p className="text-xl md:text-2xl text-[#6D4C41] mb-12">
             Relax. Your table will be prepared with care.
           </p>
           {currentUserEntry ? (
@@ -654,9 +662,19 @@ export default function Queue({
                     Successfully Joined the Queue!
                   </h3>
                 </div>
-                <p className="text-green-700">
-                  We'll notify you when your table is almost ready
-                </p>
+                <div className="flex items-center justify-between mt-3 text-sm font-medium">
+                  <span className="text-[#6D4C41]">Current Status</span>
+                  <span className="text-[#8B5A2B] px-3 py-1 bg-[#8B5A2B]/10 rounded-full">
+                    Waiting
+                  </span>
+                </div>
+
+                {currentUserEntry?.notifiedAt5Min && (
+                  <div className="mt-4 p-4 bg-amber-100 border border-amber-300 rounded-xl text-amber-900 font-semibold flex items-center justify-center gap-2 shadow-sm animate-pulse">
+                    <Bell className="w-5 h-5" />
+                    Your table is almost ready! Please head to the restaurant.
+                  </div>
+                )}
               </div>
 
               {/* Main Status Card */}

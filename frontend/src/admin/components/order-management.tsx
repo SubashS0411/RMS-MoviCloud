@@ -353,6 +353,8 @@ const SMART_NOTE_KEYWORDS = {
 export function OrderManagement() {
   const { user } = useAuth();
   const isWaiter = user?.role === 'waiter';
+  const isChef = user?.role === 'chef';
+  const isCashier = user?.role === 'cashier';
   const isAdminOrManager = user?.role === 'admin' || user?.role === 'manager';
 
   const [orders, setOrders] = useState<Order[]>([]);
@@ -422,7 +424,7 @@ export function OrderManagement() {
     fetchOrders();
     fetchMenuItems();
     fetchWaiters();
-    const interval = setInterval(fetchOrders, 10000); // Refresh every 10 seconds
+    const interval = setInterval(fetchOrders, 15000); // Refresh every 15 seconds
     return () => clearInterval(interval);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id, isWaiter]);
@@ -661,6 +663,10 @@ export function OrderManagement() {
   const filteredOrders = orders.filter(order => {
     // Waiters see their own orders AND unassigned client-placed orders (no waiterId)
     if (isWaiter && order.waiterId && order.waiterId !== user?.id) return false;
+    
+    // Chefs only see active kitchen orders
+    if (isChef && !['placed', 'preparing', 'ready'].includes(order.status)) return false;
+    
     if (filterStatus !== 'all' && order.status !== filterStatus) return false;
     if (filterType !== 'all' && order.type !== filterType) return false;
     if (filterTable !== 'all' && order.tableNumber?.toString() !== filterTable) return false;
@@ -744,13 +750,16 @@ export function OrderManagement() {
       {/* Header Section */}
       <div className="flex items-center justify-end">
         {/* Quick Order Button */}
-        <Button onClick={() => setQuickOrderOpen(true)} size="sm" className="h-9 rounded-md gap-2 shadow-sm">
-          <Zap className="h-4 w-4" />
-          Quick Order
-        </Button>
+        {!isChef && !isCashier && (
+          <Button onClick={() => setQuickOrderOpen(true)} size="sm" className="h-9 rounded-md gap-2 shadow-sm">
+            <Zap className="h-4 w-4" />
+            Quick Order
+          </Button>
+        )}
       </div>
 
       {/* Mini Order Insights */}
+      {!isChef && !isCashier && (
       <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
         <Card className="rounded-xl border border-[#ece5dc] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 transition-transform">
           <CardHeader className="p-3 pb-1">
@@ -788,6 +797,7 @@ export function OrderManagement() {
           </CardContent>
         </Card>
       </div>
+      )}
 
       {/* Innovation #8: Kitchen Load Meter */}
       <Card className="rounded-xl border border-[#ece5dc] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.06)]">
@@ -1180,8 +1190,8 @@ export function OrderManagement() {
                       </Button>
                     )}
 
-                    {/* Primary Action — Accept (only when items exist; not for waiters) */}
-                    {!isWaiter && order.status === 'placed' && order.items && order.items.length > 0 && !order.items.every(i => !i.name || i.name === 'Unknown Item') && (
+                    {/* Primary Action — Accept (only when items exist; not for waiters or cashiers) */}
+                    {!isWaiter && !isCashier && order.status === 'placed' && order.items && order.items.length > 0 && !order.items.every(i => !i.name || i.name === 'Unknown Item') && (
                       <Button
                         size="sm"
                         onClick={() => updateOrderStatus(order.id, 'preparing')}
@@ -1191,7 +1201,8 @@ export function OrderManagement() {
                         Accept Order
                       </Button>
                     )}
-                    {order.status === 'preparing' && (
+                    {/* Mark as Ready (not for cashiers) */}
+                    {!isCashier && order.status === 'preparing' && (
                       <Button
                         size="sm"
                         onClick={() => updateOrderStatus(order.id, 'ready')}
@@ -1201,7 +1212,8 @@ export function OrderManagement() {
                         Mark as Ready
                       </Button>
                     )}
-                    {order.status === 'ready' && (
+                    {/* Mark as Served (Waiters, Admins, Managers) */}
+                    {!isChef && !isCashier && order.status === 'ready' && (
                       <Button
                         size="sm"
                         onClick={() => updateOrderStatus(order.id, 'served')}
@@ -1300,7 +1312,8 @@ export function OrderManagement() {
                         </Button>
                       )}
                       
-                      {order.status !== 'completed' && order.status !== 'cancelled' && order.status !== 'served' && (
+                      {/* Cancel Order (Only Admin/Manager) */}
+                      {isAdminOrManager && order.status !== 'completed' && order.status !== 'cancelled' && order.status !== 'served' && (
                         <Button
                           size="sm"
                           variant="outline"

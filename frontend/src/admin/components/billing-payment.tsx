@@ -107,7 +107,7 @@ export function BillingPayment() {
         logoUrl: data.logoUrl || '/favicon.png',
       });
     }).catch(() => {});
-    const interval = setInterval(fetchOrders, 10000); // auto-refresh every 10s
+    const interval = setInterval(fetchOrders, 15000); // auto-refresh every 15s
     return () => clearInterval(interval);
   }, []);
 

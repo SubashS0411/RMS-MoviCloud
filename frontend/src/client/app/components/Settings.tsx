@@ -287,16 +287,16 @@ export default function Settings({ user, notifications: userNotifications, onMar
                   </section>
 
                   <aside className="space-y-4">
-                    <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-gradient-to-br from-[#3E2723] to-[#8B5A2B] p-5 text-white shadow-sm">
+                    <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-[#F5F0E8] p-5 text-[#3E2723] shadow-sm">
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">Loyalty program</p>
-                          <p className="mt-2 text-4xl font-bold">{user.loyaltyPoints}</p>
-                          <p className="mt-1 text-sm text-white/75">Points available</p>
+                          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8B5A2B]">Loyalty program</p>
+                          <p className="mt-2 text-4xl font-bold text-[#8B5A2B]">{user.loyaltyPoints}</p>
+                          <p className="mt-1 text-sm text-[#6D4C41]">Points available</p>
                         </div>
-                        <Sparkles className="h-10 w-10 text-white/60" />
+                        <Sparkles className="h-10 w-10 text-[#8B5A2B]" />
                       </div>
-                      <div className="mt-4 border-t border-white/20 pt-4 text-sm text-white/80">
+                      <div className="mt-4 border-t border-[#E8DED0] pt-4 text-sm text-[#6D4C41]">
                         Earn points with every order and redeem them for exclusive rewards.
                       </div>
                     </section>

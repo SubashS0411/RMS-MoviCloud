@@ -251,6 +251,7 @@ function AppContent() {
   const navigateTab = (value: string) => {
     setActiveTab(value);
     navigate(`/admin/${value}`);
+    window.scrollTo(0, 0);
   };
 
   // Chef skips dashboard cards and lands on the first permitted tab.
@@ -341,10 +342,10 @@ function AppContent() {
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={(v) => hasPermission(v) && navigateTab(v)} className="app-admin-content">
 
-        {/* Desktop top nav � hidden on mobile */}
-        <div className="hidden sm:block sticky top-[68px] z-40">
-          <div className="my-3 app-nav-surface">
-            <TabsList className="w-full justify-start gap-1 flex-wrap h-auto p-2 bg-transparent border-0">
+        {/* Desktop top nav - hidden on mobile */}
+        <div className="hidden sm:block fixed top-16 sm:top-20 left-0 right-0 w-full z-40 bg-background/95 backdrop-blur-sm pb-1 pt-1 border-b shadow-sm">
+          <div className="app-nav-surface w-full max-w-full overflow-hidden">
+            <TabsList className="w-full justify-start gap-2 flex-nowrap overflow-x-auto scrollbar-hide h-auto p-2 bg-transparent border-0">
               {ALL_TABS.map(({ value, icon: Icon, label }) =>
                 hasPermission(value) ? (
                   <TabsTrigger key={value} value={value} className={TAB_CLASS}>
@@ -359,6 +360,7 @@ function AppContent() {
 
         {/* Content */}
         <Suspense fallback={null}>
+        <div className="pt-[64px] sm:pt-[136px]">
         <TabsContent value="dashboard"     className="mt-0 pb-24 sm:pb-6"><AdminDashboard /></TabsContent>
         <TabsContent value="menu"          className="mt-0 pb-24 sm:pb-6"><MenuManagement /></TabsContent>
         <TabsContent value="orders"        className="mt-0 pb-24 sm:pb-6"><OrderManagement /></TabsContent>
@@ -370,6 +372,7 @@ function AppContent() {
         <TabsContent value="reports"       className="mt-0 pb-24 sm:pb-6"><ReportsAnalytics /></TabsContent>
         <TabsContent value="notifications" className="mt-0 pb-24 sm:pb-6"><NotificationManagement /></TabsContent>
         <TabsContent value="settings"      className="mt-0 pb-24 sm:pb-6"><SecuritySettings /></TabsContent>
+        </div>
         </Suspense>
       </Tabs>
 
