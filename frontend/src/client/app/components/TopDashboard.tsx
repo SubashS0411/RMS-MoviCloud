@@ -59,7 +59,7 @@ export default function TopDashboard({
       </button>
       <button
         onClick={() => onModuleChange('login')}
-        className="flex items-center gap-1.5 px-4 py-2 bg-[#8B5A2B] text-white hover:bg-[#6D4C41] rounded-lg transition-all duration-200 text-sm font-medium flex-shrink-0 shadow-sm"
+        className="flex items-center gap-1.5 px-4 py-2 bg-primary text-white hover:bg-[#6D4C41] rounded-lg transition-all duration-200 text-sm font-medium flex-shrink-0 shadow-sm"
       >
         <User className="w-4 h-4" />
         <span>Sign In</span>

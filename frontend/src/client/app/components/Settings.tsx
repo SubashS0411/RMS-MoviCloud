@@ -133,21 +133,21 @@ export default function Settings({ user, notifications: userNotifications, onMar
 
   const sidebarItemClass = (tab: typeof activeTab) => `w-full flex items-center gap-3 rounded-xl px-4 py-3 text-left transition-all border ${
     activeTab === tab
-      ? 'border-[#C8A47A] bg-[#FAF0E4] text-[#3E2723] shadow-sm'
-      : 'border-transparent text-[#6D4C41] hover:border-[#E8D5B5] hover:bg-[#FAF7F2]'
+      ? 'border-[#C8A47A] bg-[#FAF0E4] text-foreground shadow-sm'
+      : 'border-transparent text-muted-foreground hover:border-border hover:bg-background'
   }`;
 
   return (
     <div className="min-h-screen bg-background">
       <div className="mx-auto max-w-[1180px] px-4 py-6 sm:px-6 sm:py-8">
-        <div className="mb-6 flex flex-col gap-4 rounded-[1.5rem] border border-[#E8D5B5] bg-white px-5 py-5 shadow-sm sm:flex-row sm:items-start sm:justify-between">
+        <div className="mb-6 flex flex-col gap-4 rounded-[1.5rem] border border-border bg-white px-5 py-5 shadow-sm sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8B5A2B]">Account control panel</p>
-            <h1 className="settings-title mt-2 text-3xl font-semibold text-[#3E2723]">Settings</h1>
-            <p className="mt-2 max-w-2xl text-sm sm:text-base text-[#6D4C41]">Manage profile details, preferences, notifications, security, and support in one place.</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">Account control panel</p>
+            <h1 className="settings-title mt-2 text-3xl font-semibold text-foreground">Settings</h1>
+            <p className="mt-2 max-w-2xl text-sm sm:text-base text-muted-foreground">Manage profile details, preferences, notifications, security, and support in one place.</p>
           </div>
           <div className="flex items-center gap-3 self-start">
-            <div className="hidden sm:flex items-center gap-2 rounded-full border border-[#E8D5B5] bg-[#FAF7F2] px-3 py-2 text-sm text-[#6D4C41]">
+            <div className="hidden sm:flex items-center gap-2 rounded-full border border-border bg-background px-3 py-2 text-sm text-muted-foreground">
               <Bell className="w-4 h-4" />
               {unreadCount} unread
             </div>
@@ -163,15 +163,15 @@ export default function Settings({ user, notifications: userNotifications, onMar
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
           <aside className="lg:sticky lg:top-6 lg:self-start">
-            <div className="rounded-[1.5rem] border border-[#E8D5B5] bg-white p-3 shadow-sm">
-              <div className="rounded-2xl bg-[#FAF7F2] px-4 py-4 ring-1 ring-[#E8D5B5]">
+            <div className="rounded-[1.5rem] border border-border bg-white p-3 shadow-sm">
+              <div className="rounded-2xl bg-background px-4 py-4 ring-1 ring-border">
                 <div className="flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#3E2723] text-white">
                     <User className="h-5 w-5" />
                   </div>
                   <div className="min-w-0">
-                    <p className="truncate text-base font-semibold text-[#3E2723]">{user.name}</p>
-                    <p className="truncate text-sm text-[#6D4C41]">{user.email}</p>
+                    <p className="truncate text-base font-semibold text-foreground">{user.name}</p>
+                    <p className="truncate text-sm text-muted-foreground">{user.email}</p>
                   </div>
                 </div>
               </div>
@@ -208,12 +208,12 @@ export default function Settings({ user, notifications: userNotifications, onMar
                 </button>
               </nav>
 
-              <div className="mt-4 rounded-2xl border border-[#E8D5B5] bg-[#FAF7F2] px-4 py-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8B5A2B]">Quick stats</p>
-                <div className="mt-3 space-y-2 text-sm text-[#6D4C41]">
-                  <div className="flex items-center justify-between"><span>Loyalty points</span><span className="font-semibold text-[#3E2723]">{user.loyaltyPoints}</span></div>
-                  <div className="flex items-center justify-between"><span>Membership</span><span className="font-semibold text-[#3E2723]">{membershipLabel}</span></div>
-                  <div className="flex items-center justify-between"><span>Last login</span><span className="font-semibold text-[#3E2723]">{lastLogin}</span></div>
+              <div className="mt-4 rounded-2xl border border-border bg-background px-4 py-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Quick stats</p>
+                <div className="mt-3 space-y-2 text-sm text-muted-foreground">
+                  <div className="flex items-center justify-between"><span>Loyalty points</span><span className="font-semibold text-foreground">{user.loyaltyPoints}</span></div>
+                  <div className="flex items-center justify-between"><span>Membership</span><span className="font-semibold text-foreground">{membershipLabel}</span></div>
+                  <div className="flex items-center justify-between"><span>Last login</span><span className="font-semibold text-foreground">{lastLogin}</span></div>
                 </div>
               </div>
             </div>
@@ -223,63 +223,63 @@ export default function Settings({ user, notifications: userNotifications, onMar
             {activeTab === 'account' && (
               <div className="space-y-6">
                 <div className="grid gap-6 xl:grid-cols-[minmax(0,1.6fr)_minmax(300px,0.9fr)]">
-                  <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-white p-5 shadow-sm sm:p-6">
+                  <section className="rounded-[1.5rem] border border-border bg-white p-5 shadow-sm sm:p-6">
                     <div className="flex items-center justify-between gap-4 border-b border-[#F1E4D1] pb-4">
                       <div>
-                        <h2 className="text-xl font-semibold text-[#3E2723]">Account Information</h2>
-                        <p className="mt-1 text-sm text-[#6D4C41]">Keep your profile details up to date.</p>
+                        <h2 className="text-xl font-semibold text-foreground">Account Information</h2>
+                        <p className="mt-1 text-sm text-muted-foreground">Keep your profile details up to date.</p>
                       </div>
                     </div>
 
                     <div className="mt-5 grid gap-4 sm:grid-cols-2">
                       <div className="sm:col-span-2">
-                        <label className="mb-2 block text-sm font-medium text-[#6D4C41]">Full Name</label>
-                        <div className="flex items-center gap-3 rounded-xl border border-[#E8D5B5] bg-[#FAF7F2] px-4 py-3">
-                          <User className="h-4 w-4 text-[#8B5A2B]" />
+                        <label className="mb-2 block text-sm font-medium text-muted-foreground">Full Name</label>
+                        <div className="flex items-center gap-3 rounded-xl border border-border bg-background px-4 py-3">
+                          <User className="h-4 w-4 text-primary" />
                           <input
                             type="text"
                             value={profileForm.name}
                             onChange={(e) => setProfileForm((prev) => ({ ...prev, name: e.target.value }))}
-                            className="w-full bg-transparent text-sm text-[#3E2723] outline-none"
+                            className="w-full bg-transparent text-sm text-foreground outline-none"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="mb-2 block text-sm font-medium text-[#6D4C41]">Email</label>
-                        <div className="flex items-center gap-3 rounded-xl border border-[#E8D5B5] bg-[#FAF7F2] px-4 py-3">
-                          <Mail className="h-4 w-4 text-[#8B5A2B]" />
+                        <label className="mb-2 block text-sm font-medium text-muted-foreground">Email</label>
+                        <div className="flex items-center gap-3 rounded-xl border border-border bg-background px-4 py-3">
+                          <Mail className="h-4 w-4 text-primary" />
                           <input
                             type="email"
                             value={profileForm.email}
                             onChange={(e) => setProfileForm((prev) => ({ ...prev, email: e.target.value }))}
-                            className="w-full bg-transparent text-sm text-[#3E2723] outline-none"
+                            className="w-full bg-transparent text-sm text-foreground outline-none"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="mb-2 block text-sm font-medium text-[#6D4C41]">Phone Number</label>
-                        <div className="flex items-center gap-3 rounded-xl border border-[#E8D5B5] bg-[#FAF7F2] px-4 py-3">
-                          <Phone className="h-4 w-4 text-[#8B5A2B]" />
+                        <label className="mb-2 block text-sm font-medium text-muted-foreground">Phone Number</label>
+                        <div className="flex items-center gap-3 rounded-xl border border-border bg-background px-4 py-3">
+                          <Phone className="h-4 w-4 text-primary" />
                           <input
                             type="tel"
                             value={profileForm.phone}
                             onChange={(e) => setProfileForm((prev) => ({ ...prev, phone: e.target.value }))}
-                            className="w-full bg-transparent text-sm text-[#3E2723] outline-none"
+                            className="w-full bg-transparent text-sm text-foreground outline-none"
                           />
                         </div>
                       </div>
 
                       <div className="sm:col-span-2">
-                        <label className="mb-2 block text-sm font-medium text-[#6D4C41]">Address</label>
-                        <div className="flex items-start gap-3 rounded-xl border border-[#E8D5B5] bg-[#FAF7F2] px-4 py-3">
-                          <MapPin className="mt-0.5 h-4 w-4 text-[#8B5A2B]" />
+                        <label className="mb-2 block text-sm font-medium text-muted-foreground">Address</label>
+                        <div className="flex items-start gap-3 rounded-xl border border-border bg-background px-4 py-3">
+                          <MapPin className="mt-0.5 h-4 w-4 text-primary" />
                           <textarea
                             value={profileForm.address}
                             onChange={(e) => setProfileForm((prev) => ({ ...prev, address: e.target.value }))}
                             rows={3}
-                            className="w-full resize-none bg-transparent text-sm text-[#3E2723] outline-none"
+                            className="w-full resize-none bg-transparent text-sm text-foreground outline-none"
                           />
                         </div>
                       </div>
@@ -287,57 +287,57 @@ export default function Settings({ user, notifications: userNotifications, onMar
                   </section>
 
                   <aside className="space-y-4">
-                    <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-[#F5F0E8] p-5 text-[#3E2723] shadow-sm">
+                    <section className="rounded-[1.5rem] border border-border bg-[#F5F0E8] p-5 text-foreground shadow-sm">
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8B5A2B]">Loyalty program</p>
-                          <p className="mt-2 text-4xl font-bold text-[#8B5A2B]">{user.loyaltyPoints}</p>
-                          <p className="mt-1 text-sm text-[#6D4C41]">Points available</p>
+                          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Loyalty program</p>
+                          <p className="mt-2 text-4xl font-bold text-primary">{user.loyaltyPoints}</p>
+                          <p className="mt-1 text-sm text-muted-foreground">Points available</p>
                         </div>
-                        <Sparkles className="h-10 w-10 text-[#8B5A2B]" />
+                        <Sparkles className="h-10 w-10 text-primary" />
                       </div>
-                      <div className="mt-4 border-t border-[#E8DED0] pt-4 text-sm text-[#6D4C41]">
+                      <div className="mt-4 border-t border-border pt-4 text-sm text-muted-foreground">
                         Earn points with every order and redeem them for exclusive rewards.
                       </div>
                     </section>
 
                     {(sysConfig.contactNumber || sysConfig.email || sysConfig.operatingHours || sysConfig.address) && (
-                      <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-white p-5 shadow-sm">
-                        <h3 className="text-lg font-semibold text-[#3E2723]">Restaurant Information</h3>
+                      <section className="rounded-[1.5rem] border border-border bg-white p-5 shadow-sm">
+                        <h3 className="text-lg font-semibold text-foreground">Restaurant Information</h3>
                         <div className="mt-4 space-y-4">
                           {sysConfig.contactNumber && (
                             <div className="flex items-center gap-3">
-                              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FAF7F2] text-[#8B5A2B]"><Phone className="h-4 w-4" /></div>
-                              <div><p className="text-xs font-medium uppercase tracking-wide text-[#8B5A2B]">Phone</p><p className="font-semibold text-[#3E2723]">{sysConfig.contactNumber}</p></div>
+                              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-background text-primary"><Phone className="h-4 w-4" /></div>
+                              <div><p className="text-xs font-medium uppercase tracking-wide text-primary">Phone</p><p className="font-semibold text-foreground">{sysConfig.contactNumber}</p></div>
                             </div>
                           )}
                           {sysConfig.email && (
                             <div className="flex items-center gap-3">
-                              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FAF7F2] text-[#8B5A2B]"><Mail className="h-4 w-4" /></div>
-                              <div><p className="text-xs font-medium uppercase tracking-wide text-[#8B5A2B]">Email</p><p className="font-semibold text-[#3E2723]">{sysConfig.email}</p></div>
+                              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-background text-primary"><Mail className="h-4 w-4" /></div>
+                              <div><p className="text-xs font-medium uppercase tracking-wide text-primary">Email</p><p className="font-semibold text-foreground">{sysConfig.email}</p></div>
                             </div>
                           )}
                           {sysConfig.operatingHours && (
                             <div className="flex items-center gap-3">
-                              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FAF7F2] text-[#8B5A2B]"><Clock className="h-4 w-4" /></div>
-                              <div><p className="text-xs font-medium uppercase tracking-wide text-[#8B5A2B]">Hours</p><p className="font-semibold text-[#3E2723]">{sysConfig.operatingHours}</p></div>
+                              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-background text-primary"><Clock className="h-4 w-4" /></div>
+                              <div><p className="text-xs font-medium uppercase tracking-wide text-primary">Hours</p><p className="font-semibold text-foreground">{sysConfig.operatingHours}</p></div>
                             </div>
                           )}
                           {sysConfig.address && (
                             <div className="flex items-start gap-3">
-                              <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-xl bg-[#FAF7F2] text-[#8B5A2B]"><MapPin className="h-4 w-4" /></div>
+                              <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-xl bg-background text-primary"><MapPin className="h-4 w-4" /></div>
                               <div>
-                                <p className="text-xs font-medium uppercase tracking-wide text-[#8B5A2B]">Address</p>
-                                <p className="font-semibold leading-relaxed text-[#3E2723]">{sysConfig.address}{(sysConfig.city || sysConfig.state) && <>, {[sysConfig.city, sysConfig.state, sysConfig.pincode].filter(Boolean).join(', ')}</>}</p>
+                                <p className="text-xs font-medium uppercase tracking-wide text-primary">Address</p>
+                                <p className="font-semibold leading-relaxed text-foreground">{sysConfig.address}{(sysConfig.city || sysConfig.state) && <>, {[sysConfig.city, sysConfig.state, sysConfig.pincode].filter(Boolean).join(', ')}</>}</p>
                               </div>
                             </div>
                           )}
                           {sysConfig.website && (
                             <div className="flex items-center gap-3">
-                              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FAF7F2] text-[#8B5A2B]"><Globe className="h-4 w-4" /></div>
+                              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-background text-primary"><Globe className="h-4 w-4" /></div>
                               <div>
-                                <p className="text-xs font-medium uppercase tracking-wide text-[#8B5A2B]">Website</p>
-                                <a href={sysConfig.website} target="_blank" rel="noreferrer" className="font-semibold text-[#3E2723] hover:underline">{sysConfig.website}</a>
+                                <p className="text-xs font-medium uppercase tracking-wide text-primary">Website</p>
+                                <a href={sysConfig.website} target="_blank" rel="noreferrer" className="font-semibold text-foreground hover:underline">{sysConfig.website}</a>
                               </div>
                             </div>
                           )}
@@ -351,22 +351,22 @@ export default function Settings({ user, notifications: userNotifications, onMar
 
             {activeTab === 'preferences' && (
               <div className="grid gap-6 xl:grid-cols-2">
-                <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-white p-5 shadow-sm sm:p-6">
+                <section className="rounded-[1.5rem] border border-border bg-white p-5 shadow-sm sm:p-6">
                   <div className="border-b border-[#F1E4D1] pb-4">
-                    <h2 className="text-xl font-semibold text-[#3E2723]">Preferences</h2>
-                    <p className="mt-1 text-sm text-[#6D4C41]">Personalize the experience to match the way you use the app.</p>
+                    <h2 className="text-xl font-semibold text-foreground">Preferences</h2>
+                    <p className="mt-1 text-sm text-muted-foreground">Personalize the experience to match the way you use the app.</p>
                   </div>
 
                   <div className="mt-5 space-y-5">
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-[#6D4C41]">Theme</label>
+                      <label className="mb-2 block text-sm font-medium text-muted-foreground">Theme</label>
                       <div className="grid grid-cols-2 gap-3">
-                        <button onClick={() => setTheme('light')} className={`rounded-2xl border px-4 py-4 text-left transition-all ${theme === 'light' ? 'border-[#C8A47A] bg-[#FAF0E4] text-[#3E2723]' : 'border-[#E8D5B5] bg-white text-[#6D4C41]'}`}>
+                        <button onClick={() => setTheme('light')} className={`rounded-2xl border px-4 py-4 text-left transition-all ${theme === 'light' ? 'border-[#C8A47A] bg-[#FAF0E4] text-foreground' : 'border-border bg-white text-muted-foreground'}`}>
                           <SunMedium className="h-5 w-5" />
                           <p className="mt-2 font-semibold">Light</p>
                           <p className="text-xs">Clean and bright</p>
                         </button>
-                        <button onClick={() => setTheme('dark')} className={`rounded-2xl border px-4 py-4 text-left transition-all ${theme === 'dark' ? 'border-[#C8A47A] bg-[#FAF0E4] text-[#3E2723]' : 'border-[#E8D5B5] bg-white text-[#6D4C41]'}`}>
+                        <button onClick={() => setTheme('dark')} className={`rounded-2xl border px-4 py-4 text-left transition-all ${theme === 'dark' ? 'border-[#C8A47A] bg-[#FAF0E4] text-foreground' : 'border-border bg-white text-muted-foreground'}`}>
                           <Moon className="h-5 w-5" />
                           <p className="mt-2 font-semibold">Dark</p>
                           <p className="text-xs">Premium low-light view</p>
@@ -375,10 +375,10 @@ export default function Settings({ user, notifications: userNotifications, onMar
                     </div>
 
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-[#6D4C41]">Language</label>
-                      <div className="flex items-center gap-3 rounded-2xl border border-[#E8D5B5] bg-[#FAF7F2] px-4 py-3">
-                        <Languages className="h-4 w-4 text-[#8B5A2B]" />
-                        <select value={language} onChange={(e) => setLanguage(e.target.value)} className="w-full bg-transparent text-sm text-[#3E2723] outline-none">
+                      <label className="mb-2 block text-sm font-medium text-muted-foreground">Language</label>
+                      <div className="flex items-center gap-3 rounded-2xl border border-border bg-background px-4 py-3">
+                        <Languages className="h-4 w-4 text-primary" />
+                        <select value={language} onChange={(e) => setLanguage(e.target.value)} className="w-full bg-transparent text-sm text-foreground outline-none">
                           <option>English</option>
                           <option>தமிழ்</option>
                           <option>हिन्दी</option>
@@ -387,28 +387,28 @@ export default function Settings({ user, notifications: userNotifications, onMar
                     </div>
 
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-[#6D4C41]">Default order type</label>
+                      <label className="mb-2 block text-sm font-medium text-muted-foreground">Default order type</label>
                       <div className="grid grid-cols-2 gap-3">
-                        <button onClick={() => setDefaultOrderType('dine-in')} className={`rounded-2xl border px-4 py-3 text-sm font-semibold transition-all ${defaultOrderType === 'dine-in' ? 'border-[#C8A47A] bg-[#FAF0E4] text-[#3E2723]' : 'border-[#E8D5B5] text-[#6D4C41]'}`}>Dine-in</button>
-                        <button onClick={() => setDefaultOrderType('takeaway')} className={`rounded-2xl border px-4 py-3 text-sm font-semibold transition-all ${defaultOrderType === 'takeaway' ? 'border-[#C8A47A] bg-[#FAF0E4] text-[#3E2723]' : 'border-[#E8D5B5] text-[#6D4C41]'}`}>Takeaway</button>
+                        <button onClick={() => setDefaultOrderType('dine-in')} className={`rounded-2xl border px-4 py-3 text-sm font-semibold transition-all ${defaultOrderType === 'dine-in' ? 'border-[#C8A47A] bg-[#FAF0E4] text-foreground' : 'border-border text-muted-foreground'}`}>Dine-in</button>
+                        <button onClick={() => setDefaultOrderType('takeaway')} className={`rounded-2xl border px-4 py-3 text-sm font-semibold transition-all ${defaultOrderType === 'takeaway' ? 'border-[#C8A47A] bg-[#FAF0E4] text-foreground' : 'border-border text-muted-foreground'}`}>Takeaway</button>
                       </div>
                     </div>
 
-                    <div className="rounded-2xl border border-[#E8D5B5] bg-[#FAF7F2] px-4 py-3">
-                      <p className="text-sm font-medium text-[#6D4C41]">Currency display</p>
-                      <p className="mt-1 text-sm font-semibold text-[#3E2723]">₹ INR</p>
+                    <div className="rounded-2xl border border-border bg-background px-4 py-3">
+                      <p className="text-sm font-medium text-muted-foreground">Currency display</p>
+                      <p className="mt-1 text-sm font-semibold text-foreground">₹ INR</p>
                     </div>
                   </div>
                 </section>
 
-                <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-white p-5 shadow-sm sm:p-6">
+                <section className="rounded-[1.5rem] border border-border bg-white p-5 shadow-sm sm:p-6">
                   <div className="border-b border-[#F1E4D1] pb-4">
-                    <h2 className="text-xl font-semibold text-[#3E2723]">Visual preferences</h2>
-                    <p className="mt-1 text-sm text-[#6D4C41]">A few extra controls to personalize the app feel.</p>
+                    <h2 className="text-xl font-semibold text-foreground">Visual preferences</h2>
+                    <p className="mt-1 text-sm text-muted-foreground">A few extra controls to personalize the app feel.</p>
                   </div>
-                  <div className="mt-5 rounded-2xl border border-[#E8D5B5] bg-[#FAF7F2] p-4 text-sm text-[#6D4C41]">
+                  <div className="mt-5 rounded-2xl border border-border bg-background p-4 text-sm text-muted-foreground">
                     <div className="flex items-start gap-3">
-                      <ToggleLeft className="mt-0.5 h-5 w-5 text-[#8B5A2B]" />
+                      <ToggleLeft className="mt-0.5 h-5 w-5 text-primary" />
                       <p>Theme and language choices update this demo instantly, with no layout changes or reloads.</p>
                     </div>
                   </div>
@@ -418,10 +418,10 @@ export default function Settings({ user, notifications: userNotifications, onMar
 
             {activeTab === 'notifications' && (
               <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
-                <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-white p-5 shadow-sm sm:p-6">
+                <section className="rounded-[1.5rem] border border-border bg-white p-5 shadow-sm sm:p-6">
                   <div className="border-b border-[#F1E4D1] pb-4">
-                    <h2 className="text-xl font-semibold text-[#3E2723]">Notification Settings</h2>
-                    <p className="mt-1 text-sm text-[#6D4C41]">Choose what should reach your inbox or device.</p>
+                    <h2 className="text-xl font-semibold text-foreground">Notification Settings</h2>
+                    <p className="mt-1 text-sm text-muted-foreground">Choose what should reach your inbox or device.</p>
                   </div>
 
                   <div className="mt-5 space-y-4">
@@ -431,10 +431,10 @@ export default function Settings({ user, notifications: userNotifications, onMar
                       { title: 'Email notifications', desc: 'Receipts, confirmations, and account updates', checked: emailNotifications, setter: setEmailNotifications },
                       { title: 'SMS alerts', desc: 'Short, urgent updates on your phone', checked: smsAlerts, setter: setSmsAlerts },
                     ].map((item) => (
-                      <div key={item.title} className="flex items-center justify-between rounded-2xl border border-[#E8D5B5] bg-[#FAF7F2] px-4 py-4">
+                      <div key={item.title} className="flex items-center justify-between rounded-2xl border border-border bg-background px-4 py-4">
                         <div className="pr-4">
-                          <p className="font-semibold text-[#3E2723]">{item.title}</p>
-                          <p className="text-sm text-[#6D4C41]">{item.desc}</p>
+                          <p className="font-semibold text-foreground">{item.title}</p>
+                          <p className="text-sm text-muted-foreground">{item.desc}</p>
                         </div>
                         <button type="button" onClick={() => item.setter((prev: boolean) => !prev)} className={`relative h-7 w-12 rounded-full transition-colors ${item.checked ? 'bg-[#3E2723]' : 'bg-[#D8C8B3]'}`} aria-pressed={item.checked}>
                           <span className={`absolute left-1 top-1 h-5 w-5 rounded-full bg-white shadow-sm transition-transform ${item.checked ? 'translate-x-5' : 'translate-x-0'}`} />
@@ -444,30 +444,30 @@ export default function Settings({ user, notifications: userNotifications, onMar
                   </div>
                 </section>
 
-                <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-white p-5 shadow-sm sm:p-6">
+                <section className="rounded-[1.5rem] border border-border bg-white p-5 shadow-sm sm:p-6">
                   <div className="border-b border-[#F1E4D1] pb-4">
-                    <h3 className="text-lg font-semibold text-[#3E2723]">Recent Notifications</h3>
-                    <p className="mt-1 text-sm text-[#6D4C41]">Quick access to your latest alerts.</p>
+                    <h3 className="text-lg font-semibold text-foreground">Recent Notifications</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">Quick access to your latest alerts.</p>
                   </div>
 
-                  <div className="mt-4 flex items-center justify-between rounded-2xl bg-[#FAF7F2] px-4 py-3 text-sm text-[#6D4C41]">
+                  <div className="mt-4 flex items-center justify-between rounded-2xl bg-background px-4 py-3 text-sm text-muted-foreground">
                     <span>{unreadCount > 0 ? `${unreadCount} unread` : 'You are all caught up'}</span>
                     {unreadCount > 0 && (
-                      <button onClick={markAllAsRead} className="font-semibold text-[#3E2723] hover:underline">Mark all read</button>
+                      <button onClick={markAllAsRead} className="font-semibold text-foreground hover:underline">Mark all read</button>
                     )}
                   </div>
 
                   <div className="mt-4 space-y-3">
                     {notifications.slice(0, 4).map((notification) => (
-                      <div key={notification.id} className={`rounded-2xl border p-4 ${notification.read ? 'border-[#E8D5B5] bg-white' : 'border-[#C8A47A]/40 bg-[#FAF7F2]'}`}>
+                      <div key={notification.id} className={`rounded-2xl border p-4 ${notification.read ? 'border-border bg-white' : 'border-[#C8A47A]/40 bg-background'}`}>
                         <div className="flex items-start gap-3">
-                          <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-xl bg-white ring-1 ring-[#E8D5B5]">{getIcon(notification.message)}</div>
+                          <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-xl bg-white ring-1 ring-border">{getIcon(notification.message)}</div>
                           <div className="min-w-0 flex-1">
-                            <p className={`text-sm ${notification.read ? 'text-[#6D4C41]' : 'font-medium text-[#3E2723]'}`}>{notification.message}</p>
-                            <p className="mt-1 text-xs text-[#8B5A2B]">{notification.time}</p>
+                            <p className={`text-sm ${notification.read ? 'text-muted-foreground' : 'font-medium text-foreground'}`}>{notification.message}</p>
+                            <p className="mt-1 text-xs text-primary">{notification.time}</p>
                           </div>
                           {!notification.read ? (
-                            <button onClick={() => onMarkAsRead(notification.id)} className="rounded-full border border-[#C8A47A] px-3 py-1 text-xs font-semibold text-[#3E2723] hover:bg-[#FAF0E4]">Mark read</button>
+                            <button onClick={() => onMarkAsRead(notification.id)} className="rounded-full border border-[#C8A47A] px-3 py-1 text-xs font-semibold text-foreground hover:bg-[#FAF0E4]">Mark read</button>
                           ) : (
                             <CheckCircle className="h-5 w-5 text-green-600" />
                           )}
@@ -481,24 +481,24 @@ export default function Settings({ user, notifications: userNotifications, onMar
 
             {activeTab === 'privacy' && (
               <div className="grid gap-6 xl:grid-cols-2">
-                <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-white p-5 shadow-sm sm:p-6">
+                <section className="rounded-[1.5rem] border border-border bg-white p-5 shadow-sm sm:p-6">
                   <div className="border-b border-[#F1E4D1] pb-4">
-                    <h2 className="text-xl font-semibold text-[#3E2723]">Privacy &amp; Security</h2>
-                    <p className="mt-1 text-sm text-[#6D4C41]">Protect your account and control access.</p>
+                    <h2 className="text-xl font-semibold text-foreground">Privacy &amp; Security</h2>
+                    <p className="mt-1 text-sm text-muted-foreground">Protect your account and control access.</p>
                   </div>
 
                   <div className="mt-5 space-y-4">
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-[#6D4C41]">Current Password</label>
-                      <div className="flex items-center gap-3 rounded-xl border border-[#E8D5B5] bg-[#FAF7F2] px-4 py-3"><Lock className="h-4 w-4 text-[#8B5A2B]" /><input type="password" placeholder="Enter current password" className="w-full bg-transparent text-sm text-[#3E2723] outline-none" /></div>
+                      <label className="mb-2 block text-sm font-medium text-muted-foreground">Current Password</label>
+                      <div className="flex items-center gap-3 rounded-xl border border-border bg-background px-4 py-3"><Lock className="h-4 w-4 text-primary" /><input type="password" placeholder="Enter current password" className="w-full bg-transparent text-sm text-foreground outline-none" /></div>
                     </div>
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-[#6D4C41]">New Password</label>
-                      <div className="flex items-center gap-3 rounded-xl border border-[#E8D5B5] bg-[#FAF7F2] px-4 py-3"><Key className="h-4 w-4 text-[#8B5A2B]" /><input type="password" placeholder="Enter new password" className="w-full bg-transparent text-sm text-[#3E2723] outline-none" /></div>
+                      <label className="mb-2 block text-sm font-medium text-muted-foreground">New Password</label>
+                      <div className="flex items-center gap-3 rounded-xl border border-border bg-background px-4 py-3"><Key className="h-4 w-4 text-primary" /><input type="password" placeholder="Enter new password" className="w-full bg-transparent text-sm text-foreground outline-none" /></div>
                     </div>
                     <div>
-                      <label className="mb-2 block text-sm font-medium text-[#6D4C41]">Confirm New Password</label>
-                      <div className="flex items-center gap-3 rounded-xl border border-[#E8D5B5] bg-[#FAF7F2] px-4 py-3"><Key className="h-4 w-4 text-[#8B5A2B]" /><input type="password" placeholder="Confirm new password" className="w-full bg-transparent text-sm text-[#3E2723] outline-none" /></div>
+                      <label className="mb-2 block text-sm font-medium text-muted-foreground">Confirm New Password</label>
+                      <div className="flex items-center gap-3 rounded-xl border border-border bg-background px-4 py-3"><Key className="h-4 w-4 text-primary" /><input type="password" placeholder="Confirm new password" className="w-full bg-transparent text-sm text-foreground outline-none" /></div>
                     </div>
                     <button type="button" className="inline-flex items-center gap-2 rounded-xl bg-[#3E2723] px-5 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#2D1B10]">
                       <Key className="h-4 w-4" />
@@ -508,26 +508,26 @@ export default function Settings({ user, notifications: userNotifications, onMar
                 </section>
 
                 <div className="space-y-6">
-                  <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-white p-5 shadow-sm sm:p-6">
+                  <section className="rounded-[1.5rem] border border-border bg-white p-5 shadow-sm sm:p-6">
                     <div className="flex items-center justify-between gap-4 border-b border-[#F1E4D1] pb-4">
                       <div>
-                        <h3 className="text-lg font-semibold text-[#3E2723]">Two-Factor Authentication</h3>
-                        <p className="mt-1 text-sm text-[#6D4C41]">Add an extra layer of protection to your account.</p>
+                        <h3 className="text-lg font-semibold text-foreground">Two-Factor Authentication</h3>
+                        <p className="mt-1 text-sm text-muted-foreground">Add an extra layer of protection to your account.</p>
                       </div>
                       <button type="button" onClick={() => setTwoFactorEnabled((prev) => !prev)} className={`relative h-7 w-12 rounded-full transition-colors ${twoFactorEnabled ? 'bg-[#3E2723]' : 'bg-[#D8C8B3]'}`} aria-pressed={twoFactorEnabled}>
                         <span className={`absolute left-1 top-1 h-5 w-5 rounded-full bg-white shadow-sm transition-transform ${twoFactorEnabled ? 'translate-x-5' : 'translate-x-0'}`} />
                       </button>
                     </div>
-                    <div className="mt-4 rounded-2xl bg-[#FAF7F2] p-4 text-sm text-[#6D4C41]">When enabled, we will ask for a verification code during sign-in.</div>
+                    <div className="mt-4 rounded-2xl bg-background p-4 text-sm text-muted-foreground">When enabled, we will ask for a verification code during sign-in.</div>
                   </section>
 
-                  <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-white p-5 shadow-sm sm:p-6">
-                    <h3 className="text-lg font-semibold text-[#3E2723]">Login Activity</h3>
-                    <div className="mt-4 rounded-2xl border border-[#E8D5B5] bg-[#FAF7F2] p-4">
-                      <p className="text-sm text-[#6D4C41]">Last login</p>
-                      <p className="mt-1 font-semibold text-[#3E2723]">{lastLogin}</p>
+                  <section className="rounded-[1.5rem] border border-border bg-white p-5 shadow-sm sm:p-6">
+                    <h3 className="text-lg font-semibold text-foreground">Login Activity</h3>
+                    <div className="mt-4 rounded-2xl border border-border bg-background p-4">
+                      <p className="text-sm text-muted-foreground">Last login</p>
+                      <p className="mt-1 font-semibold text-foreground">{lastLogin}</p>
                     </div>
-                    <button type="button" className="mt-4 inline-flex items-center gap-2 rounded-xl border border-[#E8D5B5] px-4 py-3 text-sm font-semibold text-[#3E2723] transition-colors hover:bg-[#FAF7F2]">
+                    <button type="button" className="mt-4 inline-flex items-center gap-2 rounded-xl border border-border px-4 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-background">
                       <LogOut className="h-4 w-4" />
                       Logout from all devices
                     </button>
@@ -538,25 +538,25 @@ export default function Settings({ user, notifications: userNotifications, onMar
 
             {activeTab === 'payments' && (
               <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
-                <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-white p-5 shadow-sm sm:p-6">
+                <section className="rounded-[1.5rem] border border-border bg-white p-5 shadow-sm sm:p-6">
                   <div className="border-b border-[#F1E4D1] pb-4">
-                    <h2 className="text-xl font-semibold text-[#3E2723]">Saved Payment Methods</h2>
-                    <p className="mt-1 text-sm text-[#6D4C41]">Manage UPI IDs and cards for faster checkout.</p>
+                    <h2 className="text-xl font-semibold text-foreground">Saved Payment Methods</h2>
+                    <p className="mt-1 text-sm text-muted-foreground">Manage UPI IDs and cards for faster checkout.</p>
                   </div>
 
                   <div className="mt-5 space-y-3">
                     {paymentMethods.map((method) => (
-                      <div key={method.id} className="flex items-center justify-between rounded-2xl border border-[#E8D5B5] bg-[#FAF7F2] px-4 py-4">
+                      <div key={method.id} className="flex items-center justify-between rounded-2xl border border-border bg-background px-4 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-[#8B5A2B] ring-1 ring-[#E8D5B5]">
+                          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-primary ring-1 ring-border">
                             {method.type === 'UPI' ? <Smartphone className="h-4 w-4" /> : <CreditCard className="h-4 w-4" />}
                           </div>
                           <div>
-                            <p className="font-semibold text-[#3E2723]">{method.label}</p>
-                            <p className="text-sm text-[#6D4C41]">{method.detail}</p>
+                            <p className="font-semibold text-foreground">{method.label}</p>
+                            <p className="text-sm text-muted-foreground">{method.detail}</p>
                           </div>
                         </div>
-                        <button type="button" onClick={() => removePaymentMethod(method.id)} className="rounded-full border border-[#E8D5B5] p-2 text-[#6D4C41] transition-colors hover:bg-white hover:text-[#3E2723]">
+                        <button type="button" onClick={() => removePaymentMethod(method.id)} className="rounded-full border border-border p-2 text-muted-foreground transition-colors hover:bg-white hover:text-foreground">
                           <Trash2 className="h-4 w-4" />
                         </button>
                       </div>
@@ -564,17 +564,17 @@ export default function Settings({ user, notifications: userNotifications, onMar
                   </div>
                 </section>
 
-                <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-white p-5 shadow-sm sm:p-6">
-                  <h3 className="text-lg font-semibold text-[#3E2723]">Add Payment Method</h3>
-                  <p className="mt-1 text-sm text-[#6D4C41]">Keep a saved method ready for the next order.</p>
+                <section className="rounded-[1.5rem] border border-border bg-white p-5 shadow-sm sm:p-6">
+                  <h3 className="text-lg font-semibold text-foreground">Add Payment Method</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">Keep a saved method ready for the next order.</p>
                   <div className="mt-4 space-y-3">
-                    <button type="button" onClick={() => addPaymentMethod('UPI')} className="flex w-full items-center justify-between rounded-2xl border border-[#E8D5B5] px-4 py-3 text-left transition-colors hover:bg-[#FAF7F2]">
-                      <span className="flex items-center gap-3"><Smartphone className="h-4 w-4 text-[#8B5A2B]" />Add UPI</span>
-                      <Plus className="h-4 w-4 text-[#8B5A2B]" />
+                    <button type="button" onClick={() => addPaymentMethod('UPI')} className="flex w-full items-center justify-between rounded-2xl border border-border px-4 py-3 text-left transition-colors hover:bg-background">
+                      <span className="flex items-center gap-3"><Smartphone className="h-4 w-4 text-primary" />Add UPI</span>
+                      <Plus className="h-4 w-4 text-primary" />
                     </button>
-                    <button type="button" onClick={() => addPaymentMethod('Card')} className="flex w-full items-center justify-between rounded-2xl border border-[#E8D5B5] px-4 py-3 text-left transition-colors hover:bg-[#FAF7F2]">
-                      <span className="flex items-center gap-3"><CreditCard className="h-4 w-4 text-[#8B5A2B]" />Add Card</span>
-                      <Plus className="h-4 w-4 text-[#8B5A2B]" />
+                    <button type="button" onClick={() => addPaymentMethod('Card')} className="flex w-full items-center justify-between rounded-2xl border border-border px-4 py-3 text-left transition-colors hover:bg-background">
+                      <span className="flex items-center gap-3"><CreditCard className="h-4 w-4 text-primary" />Add Card</span>
+                      <Plus className="h-4 w-4 text-primary" />
                     </button>
                   </div>
                 </section>
@@ -583,10 +583,10 @@ export default function Settings({ user, notifications: userNotifications, onMar
 
             {activeTab === 'app' && (
               <div className="grid gap-6 xl:grid-cols-2">
-                <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-white p-5 shadow-sm sm:p-6">
+                <section className="rounded-[1.5rem] border border-border bg-white p-5 shadow-sm sm:p-6">
                   <div className="border-b border-[#F1E4D1] pb-4">
-                    <h2 className="text-xl font-semibold text-[#3E2723]">App Settings</h2>
-                    <p className="mt-1 text-sm text-[#6D4C41]">Make repeat ordering faster and more convenient.</p>
+                    <h2 className="text-xl font-semibold text-foreground">App Settings</h2>
+                    <p className="mt-1 text-sm text-muted-foreground">Make repeat ordering faster and more convenient.</p>
                   </div>
 
                   <div className="mt-5 space-y-4">
@@ -595,10 +595,10 @@ export default function Settings({ user, notifications: userNotifications, onMar
                       { title: 'Save favorite dishes', desc: 'Keep your favorite dishes accessible for quick reorders', checked: saveFavorites, setter: setSaveFavorites },
                       { title: 'Enable quick reorder', desc: 'Add items from the last order in one tap', checked: quickReorder, setter: setQuickReorder },
                     ].map((item) => (
-                      <div key={item.title} className="flex items-center justify-between rounded-2xl border border-[#E8D5B5] bg-[#FAF7F2] px-4 py-4">
+                      <div key={item.title} className="flex items-center justify-between rounded-2xl border border-border bg-background px-4 py-4">
                         <div className="pr-4">
-                          <p className="font-semibold text-[#3E2723]">{item.title}</p>
-                          <p className="text-sm text-[#6D4C41]">{item.desc}</p>
+                          <p className="font-semibold text-foreground">{item.title}</p>
+                          <p className="text-sm text-muted-foreground">{item.desc}</p>
                         </div>
                         <button type="button" onClick={() => item.setter((prev: boolean) => !prev)} className={`relative h-7 w-12 rounded-full transition-colors ${item.checked ? 'bg-[#3E2723]' : 'bg-[#D8C8B3]'}`} aria-pressed={item.checked}>
                           <span className={`absolute left-1 top-1 h-5 w-5 rounded-full bg-white shadow-sm transition-transform ${item.checked ? 'translate-x-5' : 'translate-x-0'}`} />
@@ -608,9 +608,9 @@ export default function Settings({ user, notifications: userNotifications, onMar
                   </div>
                 </section>
 
-                <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-white p-5 shadow-sm sm:p-6">
-                  <h3 className="text-lg font-semibold text-[#3E2723]">App Behavior</h3>
-                  <div className="mt-4 rounded-2xl bg-[#FAF7F2] p-4 text-sm text-[#6D4C41]">
+                <section className="rounded-[1.5rem] border border-border bg-white p-5 shadow-sm sm:p-6">
+                  <h3 className="text-lg font-semibold text-foreground">App Behavior</h3>
+                  <div className="mt-4 rounded-2xl bg-background p-4 text-sm text-muted-foreground">
                     These preferences shape checkout, favorites, and reorder shortcuts without changing the rest of the app layout.
                   </div>
                 </section>
@@ -619,59 +619,59 @@ export default function Settings({ user, notifications: userNotifications, onMar
 
             {activeTab === 'support' && (
               <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
-                <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-white p-5 shadow-sm sm:p-6">
+                <section className="rounded-[1.5rem] border border-border bg-white p-5 shadow-sm sm:p-6">
                   <div className="border-b border-[#F1E4D1] pb-4">
-                    <h2 className="text-xl font-semibold text-[#3E2723]">Help &amp; Support</h2>
-                    <p className="mt-1 text-sm text-[#6D4C41]">Reach the right team or find answers faster.</p>
+                    <h2 className="text-xl font-semibold text-foreground">Help &amp; Support</h2>
+                    <p className="mt-1 text-sm text-muted-foreground">Reach the right team or find answers faster.</p>
                   </div>
 
                   <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                    <div className="rounded-2xl border border-[#E8D5B5] bg-[#FAF7F2] p-4">
+                    <div className="rounded-2xl border border-border bg-background p-4">
                       <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white ring-1 ring-[#E8D5B5]"><Phone className="h-4 w-4 text-[#8B5A2B]" /></div>
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white ring-1 ring-border"><Phone className="h-4 w-4 text-primary" /></div>
                         <div>
-                          <p className="font-semibold text-[#3E2723]">Call support</p>
-                          <p className="text-sm text-[#6D4C41]">Fast help during operating hours</p>
+                          <p className="font-semibold text-foreground">Call support</p>
+                          <p className="text-sm text-muted-foreground">Fast help during operating hours</p>
                         </div>
                       </div>
-                      <p className="mt-3 text-sm font-semibold text-[#3E2723]">{sysConfig.contactNumber || '+91 98765 43210'}</p>
+                      <p className="mt-3 text-sm font-semibold text-foreground">{sysConfig.contactNumber || '+91 98765 43210'}</p>
                     </div>
 
-                    <div className="rounded-2xl border border-[#E8D5B5] bg-[#FAF7F2] p-4">
+                    <div className="rounded-2xl border border-border bg-background p-4">
                       <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white ring-1 ring-[#E8D5B5]"><Mail className="h-4 w-4 text-[#8B5A2B]" /></div>
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white ring-1 ring-border"><Mail className="h-4 w-4 text-primary" /></div>
                         <div>
-                          <p className="font-semibold text-[#3E2723]">Email us</p>
-                          <p className="text-sm text-[#6D4C41]">Share feedback or report an issue</p>
+                          <p className="font-semibold text-foreground">Email us</p>
+                          <p className="text-sm text-muted-foreground">Share feedback or report an issue</p>
                         </div>
                       </div>
-                      <p className="mt-3 text-sm font-semibold text-[#3E2723]">{sysConfig.email || 'support@urbanbites.com'}</p>
+                      <p className="mt-3 text-sm font-semibold text-foreground">{sysConfig.email || 'support@urbanbites.com'}</p>
                     </div>
 
-                    <div className="rounded-2xl border border-[#E8D5B5] bg-[#FAF7F2] p-4 sm:col-span-2">
+                    <div className="rounded-2xl border border-border bg-background p-4 sm:col-span-2">
                       <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white ring-1 ring-[#E8D5B5]"><HelpCircle className="h-4 w-4 text-[#8B5A2B]" /></div>
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white ring-1 ring-border"><HelpCircle className="h-4 w-4 text-primary" /></div>
                         <div>
-                          <p className="font-semibold text-[#3E2723]">Need quick answers?</p>
-                          <p className="text-sm text-[#6D4C41]">Common help topics are listed below.</p>
+                          <p className="font-semibold text-foreground">Need quick answers?</p>
+                          <p className="text-sm text-muted-foreground">Common help topics are listed below.</p>
                         </div>
                       </div>
                       <div className="mt-4 flex flex-wrap gap-2">
                         {['Orders not updating', 'Refunds', 'Reservation issues', 'Loyalty points'].map((item) => (
-                          <span key={item} className="rounded-full border border-[#E8D5B5] bg-white px-3 py-1 text-xs font-semibold text-[#3E2723]">{item}</span>
+                          <span key={item} className="rounded-full border border-border bg-white px-3 py-1 text-xs font-semibold text-foreground">{item}</span>
                         ))}
                       </div>
                     </div>
                   </div>
                 </section>
 
-                <section className="rounded-[1.5rem] border border-[#E8D5B5] bg-white p-5 shadow-sm sm:p-6">
-                  <h3 className="text-lg font-semibold text-[#3E2723]">Restaurant details</h3>
-                  <div className="mt-4 space-y-4 text-sm text-[#6D4C41]">
-                    {sysConfig.operatingHours && <div className="rounded-2xl bg-[#FAF7F2] p-4"><p className="font-semibold text-[#3E2723]">Hours</p><p className="mt-1">{sysConfig.operatingHours}</p></div>}
-                    {sysConfig.address && <div className="rounded-2xl bg-[#FAF7F2] p-4"><p className="font-semibold text-[#3E2723]">Address</p><p className="mt-1">{sysConfig.address}</p></div>}
-                    <div className="rounded-2xl bg-[#FAF7F2] p-4">
-                      <p className="font-semibold text-[#3E2723]">Feedback matters</p>
+                <section className="rounded-[1.5rem] border border-border bg-white p-5 shadow-sm sm:p-6">
+                  <h3 className="text-lg font-semibold text-foreground">Restaurant details</h3>
+                  <div className="mt-4 space-y-4 text-sm text-muted-foreground">
+                    {sysConfig.operatingHours && <div className="rounded-2xl bg-background p-4"><p className="font-semibold text-foreground">Hours</p><p className="mt-1">{sysConfig.operatingHours}</p></div>}
+                    {sysConfig.address && <div className="rounded-2xl bg-background p-4"><p className="font-semibold text-foreground">Address</p><p className="mt-1">{sysConfig.address}</p></div>}
+                    <div className="rounded-2xl bg-background p-4">
+                      <p className="font-semibold text-foreground">Feedback matters</p>
                       <p className="mt-1">Your ratings and comments help improve the dining experience.</p>
                     </div>
                   </div>
@@ -692,7 +692,7 @@ export default function Settings({ user, notifications: userNotifications, onMar
       </button>
 
       {saveMessage && (
-        <div className="fixed bottom-20 right-5 z-40 rounded-2xl border border-[#E8D5B5] bg-white px-4 py-3 text-sm font-semibold text-[#3E2723] shadow-lg">
+        <div className="fixed bottom-20 right-5 z-40 rounded-2xl border border-border bg-white px-4 py-3 text-sm font-semibold text-foreground shadow-lg">
           {saveMessage}
         </div>
       )}
