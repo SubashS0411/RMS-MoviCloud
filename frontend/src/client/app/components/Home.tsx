@@ -43,7 +43,7 @@ export default function Home({
   }, [menuItems]);
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2]">
+    <div className="min-h-screen bg-background">
       {/* SECTION 1 G�� HERO HEADER */}
       <section className="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
@@ -69,7 +69,7 @@ export default function Home({
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
             <button
               onClick={() => onNavigate(isLoggedIn ? "menu" : "login")}
-              className="px-6 sm:px-12 py-3 sm:py-5 bg-gradient-to-r from-[#8B5A2B] to-[#C8A47A] text-white rounded-2xl hover:shadow-[0_15px_30px_-10px_rgba(200,164,122,0.6)] transition-all duration-300 text-sm sm:text-lg font-black uppercase tracking-[0.15em] inline-flex items-center gap-3 active:scale-95"
+              className="px-6 sm:px-12 py-3 sm:py-5 bg-gradient-to-r from-primary to-accent text-white rounded-2xl hover:shadow-[0_15px_30px_-10px_rgba(200,164,122,0.6)] transition-all duration-300 text-sm sm:text-lg font-black uppercase tracking-[0.15em] inline-flex items-center gap-3 active:scale-95"
             >
               {isLoggedIn ? "Explore Menu" : "Get Started"}
               <ArrowRight className="w-6 h-6" />
@@ -77,7 +77,7 @@ export default function Home({
             {isLoggedIn ? (
               <button
                 onClick={() => onNavigate("profile")}
-                className="px-6 sm:px-12 py-3 sm:py-5 bg-transparent backdrop-blur-sm border-2 border-[#8B5A2B] text-[#8B5A2B] rounded-2xl hover:bg-[#8B5A2B]/10 hover:shadow-[0_15px_30px_-10px_rgba(139,90,43,0.3)] transition-all duration-300 text-sm sm:text-lg font-black uppercase tracking-[0.15em] inline-flex items-center gap-3 active:scale-95"
+                className="px-6 sm:px-12 py-3 sm:py-5 bg-transparent backdrop-blur-sm border-2 border-primary text-primary rounded-2xl hover:bg-primary/10 hover:shadow-[0_15px_30px_-10px_rgba(139,90,43,0.3)] transition-all duration-300 text-sm sm:text-lg font-black uppercase tracking-[0.15em] inline-flex items-center gap-3 active:scale-95"
               >
                 <Users className="w-6 h-6" />
                 View Profile
@@ -85,7 +85,7 @@ export default function Home({
             ) : (
               <button
                 onClick={() => onNavigate("menu")}
-                className="px-6 sm:px-12 py-3 sm:py-5 bg-transparent backdrop-blur-sm border-2 border-[#8B5A2B] text-[#8B5A2B] rounded-2xl hover:bg-[#8B5A2B]/10 hover:shadow-[0_15px_30px_-10px_rgba(139,90,43,0.3)] transition-all duration-300 text-sm sm:text-lg font-black uppercase tracking-[0.15em] inline-flex items-center gap-3 active:scale-95"
+                className="px-6 sm:px-12 py-3 sm:py-5 bg-transparent backdrop-blur-sm border-2 border-primary text-primary rounded-2xl hover:bg-primary/10 hover:shadow-[0_15px_30px_-10px_rgba(139,90,43,0.3)] transition-all duration-300 text-sm sm:text-lg font-black uppercase tracking-[0.15em] inline-flex items-center gap-3 active:scale-95"
               >
                 <ShoppingBag className="w-6 h-6" />
                 View Menu
@@ -112,19 +112,19 @@ export default function Home({
             <div className="hidden lg:block"></div>
 
             <div>
-              <div className="inline-block mb-4 sm:mb-6 px-5 py-2 bg-[#8B5A2B]/10 backdrop-blur-sm rounded-full border border-[#8B5A2B]/20">
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#8B5A2B]">About Royal Cuisine</span>
+              <div className="inline-block mb-4 sm:mb-6 px-5 py-2 bg-primary/10 backdrop-blur-sm rounded-full border border-primary/20">
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">About Royal Cuisine</span>
               </div>
               <h2
-                className="text-3xl sm:text-5xl md:text-6xl font-bold text-[#3E2723] mb-4 sm:mb-8 leading-tight"
+                className="text-3xl sm:text-5xl md:text-6xl font-bold text-foreground mb-4 sm:mb-8 leading-tight"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
                 Seamless Dining Experience
               </h2>
-              <p className="text-xl text-[#6D4C41] leading-relaxed font-light mb-6">
+              <p className="text-xl text-muted-foreground leading-relaxed font-light mb-6">
                 We provide a seamless restaurant experience with easy ordering and flexible customization based on user preferences.
               </p>
-              <p className="text-xl text-[#6D4C41] leading-relaxed font-light">
+              <p className="text-xl text-muted-foreground leading-relaxed font-light">
                 Our system is designed to deliver quality service while keeping the dining process simple and efficient.
               </p>
             </div>
@@ -164,15 +164,15 @@ export default function Home({
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <div className="inline-block mb-6 p-1 bg-[#C8A47A] rounded-full px-4">
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#3E2723]">Customer Favorites</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground">Customer Favorites</span>
             </div>
             <h2
-              className="text-3xl sm:text-5xl md:text-6xl font-bold text-[#3E2723] mb-4"
+              className="text-3xl sm:text-5xl md:text-6xl font-bold text-foreground mb-4"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
               Popular Dishes
             </h2>
-            <p className="text-xl text-[#6D4C41] font-light">
+            <p className="text-xl text-muted-foreground font-light">
               Discover the dishes our guests can't stop talking about
             </p>
           </div>
@@ -183,7 +183,7 @@ export default function Home({
                 key={item.id}
                 className="group relative bg-[#2D1B10] rounded-[24px] overflow-hidden border border-[#C8A47A]/30 shadow-2xl hover:shadow-[#C8A47A]/20 transition-all duration-500 flex flex-col hover:-translate-y-2"
               >
-                <div className="absolute inset-0 bg-gradient-to-b from-[#3E2723] to-[#2D1B10] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-foreground to-[#2D1B10] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                 <div className="relative h-60 bg-[#1A110D] overflow-hidden">
                   <MenuItemImage
@@ -252,12 +252,12 @@ export default function Home({
         <div className="max-w-7xl mx-auto w-full">
           <div className="text-center mb-8 sm:mb-12">
             <h2
-              className="text-[28px] sm:text-[30px] md:text-[32px] font-bold text-[#3E2723] mb-3"
+              className="text-[28px] sm:text-[30px] md:text-[32px] font-bold text-foreground mb-3"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
               Our Restaurant Today
             </h2>
-            <p className="text-[15px] sm:text-base text-[#6D4C41] font-light max-w-2xl mx-auto">
+            <p className="text-[15px] sm:text-base text-muted-foreground font-light max-w-2xl mx-auto">
               Real-time numbers straight from our kitchen
             </p>
           </div>
@@ -314,12 +314,12 @@ export default function Home({
                     <stat.icon className="w-6 h-6" style={{ color: stat.iconColor }} />
                   </div>
                   <div
-                    className="text-[32px] sm:text-[34px] md:text-[36px] font-bold leading-none mb-2 text-[#3E2723]"
+                    className="text-[32px] sm:text-[34px] md:text-[36px] font-bold leading-none mb-2 text-foreground"
                     style={{ fontFamily: "'Playfair Display', serif" }}
                   >
                     {stat.value}
                   </div>
-                  <p className="text-sm sm:text-[15px] md:text-base text-[#6D4C41] font-medium">
+                  <p className="text-sm sm:text-[15px] md:text-base text-muted-foreground font-medium">
                     {stat.label}
                   </p>
                 </div>
@@ -330,28 +330,28 @@ export default function Home({
       </section>
 
       {/* SECTION 6 G FOOTER */}
-      <footer className="bg-[#F5F0E8] text-[#3E2723] py-10 sm:py-16 px-4 sm:px-6 border-t border-[#E8DED0]">
+      <footer className="bg-[#F5F0E8] text-foreground py-10 sm:py-16 px-4 sm:px-6 border-t border-border">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-12 mb-8 sm:mb-12">
             {/* Brand */}
             <div>
               <h3 
-                className="text-3xl font-bold mb-4 text-[#8B5A2B]" 
+                className="text-3xl font-bold mb-4 text-primary" 
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
                 {sysConfig.restaurantName || 'Royal Cuisine'}
               </h3>
-              <p className="text-[#6D4C41] font-light leading-relaxed">
+              <p className="text-muted-foreground font-light leading-relaxed">
                 Experience authentic cuisine with royal hospitality and premium service.
               </p>
             </div>
 
             {/* Contact */}
             <div>
-              <h4 className="text-xl font-bold mb-4 text-[#8B5A2B]" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h4 className="text-xl font-bold mb-4 text-primary" style={{ fontFamily: "'Playfair Display', serif" }}>
                 Contact
               </h4>
-              <ul className="space-y-3 text-[#6D4C41] font-light">
+              <ul className="space-y-3 text-muted-foreground font-light">
                 {sysConfig.contactNumber && <li>Phone: {sysConfig.contactNumber}</li>}
                 {sysConfig.email && <li>Email: {sysConfig.email}</li>}
                 {sysConfig.operatingHours && <li>Hours: {sysConfig.operatingHours}</li>}
@@ -360,10 +360,10 @@ export default function Home({
 
             {/* Address */}
             <div>
-              <h4 className="text-xl font-bold mb-4 text-[#8B5A2B]" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h4 className="text-xl font-bold mb-4 text-primary" style={{ fontFamily: "'Playfair Display', serif" }}>
                 Address
               </h4>
-              <p className="text-[#6D4C41] font-light leading-relaxed">
+              <p className="text-muted-foreground font-light leading-relaxed">
                 {sysConfig.address ? (
                   <>
                     {sysConfig.address}{sysConfig.city || sysConfig.state ? ',' : ''}<br />
@@ -377,14 +377,14 @@ export default function Home({
 
             {/* Quick Links */}
             <div>
-              <h4 className="text-xl font-bold mb-4 text-[#8B5A2B]" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h4 className="text-xl font-bold mb-4 text-primary" style={{ fontFamily: "'Playfair Display', serif" }}>
                 Quick Links
               </h4>
               <ul className="space-y-3">
                 <li>
                   <button 
                     onClick={() => onNavigate('menu')}
-                    className="text-[#6D4C41] hover:text-[#8B5A2B] transition-colors font-light"
+                    className="text-muted-foreground hover:text-primary transition-colors font-light"
                   >
                     Menu
                   </button>
@@ -392,18 +392,18 @@ export default function Home({
                 <li>
                   <button 
                     onClick={() => onNavigate('reservation')}
-                    className="text-[#6D4C41] hover:text-[#8B5A2B] transition-colors font-light"
+                    className="text-muted-foreground hover:text-primary transition-colors font-light"
                   >
                     Reservations
                   </button>
                 </li>
                 <li>
-                  <a href="#" className="text-[#6D4C41] hover:text-[#8B5A2B] transition-colors font-light">
+                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors font-light">
                     Terms & Conditions
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-[#6D4C41] hover:text-[#8B5A2B] transition-colors font-light">
+                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors font-light">
                     Privacy Policy
                   </a>
                 </li>
@@ -411,8 +411,8 @@ export default function Home({
             </div>
           </div>
 
-          <div className="pt-8 border-t border-[#E8DED0] text-center">
-            <p className="text-[#6D4C41]/80 text-sm font-light">
+          <div className="pt-8 border-t border-border text-center">
+            <p className="text-muted-foreground/80 text-sm font-light">
               &copy; {new Date().getFullYear()} {sysConfig.restaurantName || 'Restaurant'}. All rights reserved.
             </p>
           </div>

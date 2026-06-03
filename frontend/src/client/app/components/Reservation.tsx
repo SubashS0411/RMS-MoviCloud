@@ -654,50 +654,50 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
 
   if (step === 'success') {
     return (
-      <div className="min-h-screen bg-[#FAF7F2] flex items-center justify-center py-12 px-6">
-        <div className="max-w-lg w-full bg-white rounded-xl border border-[#8B5A2B]/20 shadow-xl p-8">
+      <div className="min-h-screen bg-background flex items-center justify-center py-12 px-6">
+        <div className="max-w-lg w-full bg-white rounded-xl border border-primary/20 shadow-xl p-8">
           <div className="text-center">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle className="w-12 h-12 text-green-600" />
             </div>
-            <h2 className="text-3xl font-bold mb-2 text-[#8B5A2B]">Reservation Confirmed!</h2>
+            <h2 className="text-3xl font-bold mb-2 text-primary">Reservation Confirmed!</h2>
             <p className="text-gray-700 mb-8">
               Your table has been reserved successfully
             </p>
 
-            <div className="bg-[#FAF7F2] rounded-lg p-6 mb-6 text-left border border-[#8B5A2B]/10">
-              <h3 className="font-semibold mb-4 text-[#8B5A2B]">Reservation Details</h3>
+            <div className="bg-background rounded-lg p-6 mb-6 text-left border border-primary/10">
+              <h3 className="font-semibold mb-4 text-primary">Reservation Details</h3>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Name:</span>
-                  <span className="font-medium text-[#3E2723]">{bookingData.name}</span>
+                  <span className="font-medium text-foreground">{bookingData.name}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Date:</span>
-                  <span className="font-medium text-[#3E2723]">{bookingData.date ? new Date(bookingData.date).toLocaleDateString('en-IN', { dateStyle: 'long' }) : ''}</span>
+                  <span className="font-medium text-foreground">{bookingData.date ? new Date(bookingData.date).toLocaleDateString('en-IN', { dateStyle: 'long' }) : ''}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Time:</span>
-                  <span className="font-medium text-[#3E2723]">{buildTimeSlot(bookingData.startTime, bookingData.endTime)}</span>
+                  <span className="font-medium text-foreground">{buildTimeSlot(bookingData.startTime, bookingData.endTime)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Guests:</span>
-                  <span className="font-medium text-[#3E2723]">{bookingData.guests && bookingData.guests !== 'any' ? bookingData.guests : '—'} people</span>
+                  <span className="font-medium text-foreground">{bookingData.guests && bookingData.guests !== 'any' ? bookingData.guests : '—'} people</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Location:</span>
-                  <span className="font-medium capitalize text-[#3E2723]">{bookingData.location}</span>
+                  <span className="font-medium capitalize text-foreground">{bookingData.location}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Segment:</span>
-                  <span className="font-medium text-[#3E2723]">{bookingData.segment}</span>
+                  <span className="font-medium text-foreground">{bookingData.segment}</span>
                 </div>
               </div>
             </div>
 
             <button
               onClick={handleNewReservation}
-              className="w-full bg-[#8B5A2B] text-white py-3 rounded-lg font-semibold hover:bg-[#6D4822] transition-colors shadow-md"
+              className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-[#6D4822] transition-colors shadow-md"
             >
               Make Another Reservation
             </button>
@@ -708,7 +708,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2]">
+    <div className="min-h-screen bg-background">
       {/* SECTION 1 — HERO HEADER (First Slide) */}
       {uiMode === 'search' && (
         <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
@@ -726,18 +726,18 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
           {/* Content - Positioned in the center with animations */}
           <div className="relative z-10 max-w-4xl mx-auto text-center px-6">
             <h1
-              className="reservation-hero-title text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 text-[#3E2723] drop-shadow-2xl"
+              className="reservation-hero-title text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 text-foreground drop-shadow-2xl"
              
             >
               Table Reservation
             </h1>
-            <p className="reservation-hero-subtitle text-base sm:text-xl md:text-2xl text-[#6D4C41] font-light leading-relaxed">
+            <p className="reservation-hero-subtitle text-base sm:text-xl md:text-2xl text-muted-foreground font-light leading-relaxed">
               No waiting, No worries - just great dining.<br />
               Reserve your table and enjoy every moment.
             </p>
             <button
               onClick={scrollToReservationSection}
-              className="group mt-8 bg-[#8B5A2B] text-white px-10 py-4 rounded-lg hover:bg-[#6D4C41] transition-all shadow-lg hover:shadow-xl flex items-center gap-3 mx-auto"
+              className="group mt-8 bg-primary text-white px-10 py-4 rounded-lg hover:bg-[#6D4C41] transition-all shadow-lg hover:shadow-xl flex items-center gap-3 mx-auto"
             >
               Reserve Table
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -751,12 +751,12 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
         <div className="max-w-6xl mx-auto">
           {/* Tab Navigation */}
           {uiMode === 'search' && (
-            <div className="bg-white/95 backdrop-blur-sm rounded-t-2xl border-t border-x border-[#8B5A2B]/20 p-2 flex flex-wrap gap-2">
+            <div className="bg-white/95 backdrop-blur-sm rounded-t-2xl border-t border-x border-primary/20 p-2 flex flex-wrap gap-2">
               <button
                 onClick={() => setActiveTab('check')}
                 className={`flex-1 min-w-[140px] px-4 sm:px-6 py-3 sm:py-4 rounded-lg font-bold transition-all flex items-center justify-center gap-2 text-sm sm:text-base ${activeTab === 'check'
-                  ? 'bg-[#8B5A2B] text-white shadow-lg scale-[1.02]'
-                  : 'bg-transparent text-[#8B5A2B] hover:bg-[#8B5A2B]/10'
+                  ? 'bg-primary text-white shadow-lg scale-[1.02]'
+                  : 'bg-transparent text-primary hover:bg-primary/10'
                   }`}
               >
                 <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -765,8 +765,8 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
               <button
                 onClick={() => setActiveTab('my-reservations')}
                 className={`flex-1 min-w-[140px] px-4 sm:px-6 py-3 sm:py-4 rounded-lg font-bold transition-all flex items-center justify-center gap-2 text-sm sm:text-base ${activeTab === 'my-reservations'
-                  ? 'bg-[#8B5A2B] text-white shadow-lg scale-[1.02]'
-                  : 'bg-transparent text-[#8B5A2B] hover:bg-[#8B5A2B]/10'
+                  ? 'bg-primary text-white shadow-lg scale-[1.02]'
+                  : 'bg-transparent text-primary hover:bg-primary/10'
                   }`}
               >
                 <LayoutGrid className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -776,13 +776,13 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
           )}
 
           {/* Tab Content */}
-          <div className={`bg-white/95 backdrop-blur-sm rounded-2xl ${uiMode === 'search' ? 'rounded-t-none' : ''} border border-[#8B5A2B]/20 shadow-xl p-4 sm:p-8`}>
+          <div className={`bg-white/95 backdrop-blur-sm rounded-2xl ${uiMode === 'search' ? 'rounded-t-none' : ''} border border-primary/20 shadow-xl p-4 sm:p-8`}>
 
             {/* Check Availability Tab */}
             {activeTab === 'check' && uiMode === 'search' && (
               <div>
                 <div className="flex justify-between items-center mb-8">
-                  <h2 className="text-3xl font-bold text-[#8B5A2B]">
+                  <h2 className="text-3xl font-bold text-primary">
                     Check Table Availability
                   </h2>
                   <button
@@ -793,7 +793,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                       setViewingAllTables(true);
                       setUiMode('all');
                     }}
-                    className="flex items-center gap-2 px-6 py-3 bg-white border-2 border-[#8B5A2B] text-[#8B5A2B] rounded-lg hover:bg-[#8B5A2B]/10 transition-all font-bold"
+                    className="flex items-center gap-2 px-6 py-3 bg-white border-2 border-primary text-primary rounded-lg hover:bg-primary/10 transition-all font-bold"
                   >
                     <LayoutGrid className="w-5 h-5" />
                     View All Tables
@@ -813,7 +813,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                         minDate={new Date()}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Select a date"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8B5A2B] focus:ring-2 focus:ring-[#8B5A2B]/20"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                         required
                       />
                     </div>
@@ -827,7 +827,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                           const slot = TIME_SLOTS.find(s => s.startTime === e.target.value);
                           setCheckData({ ...checkData, startTime: slot?.startTime ?? '', endTime: slot?.endTime ?? '' });
                         }}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8B5A2B] focus:ring-2 focus:ring-[#8B5A2B]/20"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                         required
                       >
                         <option value="">Select a slot</option>
@@ -843,7 +843,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                       <select
                         value={checkData.guests}
                         onChange={(e) => setCheckData({ ...checkData, guests: e.target.value })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8B5A2B] focus:ring-2 focus:ring-[#8B5A2B]/20"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                       >
                         <option value="any">Number of guest</option>
                         {guestOptions.map((num) => (
@@ -858,7 +858,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                       <select
                         value={checkData.location}
                         onChange={(e) => setCheckData({ ...checkData, location: e.target.value })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8B5A2B] focus:ring-2 focus:ring-[#8B5A2B]/20"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                       >
                         <option value="any">Any Location</option>
                         {locations.map((loc) => (
@@ -873,7 +873,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                       <select
                         value={checkData.segment}
                         onChange={(e) => setCheckData({ ...checkData, segment: e.target.value })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#8B5A2B] focus:ring-2 focus:ring-[#8B5A2B]/20"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                       >
                         <option value="any">Any Segment</option>
                         {segments.map((seg) => (
@@ -886,7 +886,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                   <button
                     type="submit"
                     disabled={!checkData.date || !checkData.startTime || isLoading}
-                    className="w-full bg-[#8B5A2B] text-white py-4 rounded-lg font-bold text-lg hover:bg-[#6D4822] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed shadow-md flex items-center justify-center gap-3"
+                    className="w-full bg-primary text-white py-4 rounded-lg font-bold text-lg hover:bg-[#6D4822] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed shadow-md flex items-center justify-center gap-3"
                   >
                     {isLoading ? (
                       <>
@@ -904,9 +904,9 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
             {/* Availability Results / All Tables Alone */}
             {(uiMode === 'results' || uiMode === 'all') && (
               <div className="space-y-6">
-                <div className="flex justify-between items-center bg-[#FAF7F2] p-6 rounded-2xl border border-[#8B5A2B]/10">
+                <div className="flex justify-between items-center bg-background p-6 rounded-2xl border border-primary/10">
                   <div>
-                    <h2 className="text-3xl font-bold text-[#8B5A2B]">
+                    <h2 className="text-3xl font-bold text-primary">
                       {uiMode === 'all' ? 'All Restaurant Tables' : 'Availability Results'}
                     </h2>
                     <p className="text-gray-600 mt-1">
@@ -918,7 +918,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                   <div className="flex gap-3">
                     <button
                       onClick={handleRefresh}
-                      className="refresh-btn flex items-center gap-2 px-4 py-2 bg-white border border-[#8B5A2B]/30 text-[#8B5A2B] rounded-lg hover:bg-[#8B5A2B]/5 transition-all font-semibold"
+                      className="refresh-btn flex items-center gap-2 px-4 py-2 bg-white border border-primary/30 text-primary rounded-lg hover:bg-primary/5 transition-all font-semibold"
                     >
                       <RefreshCw className="w-4 h-4" />
                       Refresh
@@ -928,7 +928,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                         setUiMode('search');
                         setShowResults(false);
                       }}
-                      className="flex items-center gap-2 px-6 py-2 bg-white border-2 border-[#8B5A2B] text-[#8B5A2B] rounded-lg hover:bg-[#8B5A2B]/10 transition-all font-bold shadow-sm"
+                      className="flex items-center gap-2 px-6 py-2 bg-white border-2 border-primary text-primary rounded-lg hover:bg-primary/10 transition-all font-bold shadow-sm"
                     >
                       <ArrowLeft className="w-5 h-5" />
                       Back
@@ -945,11 +945,11 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
 
                 {/* Overall Availability Card - Only in Results mode */}
                 {uiMode === 'results' && availabilityResults.length > 0 && (
-                  <div className="bg-[#FAF7F2] border border-[#8B5A2B]/10 rounded-2xl p-6">
+                  <div className="bg-background border border-primary/10 rounded-2xl p-6">
                     <div className="flex justify-between items-center mb-6">
                       <div>
-                        <h3 className="text-2xl font-bold text-[#3E2723] flex items-center gap-2">
-                          <LayoutGrid className="w-6 h-6 text-[#8B5A2B]" />
+                        <h3 className="text-2xl font-bold text-foreground flex items-center gap-2">
+                          <LayoutGrid className="w-6 h-6 text-primary" />
                           Overall Restaurant Availability
                         </h3>
                         <p className="text-gray-600">
@@ -999,11 +999,11 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                 {/* Search Results Table */}
                 <div className="mt-8">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 bg-[#FAF7F2] rounded-full flex items-center justify-center">
-                      {uiMode === 'all' ? <LayoutGrid className="w-5 h-5 text-[#8B5A2B]" /> : <Search className="w-5 h-5 text-[#8B5A2B]" />}
+                    <div className="w-10 h-10 bg-background rounded-full flex items-center justify-center">
+                      {uiMode === 'all' ? <LayoutGrid className="w-5 h-5 text-primary" /> : <Search className="w-5 h-5 text-primary" />}
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold text-[#3E2723]">
+                      <h3 className="text-2xl font-bold text-foreground">
                         {uiMode === 'all' ? 'All Restaurant Tables' : 'Matching Tables'}
                       </h3>
                       <p className="text-gray-500 text-sm">
@@ -1017,7 +1017,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                   <div className="overflow-x-auto rounded-xl border border-gray-100 shadow-sm">
                     <table className="w-full min-w-[640px]">
                       <thead>
-                        <tr className="bg-[#FAF7F2]/50 border-b border-gray-100">
+                        <tr className="bg-background/50 border-b border-gray-100">
                           <th className="text-left py-4 px-6 font-bold text-xs text-gray-500 uppercase tracking-wider">TABLE</th>
                           <th className="text-left py-4 px-6 font-bold text-xs text-gray-500 uppercase tracking-wider">LOCATION</th>
                           <th className="text-left py-4 px-6 font-bold text-xs text-gray-500 uppercase tracking-wider">SEGMENT</th>
@@ -1066,7 +1066,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                               {table.isAvailable ? (
                                 <button
                                   onClick={() => handleReserveClick(table)}
-                                  className="bg-[#8B5A2B] text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-[#6D4822] transition-all shadow-sm active:scale-95"
+                                  className="bg-primary text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-[#6D4822] transition-all shadow-sm active:scale-95"
                                 >
                                   Reserve
                                 </button>
@@ -1095,7 +1095,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                     </p>
                     <button
                       onClick={() => handleJoinWaitingQueue()}
-                      className="bg-[#8B5A2B] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6D4822] transition-colors shadow-md"
+                      className="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6D4822] transition-colors shadow-md"
                     >
                       Join Queue
                     </button>
@@ -1107,7 +1107,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
             {/* My Reservations Tab */}
             {activeTab === 'my-reservations' && (
               <div>
-                <h2 className="text-3xl font-bold mb-8 text-[#8B5A2B]">
+                <h2 className="text-3xl font-bold mb-8 text-primary">
                   My Reservations
                 </h2>
 
@@ -1117,7 +1117,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                     <p className="text-gray-500 text-lg">No reservations found</p>
                     <button
                       onClick={() => setActiveTab('check')}
-                      className="mt-4 bg-[#8B5A2B] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6D4822] transition-colors"
+                      className="mt-4 bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6D4822] transition-colors"
                     >
                       Check Availability
                     </button>
@@ -1127,11 +1127,11 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                     {myReservations.map((reservation) => (
                       <div
                         key={reservation.reservationId}
-                        className="bg-[#FAF7F2] border border-[#8B5A2B]/20 rounded-xl p-6 hover:shadow-lg transition-shadow"
+                        className="bg-background border border-primary/20 rounded-xl p-6 hover:shadow-lg transition-shadow"
                       >
                         <div className="flex justify-between items-start mb-4">
                           <div>
-                            <h3 className="text-xl font-bold text-[#8B5A2B] mb-1">
+                            <h3 className="text-xl font-bold text-primary mb-1">
                               {allTables.find(t => t.tableId === String(reservation.tableNumber))?.tableName || `Table ${reservation.tableNumber}`}
                             </h3>
                             <span
@@ -1156,29 +1156,29 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                           <div className="flex items-center gap-2">
-                            <Calendar className="w-4 h-4 text-[#8B5A2B]" />
+                            <Calendar className="w-4 h-4 text-primary" />
                             <span className="text-gray-700">
                               {parseAndFormatDisplayDate(reservation.date)}
                             </span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Clock className="w-4 h-4 text-[#8B5A2B]" />
+                            <Clock className="w-4 h-4 text-primary" />
                             <span className="text-gray-700">{reservation.timeSlot}</span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Users className="w-4 h-4 text-[#8B5A2B]" />
+                            <Users className="w-4 h-4 text-primary" />
                             <span className="text-gray-700">{reservation.guests} Guests</span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <MapPin className="w-4 h-4 text-[#8B5A2B]" />
+                            <MapPin className="w-4 h-4 text-primary" />
                             <span className="text-gray-700 capitalize">{reservation.location}</span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <UserIcon className="w-4 h-4 text-[#8B5A2B]" />
+                            <UserIcon className="w-4 h-4 text-primary" />
                             <span className="text-gray-700">{reservation.userName}</span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Phone className="w-4 h-4 text-[#8B5A2B]" />
+                            <Phone className="w-4 h-4 text-primary" />
                             <span className="text-gray-700">{reservation.userPhone}</span>
                           </div>
                         </div>
@@ -1195,9 +1195,9 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
       {/* Confirmation Dialog */}
       {showConfirmDialog && confirmDialogData && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-[#8B5A2B]/20 overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-primary/20 overflow-hidden">
             {/* Header with brown background */}
-            <div className="bg-[#8B5A2B] px-8 py-6">
+            <div className="bg-primary px-8 py-6">
               <h3 className="text-white text-2xl font-bold">
                 {confirmDialogData.title}
               </h3>
@@ -1209,13 +1209,13 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
 
               <div className="flex justify-end gap-3">
                 <button
-                  className="px-8 py-3 rounded-lg border-2 border-[#8B5A2B] text-[#8B5A2B] hover:bg-[#8B5A2B]/10 transition-colors font-semibold"
+                  className="px-8 py-3 rounded-lg border-2 border-primary text-primary hover:bg-primary/10 transition-colors font-semibold"
                   onClick={() => setShowConfirmDialog(false)}
                 >
                   Cancel
                 </button>
                 <button
-                  className="px-8 py-3 rounded-lg bg-[#8B5A2B] text-white hover:bg-[#6D4822] transition-colors font-semibold shadow-md"
+                  className="px-8 py-3 rounded-lg bg-primary text-white hover:bg-[#6D4822] transition-colors font-semibold shadow-md"
                   onClick={confirmDialogData.onConfirm}
                 >
                   Confirm
@@ -1229,8 +1229,8 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
       {/* Reserve Table Popup */}
       {reservePopup.show && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-[#8B5A2B]/20 overflow-hidden transform transition-all scale-100">
-            <div className="bg-[#8B5A2B] px-8 py-6 flex justify-between items-center">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-primary/20 overflow-hidden transform transition-all scale-100">
+            <div className="bg-primary px-8 py-6 flex justify-between items-center">
               <h3 className="text-white text-2xl font-bold">
                 Reserve Table
               </h3>
@@ -1243,8 +1243,8 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
             </div>
 
             <div className="p-8">
-              <div className="mb-6 p-4 bg-[#FAF7F2] rounded-lg border border-[#8B5A2B]/10">
-                <p className="text-[#8B5A2B] font-bold text-lg mb-1">{reservePopup.table?.tableName}</p>
+              <div className="mb-6 p-4 bg-background rounded-lg border border-primary/10">
+                <p className="text-primary font-bold text-lg mb-1">{reservePopup.table?.tableName}</p>
                 <div className="flex gap-4 text-sm text-gray-600">
                   <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {reservePopup.table?.location}</span>
                   <span className="flex items-center gap-1"><Users className="w-3 h-3" /> {reservePopup.table?.capacity} Guests</span>
@@ -1263,7 +1263,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                           type="time"
                           value={checkData.startTime}
                           onChange={(e) => setCheckData({ ...checkData, startTime: e.target.value })}
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#8B5A2B]/20 focus:border-[#8B5A2B] outline-none transition-all"
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
                         />
                       </div>
                     </div>
@@ -1276,7 +1276,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                           value={checkData.endTime}
                           min={checkData.startTime || undefined}
                           onChange={(e) => setCheckData({ ...checkData, endTime: e.target.value })}
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#8B5A2B]/20 focus:border-[#8B5A2B] outline-none transition-all"
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
                         />
                       </div>
                     </div>
@@ -1291,7 +1291,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                       type="text"
                       value={reservePopup.name}
                       onChange={(e) => setReservePopup({ ...reservePopup, name: e.target.value })}
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#8B5A2B]/20 focus:border-[#8B5A2B] outline-none transition-all"
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
                       placeholder="Your Name"
                     />
                   </div>
@@ -1306,7 +1306,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                       maxLength={10}
                       value={reservePopup.phone}
                       onChange={(e) => setReservePopup({ ...reservePopup, phone: e.target.value.replace(/\D/g, '') })}
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#8B5A2B]/20 focus:border-[#8B5A2B] outline-none transition-all"
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
                       placeholder="e.g. 9876543210"
                     />
                   </div>
@@ -1316,7 +1316,7 @@ export default function Reservation({ user, onNavigate }: ReservationProps) {
                   <button
                     onClick={handleConfirmReservation}
                     disabled={!reservePopup.name || reservePopup.phone.length !== 10}
-                    className="w-full bg-[#8B5A2B] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#6D4822] transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-[#6D4822] transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Confirm & Reserve
                   </button>

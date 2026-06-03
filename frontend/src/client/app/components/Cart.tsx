@@ -202,7 +202,7 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
     <div className="w-full">
       <button
         onClick={() => setShowHistory((p) => !p)}
-        className="w-full flex items-center justify-between px-5 py-4 bg-white border border-[#E8DED0] rounded-2xl shadow-sm hover:shadow-md transition-all"
+        className="w-full flex items-center justify-between px-5 py-4 bg-white border border-border rounded-2xl shadow-sm hover:shadow-md transition-all"
       >
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center ring-1 ring-amber-100">
@@ -219,7 +219,7 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
       </button>
 
       {showHistory && (
-        <div className="mt-3 border border-[#E8DED0] rounded-2xl overflow-hidden bg-white shadow-sm">
+        <div className="mt-3 border border-border rounded-2xl overflow-hidden bg-white shadow-sm">
           {loadingHistory ? (
             <div className="flex items-center justify-center py-10 gap-2 text-gray-500">
               <Loader2 className="w-5 h-5 animate-spin" />
@@ -352,20 +352,20 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
         <div className="max-w-7xl mx-auto">
           <div className="mb-6 flex items-center justify-between gap-4 flex-wrap">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-[#8B5A2B]">Basket / Bills / History</p>
+              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-primary">Basket / Bills / History</p>
               <h2 className="mt-2 text-2xl sm:text-3xl font-bold text-[#2D1B10]">A calmer cart experience</h2>
             </div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#E8DED0] bg-white px-4 py-2 text-sm text-[#6D4C41] shadow-sm">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#8B5A2B]" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2 text-sm text-muted-foreground shadow-sm">
+              <span className="w-2.5 h-2.5 rounded-full bg-primary" />
               Empty basket, full control
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-6 lg:gap-8 items-start">
-            <div className="relative overflow-hidden rounded-[2rem] border border-[#E8DED0] bg-white shadow-[0_24px_80px_-24px_rgba(62,39,35,0.22)]">
+            <div className="relative overflow-hidden rounded-[2rem] border border-border bg-white shadow-[0_24px_80px_-24px_rgba(62,39,35,0.22)]">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(200,164,122,0.24),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(62,39,35,0.08),transparent_36%)]" />
               <div className="relative z-10 p-6 sm:p-10 lg:p-12">
-                <div className="inline-flex items-center gap-2 rounded-full bg-[#F8F1E7] px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8B5A2B] border border-[#C8A47A]/40">
+                <div className="inline-flex items-center gap-2 rounded-full bg-[#F8F1E7] px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-primary border border-[#C8A47A]/40">
                   <ShoppingBag className="w-3.5 h-3.5" />
                   Cart Ready
                 </div>
@@ -380,7 +380,7 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
                     <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#2D1B10] leading-tight max-w-xl">
                       Your cart is empty, but the kitchen is not.
                     </h2>
-                    <p className="mt-3 text-base sm:text-lg text-[#6D4C41] max-w-2xl leading-relaxed">
+                    <p className="mt-3 text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
                       Build a fresh order from the menu, or jump back into your bill history and continue where you left off.
                     </p>
                   </div>
@@ -389,7 +389,7 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
                 <div className="mt-8 flex flex-wrap gap-3">
                   <button
                     onClick={() => onNavigate('menu')}
-                    className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#8B5A2B] px-6 py-3.5 text-white font-semibold shadow-lg hover:bg-[#6D4C41] transition-all"
+                    className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 text-white font-semibold shadow-lg hover:bg-[#6D4C41] transition-all"
                   >
                     Browse Menu
                     <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
@@ -402,7 +402,7 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
                   </button>
                   <button
                     onClick={() => onNavigate('reservation')}
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-[#E8DED0] bg-[#FAF7F2] px-6 py-3.5 text-[#5D4037] font-semibold hover:bg-white transition-all"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-background px-6 py-3.5 text-[#5D4037] font-semibold hover:bg-white transition-all"
                   >
                     Reserve Table
                   </button>
@@ -414,9 +414,9 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
                     { title: 'Saved Bills', desc: 'Revisit invoices without digging through the app.' },
                     { title: 'Menu Favorites', desc: 'Return to dishes you already know will work.' },
                   ].map((item) => (
-                    <div key={item.title} className="rounded-2xl border border-[#E8DED0] bg-[#FFFDF9] p-4">
+                    <div key={item.title} className="rounded-2xl border border-border bg-[#FFFDF9] p-4">
                       <p className="font-semibold text-[#2D1B10]">{item.title}</p>
-                      <p className="mt-1 text-sm text-[#6D4C41] leading-relaxed">{item.desc}</p>
+                      <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -424,41 +424,41 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
             </div>
 
             <div className="space-y-4">
-              <div className="rounded-[2rem] border border-[#E8DED0] bg-white shadow-[0_20px_60px_-24px_rgba(62,39,35,0.18)] p-5 sm:p-6">
+              <div className="rounded-[2rem] border border-border bg-white shadow-[0_20px_60px_-24px_rgba(62,39,35,0.18)] p-5 sm:p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#8B5A2B]">Order Memory</p>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-primary">Order Memory</p>
                     <h3 className="text-xl font-bold text-[#2D1B10] mt-1">Recent activity</h3>
                   </div>
                   <div className="w-11 h-11 rounded-full bg-[#F8F1E7] flex items-center justify-center border border-[#C8A47A]/30">
-                    <Receipt className="w-5 h-5 text-[#8B5A2B]" />
+                    <Receipt className="w-5 h-5 text-primary" />
                   </div>
                 </div>
 
                 {user ? (
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-3">
-                      <div className="rounded-2xl bg-[#FAF7F2] border border-[#E8DED0] p-4">
-                        <p className="text-[11px] uppercase tracking-[0.2em] text-[#8B5A2B] font-bold">Recent bills</p>
+                      <div className="rounded-2xl bg-background border border-border p-4">
+                        <p className="text-[11px] uppercase tracking-[0.2em] text-primary font-bold">Recent bills</p>
                         <p className="mt-2 text-2xl font-bold text-[#2D1B10]">{invoiceHistory.length}</p>
                       </div>
-                      <div className="rounded-2xl bg-[#FAF7F2] border border-[#E8DED0] p-4">
-                        <p className="text-[11px] uppercase tracking-[0.2em] text-[#8B5A2B] font-bold">Last payment</p>
+                      <div className="rounded-2xl bg-background border border-border p-4">
+                        <p className="text-[11px] uppercase tracking-[0.2em] text-primary font-bold">Last payment</p>
                         <p className="mt-2 text-2xl font-bold text-[#2D1B10]">
                           {invoiceHistory[0] ? `₹${Number(invoiceHistory[0].grandTotal).toFixed(0)}` : '—'}
                         </p>
                       </div>
                     </div>
 
-                    <div className="rounded-2xl border border-[#E8DED0] bg-[#FFFDF9] p-4">
+                    <div className="rounded-2xl border border-border bg-[#FFFDF9] p-4">
                       {previousOrdersSection}
                     </div>
                   </div>
                 ) : (
-                  <div className="rounded-2xl border border-[#E8DED0] bg-[#FFFDF9] p-5">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#8B5A2B]">Signed out</p>
+                  <div className="rounded-2xl border border-border bg-[#FFFDF9] p-5">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Signed out</p>
                     <h3 className="text-lg font-bold text-[#2D1B10] mt-1">Log in to see previous bills</h3>
-                    <p className="text-sm text-[#6D4C41] mt-1">Previous orders and invoices appear once you sign in.</p>
+                    <p className="text-sm text-muted-foreground mt-1">Previous orders and invoices appear once you sign in.</p>
                     <button
                       onClick={() => onNavigate('login')}
                       className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-[#3E2723] px-5 py-3 text-white font-semibold hover:bg-[#2D1B10] transition-all"
@@ -469,15 +469,15 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
                 )}
               </div>
 
-              <div className="rounded-[2rem] border border-[#E8DED0] bg-white shadow-[0_20px_60px_-24px_rgba(62,39,35,0.18)] p-5 sm:p-6">
-                <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#8B5A2B]">Flow</p>
+              <div className="rounded-[2rem] border border-border bg-white shadow-[0_20px_60px_-24px_rgba(62,39,35,0.18)] p-5 sm:p-6">
+                <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-primary">Flow</p>
                 <div className="mt-4 space-y-3">
                   {[
                     'Browse the menu and add what you want',
                     'Review cart and complete payment',
                     'Track preparation status after checkout',
                   ].map((step, index) => (
-                    <div key={step} className="flex items-start gap-3 rounded-2xl bg-[#FAF7F2] border border-[#E8DED0] p-4">
+                    <div key={step} className="flex items-start gap-3 rounded-2xl bg-background border border-border p-4">
                       <div className="w-8 h-8 rounded-full bg-[#3E2723] text-[#FAF7F2] flex items-center justify-center text-sm font-bold shrink-0">
                         {index + 1}
                       </div>
@@ -510,11 +510,11 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
               {cart.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white rounded-2xl border border-[#E8D5B5] shadow-sm p-4 sm:p-5"
+                  className="bg-white rounded-2xl border border-border shadow-sm p-4 sm:p-5"
                 >
                   <div className="flex items-start gap-4">
                     {/* Item Image */}
-                    <div className="w-24 h-24 rounded-xl overflow-hidden bg-[#FAF0E4] flex-shrink-0 ring-1 ring-[#E8D5B5]">
+                    <div className="w-24 h-24 rounded-xl overflow-hidden bg-[#FAF0E4] flex-shrink-0 ring-1 ring-border">
                       <MenuItemImage
                         src={item.image}
                         alt={item.name}
@@ -526,7 +526,7 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between mb-2">
                         <div>
-                          <h3 className="font-semibold text-base sm:text-lg text-[#3E2723]">{item.name}</h3>
+                          <h3 className="font-semibold text-base sm:text-lg text-foreground">{item.name}</h3>
                           <span
                             className={`inline-block px-2 py-1 rounded text-xs font-medium mt-1 ${
                               item.isVeg
@@ -588,7 +588,7 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
                         </div>
                         <div className="text-right">
                           <p className="text-xs sm:text-sm text-gray-600">₹{item.price} each</p>
-                          <p className="text-lg sm:text-xl font-bold text-[#8B5A2B]">
+                          <p className="text-lg sm:text-xl font-bold text-primary">
                             ₹{(item.price * item.quantity).toFixed(2)}
                           </p>
                         </div>
@@ -600,8 +600,8 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
             </div>
 
             {/* Order Type Selection */}
-            <div className="bg-white rounded-2xl border border-[#E8D5B5] shadow-sm p-5">
-              <h2 className="!text-[22px] !font-semibold text-[#3E2723] mb-3">Select Order Type</h2>
+            <div className="bg-white rounded-2xl border border-border shadow-sm p-5">
+              <h2 className="!text-[22px] !font-semibold text-foreground mb-3">Select Order Type</h2>
               <div className="grid grid-cols-2 gap-3">
                 <button
                   onClick={() => { setOrderType('dine-in'); setTableNumber(''); }}
@@ -877,7 +877,7 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
                         onClick={() => { setSelectedPayment('upi'); setUpiError(null); }}
                         className={`flex flex-col items-center justify-center gap-1 rounded-lg border p-2 text-xs font-semibold transition-colors ${
                           selectedPayment === 'upi'
-                            ? 'border-[#C8A47A] bg-[#FAF7F2] text-[#3E2723]'
+                            ? 'border-[#C8A47A] bg-background text-foreground'
                             : 'border-[#C8A47A]/40 text-[#FAF7F2] hover:border-[#C8A47A]'
                         }`}
                       >
@@ -888,7 +888,7 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
                         onClick={() => { setSelectedPayment('card'); setUpiError(null); }}
                         className={`flex flex-col items-center justify-center gap-1 rounded-lg border p-2 text-xs font-semibold transition-colors ${
                           selectedPayment === 'card'
-                            ? 'border-[#C8A47A] bg-[#FAF7F2] text-[#3E2723]'
+                            ? 'border-[#C8A47A] bg-background text-foreground'
                             : 'border-[#C8A47A]/40 text-[#FAF7F2] hover:border-[#C8A47A]'
                         }`}
                       >
@@ -899,7 +899,7 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
                         onClick={() => { setSelectedPayment('cash'); setUpiError(null); }}
                         className={`flex flex-col items-center justify-center gap-1 rounded-lg border p-2 text-xs font-semibold transition-colors ${
                           selectedPayment === 'cash'
-                            ? 'border-[#C8A47A] bg-[#FAF7F2] text-[#3E2723]'
+                            ? 'border-[#C8A47A] bg-background text-foreground'
                             : 'border-[#C8A47A]/40 text-[#FAF7F2] hover:border-[#C8A47A]'
                         }`}
                       >
@@ -919,7 +919,7 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
                             setUpiId(e.target.value);
                             if (upiError) setUpiError(null);
                           }}
-                          className="w-full rounded-lg border border-[#C8A47A]/40 bg-[#FAF7F2] px-3 py-2 text-sm text-[#3E2723] placeholder:text-[#8B5A2B]/60 focus:outline-none focus:ring-2 focus:ring-[#C8A47A]"
+                          className="w-full rounded-lg border border-[#C8A47A]/40 bg-background px-3 py-2 text-sm text-foreground placeholder:text-primary/60 focus:outline-none focus:ring-2 focus:ring-[#C8A47A]"
                         />
                         {upiError && <p className="text-xs text-[#FCA5A5]">{upiError}</p>}
                       </div>
@@ -932,7 +932,7 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
                           <input
                             type="text"
                             placeholder="1234 5678 9012 3456"
-                            className="w-full rounded-lg border border-[#C8A47A]/40 bg-[#FAF7F2] px-3 py-2 text-sm text-[#3E2723] placeholder:text-[#8B5A2B]/60 focus:outline-none focus:ring-2 focus:ring-[#C8A47A]"
+                            className="w-full rounded-lg border border-[#C8A47A]/40 bg-background px-3 py-2 text-sm text-foreground placeholder:text-primary/60 focus:outline-none focus:ring-2 focus:ring-[#C8A47A]"
                           />
                         </div>
                         <div className="grid grid-cols-2 gap-2">
@@ -941,7 +941,7 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
                             <input
                               type="text"
                               placeholder="MM/YY"
-                              className="w-full rounded-lg border border-[#C8A47A]/40 bg-[#FAF7F2] px-3 py-2 text-sm text-[#3E2723] placeholder:text-[#8B5A2B]/60 focus:outline-none focus:ring-2 focus:ring-[#C8A47A]"
+                              className="w-full rounded-lg border border-[#C8A47A]/40 bg-background px-3 py-2 text-sm text-foreground placeholder:text-primary/60 focus:outline-none focus:ring-2 focus:ring-[#C8A47A]"
                             />
                           </div>
                           <div>
@@ -949,7 +949,7 @@ export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onChe
                             <input
                               type="text"
                               placeholder="123"
-                              className="w-full rounded-lg border border-[#C8A47A]/40 bg-[#FAF7F2] px-3 py-2 text-sm text-[#3E2723] placeholder:text-[#8B5A2B]/60 focus:outline-none focus:ring-2 focus:ring-[#C8A47A]"
+                              className="w-full rounded-lg border border-[#C8A47A]/40 bg-background px-3 py-2 text-sm text-foreground placeholder:text-primary/60 focus:outline-none focus:ring-2 focus:ring-[#C8A47A]"
                             />
                           </div>
                         </div>
