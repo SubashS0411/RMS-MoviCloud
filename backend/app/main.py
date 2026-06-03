@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
-from .db import init_db, get_db, force_mock_db, is_using_mock_db
+from .db import init_db, get_db, force_mock_db, is_using_mock_db, seed_db
 from .scheduler import start_scheduler, shutdown_scheduler
 
 # ── Admin route modules ──
@@ -87,9 +87,10 @@ async def startup():
                 print("[Startup] MongoMock fallback unavailable")
 
     if db_ready:
+        await seed_db()
         await start_scheduler()
     else:
-        print("[Startup] Scheduler skipped because database is unavailable")
+        print("[Startup] Scheduler and Seeding skipped because database is unavailable")
 
 @app.on_event('shutdown')
 async def shutdown():
