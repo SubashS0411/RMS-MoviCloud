@@ -324,10 +324,10 @@ export function InventoryManagement({ triggerStockManagement }: { triggerStockMa
   if (loading) return <LoadingInventory />;
 
   return (
-    <div className="min-h-screen bg-[#f8f6f3] pb-20 max-w-full overflow-x-hidden">
+    <div className="min-h-screen bg-background pb-20 max-w-full overflow-x-hidden">
       <div className="max-w-[1800px] mx-auto px-4 sm:px-6 pt-4 sm:pt-5 space-y-6">
         <div className="flex flex-wrap items-center justify-end gap-3">
-          <Button variant="outline" onClick={fetchData} disabled={loading} className="bg-white hover:bg-gray-50 text-foreground border-border">
+          <Button variant="outline" onClick={fetchData} disabled={loading} className="font-semibold shadow-sm">
             {loading ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : (
@@ -340,54 +340,32 @@ export function InventoryManagement({ triggerStockManagement }: { triggerStockMa
               <Pause className="mr-2 h-4 w-4" /> Stop Live Sync
             </Button>
           ) : (
-            <Button onClick={() => setIsSimulating(true)} className="bg-emerald-600 hover:bg-emerald-700 shadow-sm text-white">
+            <Button onClick={() => setIsSimulating(true)} variant="default" className="bg-green-600 hover:bg-green-700 shadow-sm text-white">
               <Play className="mr-2 h-4 w-4" /> Start Live Sync
             </Button>
           )}
           <AddPurchaseDialog ingredients={ingredients} suppliers={suppliers} onSave={handleAddPurchase} />
         </div>
 
-        <div className="w-full overflow-x-auto pb-2">
-          <div className="bg-muted text-muted-foreground rounded-xl p-[3px] grid grid-cols-5 min-w-[560px]">
-            {[
-              { id: 'dashboard', label: 'Dashboard', icon: Package },
-              { id: 'inventory', label: 'Stock', icon: Package },
-              { id: 'feed', label: 'Deductions', icon: History },
-              { id: 'suppliers', label: 'Suppliers', icon: Truck },
-              { id: 'records', label: 'Purchases', icon: FileText },
-            ].map((item) => {
-              const Icon = item.icon;
-              const isActive = activeTab === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveTab(item.id)}
-                  className={cn(
-                    'inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                    isActive
-                      ? 'bg-background text-foreground shadow-sm'
-                      : 'hover:bg-background/50 hover:text-foreground'
-                  )}
-                >
-                  <Icon className="h-4 w-4 flex-shrink-0" />
-                  {item.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full space-y-6">
+          <TabsList className="bg-card border border-border p-1 rounded-lg shadow-sm">
+            <TabsTrigger value="dashboard" className="rounded-md"><Package className="h-4 w-4 mr-2" /> Dashboard</TabsTrigger>
+            <TabsTrigger value="inventory" className="rounded-md"><Package className="h-4 w-4 mr-2" /> Stock</TabsTrigger>
+            <TabsTrigger value="feed" className="rounded-md"><History className="h-4 w-4 mr-2" /> Deductions</TabsTrigger>
+            <TabsTrigger value="suppliers" className="rounded-md"><Truck className="h-4 w-4 mr-2" /> Suppliers</TabsTrigger>
+            <TabsTrigger value="records" className="rounded-md"><FileText className="h-4 w-4 mr-2" /> Purchases</TabsTrigger>
+          </TabsList>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsContent value="dashboard" className="space-y-6 animate-in fade-in-50 duration-500">
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                <KPICard title="Total Ingredients" value={stats.total} icon={Package} />
-               <KPICard title="Low Stock Items" value={stats.low} icon={AlertTriangle} color="text-yellow-600" bg="bg-yellow-50" border="border-yellow-200" />
-               <KPICard title="Out of Stock" value={stats.out} icon={XCircle} color="text-red-600" bg="bg-red-50" border="border-red-200" />
-               <KPICard title="Deductions Today" value={stats.consumptionToday} icon={TrendingDown} color="text-blue-600" bg="bg-blue-50" border="border-blue-200" />
+               <KPICard title="Low Stock Items" value={stats.low} icon={AlertTriangle} color="text-warning" bg="bg-warning/10" border="border-warning/20" />
+               <KPICard title="Out of Stock" value={stats.out} icon={XCircle} color="text-destructive" bg="bg-destructive/10" border="border-destructive/20" />
+               <KPICard title="Deductions Today" value={stats.consumptionToday} icon={TrendingDown} color="text-info" bg="bg-info/10" border="border-info/20" />
              </div>
 
              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <Card className="lg:col-span-2 shadow-sm border-none bg-white">
+                <Card className="lg:col-span-2 shadow-sm border border-border bg-card">
                   <CardHeader>
                     <CardTitle>Consumption Trends</CardTitle>
                     <CardDescription>Live order-based ingredient usage over time</CardDescription>
@@ -397,33 +375,33 @@ export function InventoryManagement({ triggerStockManagement }: { triggerStockMa
                       <AreaChart data={deductionLogs.slice(0, 20).reverse().map((l, i) => ({ time: i, amount: l.ingredients.length }))}>
                         <defs>
                           <linearGradient id="colorUsage" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#10b981" stopOpacity={0.8}/>
-                            <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                            <stop offset="5%" stopColor="var(--color-primary)" stopOpacity={0.8}/>
+                            <stop offset="95%" stopColor="var(--color-primary)" stopOpacity={0}/>
                           </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-border)" />
                         <XAxis dataKey="time" hide />
                         <YAxis hide />
-                        <RechartsTooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-                        <Area type="monotone" dataKey="amount" stroke="#10b981" fillOpacity={1} fill="url(#colorUsage)" />
+                        <RechartsTooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', backgroundColor: 'var(--color-card)', color: 'var(--color-card-foreground)' }} />
+                        <Area type="monotone" dataKey="amount" stroke="var(--color-primary)" fillOpacity={1} fill="url(#colorUsage)" />
                       </AreaChart>
                     </ResponsiveContainer>
                   </CardContent>
                 </Card>
 
-                <Card className="shadow-sm border-none bg-white">
+                <Card className="shadow-sm border border-border bg-card">
                   <CardHeader>
                     <CardTitle>Low Stock Alerts</CardTitle>
                     <CardDescription>Advisory only - Action required</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {ingredients.filter(i => i.status !== 'Healthy').slice(0, 4).map(item => (
-                      <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg border bg-gray-50/50">
-                        {item.status === 'Out' ? <XCircle className="h-5 w-5 text-red-500 mt-0.5" /> : <AlertTriangle className="h-5 w-5 text-yellow-500 mt-0.5" />}
+                      <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg border border-border bg-muted/30">
+                        {item.status === 'Out' ? <XCircle className="h-5 w-5 text-destructive mt-0.5" /> : <AlertTriangle className="h-5 w-5 text-warning mt-0.5" />}
                         <div className="flex-1">
                           <div className="flex justify-between">
                             <h4 className="font-medium text-sm">{item.name}</h4>
-                            <span className={`text-xs font-bold ${item.status === 'Out' ? 'text-red-600' : 'text-yellow-600'}`}>{item.status}</span>
+                            <span className={`text-xs font-bold ${item.status === 'Out' ? 'text-destructive' : 'text-warning'}`}>{item.status}</span>
                           </div>
                           <p className="text-xs text-muted-foreground mt-1">
                             Current: {item.stockLevel} {item.unit} (Min: {item.minThreshold})
@@ -436,7 +414,7 @@ export function InventoryManagement({ triggerStockManagement }: { triggerStockMa
                     ))}
                     {ingredients.filter(i => i.status !== 'Healthy').length === 0 && (
                       <div className="flex flex-col items-center justify-center py-8 text-center text-muted-foreground">
-                        <CheckCircle2 className="h-10 w-10 text-green-100 mb-2" />
+                        <CheckCircle2 className="h-10 w-10 text-success/20 mb-2" />
                         <p>All stock levels are healthy.</p>
                       </div>
                     )}
@@ -448,14 +426,14 @@ export function InventoryManagement({ triggerStockManagement }: { triggerStockMa
           {/* INVENTORY TAB */}
           <TabsContent value="inventory" className="space-y-6 animate-in fade-in-50 duration-500">
             {/* Filters */}
-            <div className="flex flex-col md:flex-row gap-4 bg-white p-4 rounded-lg shadow-sm border">
+            <div className="flex flex-col md:flex-row gap-4 bg-card p-4 rounded-lg shadow-sm border border-border">
                <div className="flex-1 flex items-center gap-3">
                  <Search className="h-4 w-4 text-muted-foreground" />
                  <Input 
                    placeholder="Search ingredients..." 
                    value={searchQuery}
                    onChange={(e) => setSearchQuery(e.target.value)}
-                   className="border-none shadow-none focus-visible:ring-0 pl-0" 
+                   className="border-none shadow-none focus-visible:ring-0 pl-0 bg-transparent" 
                  />
                </div>
                <div className="flex items-center gap-3">
@@ -490,10 +468,10 @@ export function InventoryManagement({ triggerStockManagement }: { triggerStockMa
                </div>
             </div>
 
-            <div className="rounded-md border shadow-sm bg-white overflow-hidden">
+            <div className="rounded-lg border border-border shadow-sm bg-card overflow-hidden">
               <Table>
                 <TableHeader>
-                  <TableRow className="bg-gray-50 hover:bg-gray-50">
+                  <TableRow className="bg-muted/50 hover:bg-muted/50">
                     <TableHead>Ingredient Name</TableHead>
                     <TableHead>Category</TableHead>
                     <TableHead>Stock Level</TableHead>
@@ -515,20 +493,20 @@ export function InventoryManagement({ triggerStockManagement }: { triggerStockMa
                       <TableCell className="w-[200px]">
                         <Progress 
                           value={Math.min(100, (item.stockLevel / (item.minThreshold * 3)) * 100)} 
-                          className="h-2 bg-black/5"
+                          className="h-2 bg-muted"
                           indicatorClassName={
-                             item.status === 'Out' ? 'bg-red-600' :
-                             item.status === 'Critical' ? 'bg-red-500' :
-                             item.status === 'Low' ? 'bg-yellow-500' : 'bg-green-600'
+                             item.status === 'Out' ? 'bg-destructive' :
+                             item.status === 'Critical' ? 'bg-destructive' :
+                             item.status === 'Low' ? 'bg-warning' : 'bg-success'
                           } 
                         />
                       </TableCell>
                       <TableCell>
                         <Badge variant="outline" className={`
-                          ${item.status === 'Out' ? 'bg-red-100 text-red-700 border-red-200' : 
-                            item.status === 'Critical' ? 'bg-red-50 text-red-600 border-red-100' :
-                            item.status === 'Low' ? 'bg-yellow-100 text-yellow-700 border-yellow-200' : 
-                            'bg-green-100 text-green-700 border-green-200'}
+                          ${item.status === 'Out' ? 'bg-destructive/10 text-destructive border-destructive/20' : 
+                            item.status === 'Critical' ? 'bg-destructive/5 text-destructive border-destructive/10' :
+                            item.status === 'Low' ? 'bg-warning/10 text-warning border-warning/20' : 
+                            'bg-success/10 text-success border-success/20'}
                         `}>
                           {item.status}
                         </Badge>
@@ -556,7 +534,7 @@ export function InventoryManagement({ triggerStockManagement }: { triggerStockMa
           {/* FEED TAB */}
           <TabsContent value="feed" className="space-y-6 animate-in fade-in-50 duration-500">
              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <Card className="lg:col-span-2 border-none shadow-md overflow-hidden flex flex-col h-[600px] bg-slate-900 text-white relative">
+                <Card className="lg:col-span-2 border border-border shadow-md overflow-hidden flex flex-col h-[600px] bg-slate-900 text-white relative rounded-lg">
                    <div className="absolute top-0 w-full h-16 bg-gradient-to-b from-slate-900 to-transparent z-10 pointer-events-none" />
                    <CardHeader className="z-20 bg-slate-900/80 backdrop-blur border-b border-slate-800">
                      <CardTitle className="flex items-center gap-2">
@@ -618,15 +596,15 @@ export function InventoryManagement({ triggerStockManagement }: { triggerStockMa
           <TabsContent value="suppliers" className="space-y-6 animate-in fade-in-50 duration-500">
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {suppliers.map(supplier => (
-                  <Card key={supplier.id} className="group hover:shadow-lg transition-shadow border-none shadow-sm">
+                  <Card key={supplier.id} className="group hover:shadow-lg transition-shadow border border-border shadow-sm bg-card rounded-lg">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                       <div className="flex items-center gap-3">
-                        <Avatar className="h-10 w-10 border bg-white">
+                        <Avatar className="h-10 w-10 border bg-background">
                           <AvatarFallback className="text-primary">{supplier.name.substring(0,2).toUpperCase()}</AvatarFallback>
                         </Avatar>
                         <div>
                           <CardTitle className="text-base group-hover:text-primary transition-colors">{supplier.name}</CardTitle>
-                          <Badge variant={supplier.status === 'Active' ? 'default' : 'secondary'} className="mt-1 text-[10px] h-5">
+                          <Badge variant={supplier.status === 'Active' ? 'success' : 'secondary'} className="mt-1 text-[10px] h-5">
                             {supplier.status}
                           </Badge>
                         </div>
@@ -647,7 +625,7 @@ export function InventoryManagement({ triggerStockManagement }: { triggerStockMa
                         <p className="text-xs font-semibold text-muted-foreground uppercase">Supplies</p>
                         <div className="flex flex-wrap gap-1">
                           {supplier.suppliedItems.map(item => (
-                            <Badge key={item} variant="secondary" className="bg-gray-100 text-gray-700 hover:bg-gray-200">
+                            <Badge key={item} variant="secondary" className="bg-muted text-muted-foreground">
                               {item}
                             </Badge>
                           ))}
@@ -661,7 +639,7 @@ export function InventoryManagement({ triggerStockManagement }: { triggerStockMa
 
           {/* RECORDS TAB */}
           <TabsContent value="records" className="space-y-6 animate-in fade-in-50 duration-500">
-             <Card className="border-none shadow-sm">
+             <Card className="border border-border shadow-sm bg-card rounded-lg">
                <CardHeader>
                  <CardTitle>Purchase Records & Audit Logs</CardTitle>
                  <CardDescription>
@@ -671,7 +649,7 @@ export function InventoryManagement({ triggerStockManagement }: { triggerStockMa
                <CardContent>
                  <Table>
                    <TableHeader>
-                     <TableRow>
+                     <TableRow className="bg-muted/50">
                        <TableHead>Date & Time</TableHead>
                        <TableHead>Ingredient</TableHead>
                        <TableHead>Supplier</TableHead>
@@ -692,7 +670,7 @@ export function InventoryManagement({ triggerStockManagement }: { triggerStockMa
                          <TableCell><Badge variant="outline">Purchase</Badge></TableCell>
                          <TableCell>{record.quantity} Units</TableCell>
                          <TableCell>₹{record.cost.toLocaleString()}</TableCell>
-                         <TableCell><Badge variant="secondary" className="bg-yellow-100 text-yellow-800">Pending Receipt</Badge></TableCell>
+                         <TableCell><Badge variant="warning">Pending Receipt</Badge></TableCell>
                        </TableRow>
                      ))}
                      {purchaseRecords.length === 0 && (

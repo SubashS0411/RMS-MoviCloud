@@ -356,6 +356,11 @@ function TableCard({ table, onClick, waiters, onAssignWaiter, onCheckout, onRequ
   );
 }
 
+interface ReservationCardProps {
+  table: any;
+  onCancel: (tableId: string) => void;
+}
+
 function ReservationCard({ table, onCancel }: ReservationCardProps) {
   return (
     <motion.div

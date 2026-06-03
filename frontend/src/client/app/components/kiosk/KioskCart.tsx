@@ -70,7 +70,7 @@ export default function KioskCart({ cart, onUpdateQuantity, onRemoveItem, onChec
             centerSlot={
               <div className="hidden md:flex items-center gap-2">
                 <span className="rounded-full border border-[#E8DED0] bg-[#FCFAF7] px-3 py-1 text-[11px] font-semibold text-[#6D4C41]">
-                  {cart.length} item{cart.length !== 1 ? 's' : ''}
+                  0 items
                 </span>
                 <span className="rounded-full border border-[#E8DED0] bg-[#FCFAF7] px-3 py-1 text-[11px] font-semibold text-[#6D4C41]">
                   Counter Pickup
@@ -116,7 +116,7 @@ export default function KioskCart({ cart, onUpdateQuantity, onRemoveItem, onChec
           centerSlot={
             <div className="hidden md:flex items-center gap-2">
               <span className="rounded-full border border-[#E8DED0] bg-[#FCFAF7] px-3 py-1 text-[11px] font-semibold text-[#6D4C41]">
-                {cart.length} item{cart.length !== 1 ? 's' : ''}
+                0 items
               </span>
               <span className="rounded-full border border-[#E8DED0] bg-[#FCFAF7] px-3 py-1 text-[11px] font-semibold text-[#6D4C41]">
                 Counter Pickup

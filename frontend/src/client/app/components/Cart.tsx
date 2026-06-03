@@ -17,9 +17,10 @@ interface CartProps {
   onUpdateQuantity: (id: string, quantity: number) => void;
   onRemoveItem: (id: string) => void;
   onCheckout: (order: Order) => void;
+  onNavigate: (page: string) => void;
 }
 
-export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onCheckout }: CartProps) {
+export default function Cart({ cart, user, onUpdateQuantity, onRemoveItem, onCheckout, onNavigate }: CartProps) {
   const loyalty = useLoyalty();
   const [orderType, setOrderType] = useState<'dine-in' | 'takeaway' | null>(null);
   const [tableNumber, setTableNumber] = useState<string>('');

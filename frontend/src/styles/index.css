@@ -9,8 +9,6 @@
 @import './client-theme.css';
 
 /* ── Typography ─── */
-@import './admin-fonts.css';
-@import './client-fonts.css';
 @import './design-system.css';
 
 /* ── Module backgrounds ─── */
@@ -49,14 +47,6 @@ html, body {
     font-weight: 500 !important;
     line-height: 1.35 !important;
   }
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
 }
 
 .scroll-smooth-ios {

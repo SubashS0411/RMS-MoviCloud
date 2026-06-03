@@ -374,14 +374,14 @@ function AppContent() {
       </Tabs>
 
       {/* Footer � desktop only */}
-      <footer className="border-t mt-8 py-4 bg-white hidden sm:block">
+      <footer className="border-t mt-8 py-4 bg-card hidden sm:block">
         <div className="app-admin-content text-center">
           <p className="text-sm text-muted-foreground">{config.restaurantName}  Movicloud Labs</p>
         </div>
       </footer>
 
       {/* Mobile bottom navigation � scrollable, shows all tabs */}
-      <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] pb-[env(safe-area-inset-bottom)]">
+      <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border shadow-[0_-4px_20px_rgba(0,0,0,0.08)] pb-[env(safe-area-inset-bottom)]">
         <div className="flex overflow-x-auto scrollbar-hide">
           {permittedTabs.map(({ value, icon: Icon, label }) => {
             const isActive = activeTab === value;
@@ -390,13 +390,13 @@ function AppContent() {
                 key={value}
                 onClick={() => navigateTab(value)}
                 className={`[webkit-tap-highlight-color:transparent] min-w-16 app-mobile-nav-button flex flex-col items-center justify-center gap-0.5 transition-colors ${
-                  isActive ? 'text-[#8B5A2B]' : 'text-gray-500'
+                  isActive ? 'text-primary' : 'text-muted-foreground'
                 }`}
               >
-                <span className={`flex flex-col items-center justify-center rounded-full px-2 py-1 ${isActive ? 'bg-[#F5EDE5]' : ''}`}>
-                  <Icon className={`h-5 w-5 ${isActive ? 'text-[#8B5A2B]' : 'text-gray-500'}`} />
+                <span className={`flex flex-col items-center justify-center rounded-full px-2 py-1 ${isActive ? 'bg-primary/10' : ''}`}>
+                  <Icon className={`h-5 w-5 ${isActive ? 'text-primary' : 'text-muted-foreground'}`} />
                 </span>
-                <span className={`text-[10px] font-medium leading-none whitespace-nowrap ${isActive ? 'text-[#8B5A2B]' : 'text-gray-500'}`}>
+                <span className={`text-[10px] font-medium leading-none whitespace-nowrap ${isActive ? 'text-primary' : 'text-muted-foreground'}`}>
                   {label}
                 </span>
               </button>

@@ -27,7 +27,7 @@ function Progress({
     >
       <ProgressPrimitive.Indicator
         data-slot="progress-indicator"
-        className={cn("bg-primary h-full transition-all", toPercentClass(value), indicatorClassName)}
+        className={cn("bg-primary h-full transition-all", toPercentClass(value ?? undefined), indicatorClassName)}
       />
     </ProgressPrimitive.Root>
   );

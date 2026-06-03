@@ -479,6 +479,7 @@ export default function App() {
             user={appState.user || undefined}
             onUpdateQuantity={updateCartItem}
             onRemoveItem={removeFromCart}
+            onNavigate={(page: string) => handleModuleChange(page as Module)}
             onCheckout={(order) => {
               updateAppState({
                 currentOrder: order,

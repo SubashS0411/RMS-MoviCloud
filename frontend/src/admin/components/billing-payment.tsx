@@ -598,26 +598,26 @@ export function BillingPayment() {
   if (loading) return <LoadingBilling />;
 
   return (
-    <div className="min-h-screen bg-[#f8f8f8] space-y-4 sm:space-y-5 px-4 py-4 sm:px-6 sm:py-5 max-w-full overflow-x-hidden">
+    <div className="min-h-screen bg-background space-y-4 sm:space-y-5 px-4 py-4 sm:px-6 sm:py-5 max-w-full overflow-x-hidden">
       <div className="flex flex-wrap items-center justify-end gap-3">
-        <Button onClick={fetchOrders} size="sm" className="font-semibold shadow-sm bg-white text-[#8B5A2B] border border-[#e7ded4] hover:bg-gray-50">
+        <Button onClick={fetchOrders} size="sm" variant="outline" className="font-semibold shadow-sm">
           <RefreshCcw className="h-4 w-4 mr-2" />
           Refresh
         </Button>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-3 sm:w-[500px] bg-white border border-[#e7ded4] p-1 rounded-xl shadow-sm">
-          <TabsTrigger value="generate" className="rounded-xl font-medium text-[#6B5B4F] transition-all duration-300 hover:bg-[#F5EDE5] hover:text-[#8B5A2B] data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#8B5A2B] data-[state=active]:to-[#A0694B] data-[state=active]:!text-white data-[state=active]:shadow-md data-[state=active]:shadow-[#8B5A2B]/25">Bill Generation</TabsTrigger>
-          <TabsTrigger value="invoices" className="rounded-xl font-medium text-[#6B5B4F] transition-all duration-300 hover:bg-[#F5EDE5] hover:text-[#8B5A2B] data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#8B5A2B] data-[state=active]:to-[#A0694B] data-[state=active]:!text-white data-[state=active]:shadow-md data-[state=active]:shadow-[#8B5A2B]/25">Invoices</TabsTrigger>
-          <TabsTrigger value="refunds" className="rounded-xl font-medium text-[#6B5B4F] transition-all duration-300 hover:bg-[#F5EDE5] hover:text-[#8B5A2B] data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#8B5A2B] data-[state=active]:to-[#A0694B] data-[state=active]:!text-white data-[state=active]:shadow-md data-[state=active]:shadow-[#8B5A2B]/25">Refunds</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3 sm:w-[500px] bg-card border border-border p-1 rounded-lg shadow-sm">
+          <TabsTrigger value="generate" className="rounded-md font-medium transition-all duration-300">Bill Generation</TabsTrigger>
+          <TabsTrigger value="invoices" className="rounded-md font-medium transition-all duration-300">Invoices</TabsTrigger>
+          <TabsTrigger value="refunds" className="rounded-md font-medium transition-all duration-300">Refunds</TabsTrigger>
         </TabsList>
 
         {/* Bill Generation Tab */}
         <TabsContent value="generate" className="space-y-4 sm:space-y-5">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5 items-stretch">
             {/* Order Selection */}
-            <Card className="h-full shadow-sm border border-[#ebe2d8] rounded-2xl bg-white flex flex-col">
+            <Card className="h-full shadow-sm border border-border rounded-lg bg-card flex flex-col">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg flex items-center gap-2">
                   Select Order
@@ -635,7 +635,7 @@ export function BillingPayment() {
                     {orders.map(order => (
                       <Card
                         key={order.id}
-                        className={`cursor-pointer transition-all hover:shadow-md rounded-xl ${
+                        className={`cursor-pointer transition-all hover:shadow-md rounded-lg ${
                           selectedOrder?.id === order.id
                             ? 'border-primary bg-primary/5'
                             : order.status === 'bill_requested'
@@ -677,7 +677,7 @@ export function BillingPayment() {
             </Card>
 
             {/* Bill Items */}
-            <Card className="lg:col-span-2 h-full shadow-sm border border-[#ebe2d8] rounded-2xl bg-white flex flex-col">
+            <Card className="lg:col-span-2 h-full shadow-sm border border-border rounded-lg bg-card flex flex-col">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg">Bill Items</CardTitle>
                 <CardDescription>
@@ -690,7 +690,7 @@ export function BillingPayment() {
                 {/* Items List */}
                 <div className="space-y-2.5">
                   {billItems.map(item => (
-                    <div key={item.id} className="flex items-center justify-between p-3 border rounded-xl bg-white">
+                    <div key={item.id} className="flex items-center justify-between p-3 border border-border rounded-lg bg-card">
                       <div className="flex-1">
                         <p className="font-medium">{item.name}</p>
                         <p className="text-sm text-muted-foreground">
@@ -1058,7 +1058,7 @@ export function BillingPayment() {
             <div className="space-y-6 overflow-y-auto flex-1 pr-1">
               {/* Invoice Header */}
               <div className="text-center border-b pb-4">
-                <h2 className="text-2xl font-bold">Restaurant Management System</h2>
+                <h2 className="text-2xl font-bold">{sysConfig.restaurantName}</h2>
                 <p className="text-sm text-muted-foreground">Movicloud Labs</p>
                 <p className="text-sm text-muted-foreground mt-2">
                   Invoice: {previewInvoice.invoice_number}
