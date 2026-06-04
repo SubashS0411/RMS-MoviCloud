@@ -86,3 +86,172 @@ def get_db():
     if db is None:
         raise RuntimeError('Database not initialized. Unable to connect to database.')
     return db
+
+
+async def seed_db():
+    """Seed the database with default roles and staff if empty"""
+    global db
+    if db is None:
+        db = get_db()
+    
+    # 1. Seed Roles
+    try:
+        roles_coll = db.get_collection('roles')
+        roles_count = await roles_coll.count_documents({})
+        if roles_count == 0:
+            from datetime import datetime
+            default_roles = [
+                {
+                    '_id': 'admin',
+                    'name': 'Admin',
+                    'description': 'Full system access with all permissions',
+                    'permissions': {
+                        'dashboard': True, 'menu': True, 'orders': True, 'kitchen': True,
+                        'tables': True, 'inventory': True, 'staff': True, 'billing': True,
+                        'delivery': True, 'offers': True, 'reports': True, 'notifications': True, 'settings': True
+                    },
+                    'createdAt': datetime.utcnow().isoformat()
+                },
+                {
+                    '_id': 'manager',
+                    'name': 'Manager',
+                    'description': 'Restaurant operations management',
+                    'permissions': {
+                        'dashboard': True, 'menu': True, 'orders': True, 'kitchen': True,
+                        'tables': True, 'inventory': True, 'staff': True, 'billing': True,
+                        'delivery': True, 'offers': True, 'reports': True, 'notifications': True, 'settings': False
+                    },
+                    'createdAt': datetime.utcnow().isoformat()
+                },
+                {
+                    '_id': 'chef',
+                    'name': 'Chef',
+                    'description': 'Kitchen and menu management',
+                    'permissions': {
+                        'dashboard': True, 'menu': True, 'orders': True, 'kitchen': True,
+                        'tables': False, 'inventory': True, 'staff': False, 'billing': False,
+                        'delivery': False, 'offers': False, 'reports': False, 'notifications': True, 'settings': False
+                    },
+                    'createdAt': datetime.utcnow().isoformat()
+                },
+                {
+                    '_id': 'waiter',
+                    'name': 'Waiter',
+                    'description': 'Order and table management',
+                    'permissions': {
+                        'dashboard': True, 'menu': True, 'orders': True, 'kitchen': False,
+                        'tables': True, 'inventory': False, 'staff': False, 'billing': True,
+                        'delivery': False, 'offers': False, 'reports': False, 'notifications': True, 'settings': False
+                    },
+                    'createdAt': datetime.utcnow().isoformat()
+                },
+                {
+                    '_id': 'cashier',
+                    'name': 'Cashier',
+                    'description': 'Billing and payment management',
+                    'permissions': {
+                        'dashboard': True, 'menu': True, 'orders': True, 'kitchen': False,
+                        'tables': False, 'inventory': False, 'staff': False, 'billing': True,
+                        'delivery': False, 'offers': True, 'reports': True, 'notifications': True, 'settings': False
+                    },
+                    'createdAt': datetime.utcnow().isoformat()
+                },
+                {
+                    '_id': 'delivery',
+                    'name': 'Delivery',
+                    'description': 'Delivery and order management',
+                    'permissions': {
+                        'dashboard': True, 'menu': True, 'orders': True, 'kitchen': False,
+                        'tables': False, 'inventory': False, 'staff': False, 'billing': False,
+                        'delivery': True, 'offers': False, 'reports': False, 'notifications': True, 'settings': False
+                    },
+                    'createdAt': datetime.utcnow().isoformat()
+                }
+            ]
+            await roles_coll.insert_many(default_roles)
+            print("[DB] Default roles seeded successfully")
+    except Exception as e:
+        print(f"[DB] Error seeding default roles: {e}")
+
+    # 2. Seed Staff
+    try:
+        staff_coll = db.get_collection('staff')
+        staff_count = await staff_coll.count_documents({})
+        if staff_count == 0:
+            from datetime import datetime
+            from .utils import hash_password
+            
+            default_staff = [
+                {
+                    'name': 'Admin User',
+                    'email': 'admin@restaurant.com',
+                    'role': 'admin',
+                    'password_hash': hash_password('password123'),
+                    'phone': '+91 9999999999',
+                    'shift': 'morning',
+                    'department': 'Administration',
+                    'salary': 75000,
+                    'hireDate': datetime.utcnow().isoformat(),
+                    'active': True,
+                    'createdAt': datetime.utcnow().isoformat()
+                },
+                {
+                    'name': 'Rahul Sharma',
+                    'email': 'rahul@restaurant.com',
+                    'role': 'chef',
+                    'password_hash': hash_password('password123'),
+                    'phone': '+91 9876543210',
+                    'shift': 'morning',
+                    'department': 'Kitchen',
+                    'salary': 45000,
+                    'hireDate': datetime.utcnow().isoformat(),
+                    'active': True,
+                    'kitchenStation': 'HEAD_CHEF',
+                    'kitchenPin': '0000',
+                    'createdAt': datetime.utcnow().isoformat()
+                },
+                {
+                    'name': 'Amit Kumar',
+                    'email': 'amit@restaurant.com',
+                    'role': 'manager',
+                    'password_hash': hash_password('password123'),
+                    'phone': '+91 9876543212',
+                    'shift': 'morning',
+                    'department': 'Management',
+                    'salary': 55000,
+                    'hireDate': datetime.utcnow().isoformat(),
+                    'active': True,
+                    'createdAt': datetime.utcnow().isoformat()
+                },
+                {
+                    'name': 'Priya Patel',
+                    'email': 'priya@restaurant.com',
+                    'role': 'waiter',
+                    'password_hash': hash_password('password123'),
+                    'phone': '+91 9876543211',
+                    'shift': 'evening',
+                    'department': 'Service',
+                    'salary': 25000,
+                    'hireDate': datetime.utcnow().isoformat(),
+                    'active': True,
+                    'createdAt': datetime.utcnow().isoformat()
+                },
+                {
+                    'name': 'Sneha Reddy',
+                    'email': 'sneha@restaurant.com',
+                    'role': 'cashier',
+                    'password_hash': hash_password('password123'),
+                    'phone': '+91 9876543213',
+                    'shift': 'morning',
+                    'department': 'Billing',
+                    'salary': 28000,
+                    'hireDate': datetime.utcnow().isoformat(),
+                    'active': True,
+                    'createdAt': datetime.utcnow().isoformat()
+                }
+            ]
+            await staff_coll.insert_many(default_staff)
+            print("[DB] Default staff seeded successfully")
+    except Exception as e:
+        print(f"[DB] Error seeding default staff: {e}")
+
