@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/admin/components/ui/button';
 import { Badge } from '@/admin/components/ui/badge';
+import { Card, CardContent } from '@/admin/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/admin/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/admin/components/ui/select';
 import { Input } from '@/admin/components/ui/input';
@@ -186,7 +187,7 @@ function TableCard({ table, onClick, waiters, onAssignWaiter, onCheckout, onRequ
     >
       <div
         className={cn(
-          "bg-white cursor-pointer transition-all duration-200 border rounded-xl h-[272px] p-2.5 flex flex-col",
+          "bg-white cursor-pointer transition-all duration-200 border rounded-xl h-[176px] p-2.5 flex flex-col overflow-hidden",
           "border-[#ece5dc] shadow-[0_4px_10px_rgba(0,0,0,0.06)] hover:-translate-y-[3px] hover:shadow-[0_8px_16px_rgba(0,0,0,0.09)]",
           isPulsing && "animate-pulse border-amber-500 shadow-xl"
         )}
@@ -359,11 +360,11 @@ function TableCard({ table, onClick, waiters, onAssignWaiter, onCheckout, onRequ
 }
 
 interface ReservationCardProps {
-  table: any;
-  onCancel: (tableId: string) => void;
+  reservation: any;
+  onCancel: (reservation: any) => void;
 }
 
-function ReservationCard({ table, onCancel }: ReservationCardProps) {
+function ReservationCard({ reservation, onCancel }: ReservationCardProps) {
   return (
     <motion.div
       layout
@@ -377,32 +378,32 @@ function ReservationCard({ table, onCancel }: ReservationCardProps) {
           {/* Table Number */}
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-stone-800 text-white rounded-lg flex items-center justify-center font-bold text-lg">
-              {table.displayNumber}
+              {reservation.tableNumber || 'TBD'}
             </div>
             <div>
-              <p className="text-sm text-stone-500">Table • {table.capacity} Seats</p>
-              <p className="text-xs text-stone-400">{table.location}</p>
+              <p className="text-sm text-stone-500">Table • {reservation.guests || 0} Guests</p>
+              <p className="text-xs text-stone-400">{reservation.location || 'Unassigned'}</p>
             </div>
           </div>
 
           {/* Time Slot */}
-          {table.reservationSlot && (
+          {reservation.timeSlot && (
             <div className="flex items-center gap-2 text-amber-900">
               <Clock className="w-4 h-4" />
-              <span className="font-medium text-sm">{table.reservationSlot}</span>
+              <span className="font-medium text-sm">{reservation.timeSlot}</span>
             </div>
           )}
 
           {/* Guest Count */}
           <div className="flex items-center gap-2 text-stone-700">
             <Users className="w-4 h-4" />
-            <span className="text-sm">{table.guestCount} Guests</span>
+            <span className="text-sm">{reservation.guests || 0} Guests</span>
           </div>
 
           {/* Status */}
           <div className="inline-block">
             <span className="text-xs font-medium text-stone-800 bg-stone-100 px-3 py-1 rounded-full border border-stone-300">
-              {table.reservationStatus}
+              {reservation.status}
             </span>
           </div>
         </div>
@@ -412,7 +413,7 @@ function ReservationCard({ table, onCancel }: ReservationCardProps) {
           variant="outline"
           size="sm"
           className="border-stone-300 text-stone-700 hover:bg-stone-100 hover:text-stone-900"
-          onClick={() => onCancel(table.id)}
+          onClick={() => onCancel(reservation)}
         >
           <X className="w-4 h-4 mr-1" />
           Cancel
@@ -619,6 +620,7 @@ function parseReservationTime(timeStr: string | null | undefined): Date | null {
 export function TableManagementComprehensive() {
   const { user } = useAuth();
   const [tables, setTables] = useState<any[]>([]);
+  const [reservations, setReservations] = useState<any[]>([]);
   const [waiters, setWaiters] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const isInitialLoad = useRef(true);
@@ -647,9 +649,10 @@ export function TableManagementComprehensive() {
   const fetchData = async () => {
     try {
       // Fetch tables and staff independently so a staff failure never blocks the table view
-      const [tablesRes, staffRes] = await Promise.allSettled([
+      const [tablesRes, staffRes, reservationsRes] = await Promise.allSettled([
         tablesApi.list(),
-        staffApi.list({ role: 'Waiter' })
+        staffApi.list({ role: 'Waiter' }),
+        tablesApi.listReservations()
       ]);
 
       // ── Tables ──────────────────────────────────────────
@@ -683,6 +686,50 @@ export function TableManagementComprehensive() {
           reservedFor: t.reservedFor || t.reservation?.customerName || t.reservation?.name || null,
           reservationTime: t.reservationTime || t.reservation?.time || t.reservation?.scheduledTime || null,
         }));
+
+        let normalizedReservations: any[] = [];
+        if (reservationsRes.status === 'fulfilled') {
+          const rawReservations = Array.isArray(reservationsRes.value)
+            ? reservationsRes.value
+            : ((reservationsRes.value as any).data || []);
+          normalizedReservations = rawReservations.map((r: any) => {
+            const reservationId = r._id || r.id || r.reservationId || r.reservation_id;
+            const tableId = r.tableId || r.table_id || r.table?._id || r.table?.id || r.tableIdRef;
+            const tableNumber = r.tableNumber || r.displayNumber || r.table_number || r.tableName || r.table?.displayNumber || r.table?.name || '';
+            return {
+              id: reservationId,
+              tableId,
+              tableNumber,
+              timeSlot: r.timeSlot || r.reservationSlot || r.slot,
+              date: r.date || r.reservationDate,
+              guests: r.guests ?? r.guestCount ?? r.partySize ?? 0,
+              location: r.location || r.tableLocation || r.table?.location,
+              segment: r.segment || r.tableSegment || r.table?.segment,
+              status: r.status || r.reservationStatus || 'Confirmed',
+              userName: r.userName || r.customerName || r.name || null,
+              userPhone: r.userPhone || r.phone || null,
+            };
+          });
+          setReservations(normalizedReservations);
+        } else {
+          console.warn('Could not load reservations:', reservationsRes.reason);
+          setReservations([]);
+        }
+
+        if (normalizedReservations.length > 0) {
+          const byTableId = new Map(normalizedReservations.filter(r => r.tableId).map(r => [String(r.tableId), r]));
+          const byTableNumber = new Map(normalizedReservations.filter(r => r.tableNumber).map(r => [String(r.tableNumber), r]));
+          transformedTables.forEach((t: any) => {
+            const match = byTableId.get(String(t.id)) || byTableNumber.get(String(t.displayNumber)) || byTableNumber.get(String(t.number));
+            if (!match) return;
+            t.reservationSlot = match.timeSlot || t.reservationSlot;
+            t.reservationStatus = match.status || t.reservationStatus;
+            t.reservedFor = match.userName || t.reservedFor;
+            if (t.status === 'Available' && match.status && match.status !== 'Cancelled') {
+              t.status = 'Reserved';
+            }
+          });
+        }
         setTables(transformedTables);
       } else {
         console.error('Error fetching tables:', tablesRes.reason);
@@ -827,9 +874,14 @@ export function TableManagementComprehensive() {
     }
   };
 
-  const handleCancelReservation = async (tableId: string) => {
+  const handleCancelReservation = async (reservation: any) => {
     try {
-      await tablesApi.updateStatus(tableId, 'available');
+      if (reservation?.id) {
+        await tablesApi.deleteReservation(reservation.id);
+      }
+      if (reservation?.tableId) {
+        await tablesApi.updateStatus(reservation.tableId, 'available');
+      }
       toast.success('Reservation cancelled');
       fetchData();
     } catch (error) {
@@ -1029,10 +1081,15 @@ export function TableManagementComprehensive() {
   const filteredTables = (selectedLocation === 'All'
     ? tables
     : tables.filter(t => t.location === selectedLocation)
-  ).filter(t => !isWaiterUser || t.waiterId === user?.id);
+  ).filter((t) => {
+    if (!isWaiterUser) return true;
+    // Waiters should always be able to see all available tables,
+    // plus any tables already assigned to them.
+    return t.status === 'Available' || t.waiterId === user?.id;
+  });
 
-  const reservationTables = tables.filter(
-    t => t.reservationStatus && !['Cancelled', 'Expired'].includes(t.reservationStatus)
+  const reservationTables = reservations.filter(
+    (r) => r.status && !['Cancelled', 'Expired'].includes(String(r.status))
   );
 
   const groupedTables: Record<string, any[]> = filteredTables.reduce((acc: Record<string, any[]>, table) => {
@@ -1050,27 +1107,40 @@ export function TableManagementComprehensive() {
 
   return (
     <div className="min-h-screen p-4 sm:p-5 space-y-2.5 bg-[#f8f6f3] max-w-full overflow-x-hidden text-[#2c2c2c]">
-      {/* Header Row: KPI cards (left) + Actions (right) */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-2.5">
+      {/* Header Row: Walk-In button above KPI cards */}
+      <div className="space-y-4">
+        <div className="flex justify-end">
+          <Button
+            className="h-9 rounded-md bg-[#8B5A2B] hover:bg-[#6B4520] text-white text-xs sm:text-sm"
+            onClick={handleWalkIn}
+          >
+            <UserPlus className="w-4 h-4 mr-1 sm:mr-2" />
+            Walk-In Entry
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
           {[
             { label: 'Available Tables', count: tables.filter(t => t.status === 'Available').length, color: 'bg-[#6ea77a]', text: 'text-[#4f7f5b]' },
             { label: 'Occupied Tables', count: tables.filter(t => t.status === 'Occupied' || t.status === 'Eating').length, color: 'bg-[#6f8598]', text: 'text-[#5f7284]' },
             { label: 'Reserved Tables', count: tables.filter(t => t.status === 'Reserved').length, color: 'bg-[#c79b63]', text: 'text-[#92693e]' },
             { label: 'Cleaning Tables', count: tables.filter(t => t.status === 'Cleaning').length, color: 'bg-gray-400', text: 'text-gray-700' },
           ].map(({ label, count, color, text }) => (
-            <div key={label} className="h-[72px] w-[200px] flex items-center justify-center gap-2 rounded-xl border border-[#ece5dc] bg-white px-2.5 py-2 shadow-[0_4px_10px_rgba(0,0,0,0.06)]">
-              <div className={`w-3 h-3 rounded-full ${color}`} />
-              <div className="flex flex-col justify-center">
-                <p className="text-[16px] leading-none font-bold text-gray-900 mb-0.5">{count}</p>
-                <p className={`text-[12px] font-medium ${text}`}>{label}</p>
-              </div>
-            </div>
+            <Card key={label} className="hover:shadow-md transition-shadow">
+              <CardContent className="flex items-center justify-between gap-3 py-5">
+                <div className="flex items-center gap-2">
+                  <div className={`w-3 h-3 rounded-full ${color}`} />
+                  <div>
+                    <p className="text-2xl font-semibold text-slate-900">{count}</p>
+                    <p className={`text-sm font-medium ${text}`}>{label}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-          {/* Only admin/manager can add tables */}
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 justify-end">
           {(user?.role === 'admin' || user?.role === 'manager') && (
             <>
               <Button
@@ -1090,13 +1160,6 @@ export function TableManagementComprehensive() {
               </Button>
             </>
           )}
-          <Button
-            className="h-9 rounded-md bg-[#8B5A2B] hover:bg-[#6B4520] text-white text-xs sm:text-sm"
-            onClick={handleWalkIn}
-          >
-            <UserPlus className="w-4 h-4 mr-1 sm:mr-2" />
-            Walk-In Entry
-          </Button>
         </div>
       </div>
 
@@ -1163,7 +1226,10 @@ export function TableManagementComprehensive() {
                   <MapPin className="w-4 h-4 text-[#8B5A2B]" />
                   {location}
                 </h2>
-                <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))' }}>
+                <div
+                  className="grid gap-3"
+                  style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(380px, 1fr))', gridAutoRows: '176px' }}
+                >
                   <AnimatePresence>
                     {locationTables.map((table) => (
                       <TableCard
@@ -1208,10 +1274,10 @@ export function TableManagementComprehensive() {
                 </div>
               ) : (
                 <AnimatePresence>
-                  {reservationTables.map((table) => (
+                  {reservationTables.map((reservation) => (
                     <ReservationCard
-                      key={table.id}
-                      table={table}
+                      key={reservation.id}
+                      reservation={reservation}
                       onCancel={handleCancelReservation}
                     />
                   ))}
