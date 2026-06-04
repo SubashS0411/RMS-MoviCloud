@@ -41,10 +41,16 @@ export async function apiRequest<T>(
   const payload = isJson ? await res.json().catch(() => null) : await res.text().catch(() => null);
 
   if (!res.ok) {
-    const message =
-      payload && typeof payload === "object" && "error" in (payload as any)
-        ? String((payload as any).error)
-        : `HTTP ${res.status}`;
+    const message = (() => {
+      if (payload && typeof payload === "object") {
+        const data = payload as Record<string, unknown>;
+        if (typeof data.error === "string" && data.error.trim()) return data.error;
+        if (typeof data.detail === "string" && data.detail.trim()) return data.detail;
+        if (Array.isArray(data.detail)) return JSON.stringify(data.detail);
+      }
+      if (typeof payload === "string" && payload.trim()) return payload;
+      return `HTTP ${res.status}`;
+    })();
     throw new Error(message);
   }
 

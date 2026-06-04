@@ -8,6 +8,7 @@ echo ============================================
 echo.
 
 set "PYTHON_CMD=python"
+set "BACKEND_PYTHON=%~dp0backend\.venv\Scripts\python.exe"
 
 :: Verify Python is available
 %PYTHON_CMD% --version >nul 2>&1
@@ -42,7 +43,12 @@ echo       Done.
 echo.
 echo [3/4] Starting backend (FastAPI)...
 cd /d "%~dp0backend"
-start "RMS Backend" cmd /k "%PYTHON_CMD% -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"
+if exist "%BACKEND_PYTHON%" (
+    set "UVICORN_PYTHON=%BACKEND_PYTHON%"
+) else (
+    set "UVICORN_PYTHON=%PYTHON_CMD%"
+)
+start "RMS Backend" cmd /k ""%UVICORN_PYTHON%" -m uvicorn app.main:app --reload --reload-dir app --reload-exclude scripts --host 0.0.0.0 --port 10000"
 
 :: Give backend a moment to boot
 timeout /t 3 /nobreak >nul
@@ -55,8 +61,8 @@ echo.
 echo ============================================
 echo    Both servers are running!
 echo    Frontend : http://localhost:5173
-echo    Backend  : http://localhost:8000
-echo    API Docs : http://localhost:8000/docs
+echo    Backend  : http://localhost:10000
+echo    API Docs : http://localhost:10000/docs
 echo ============================================
 echo.
 echo Close this window or press any key to exit.
