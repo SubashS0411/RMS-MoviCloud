@@ -97,6 +97,9 @@
   .app-navbar-inner {
     @apply mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8;
   }
+  .app-admin-navbar-inner {
+    @apply mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8;
+  }
   .app-navbar-row {
     @apply flex h-16 sm:h-20 items-center justify-between gap-4;
   }
