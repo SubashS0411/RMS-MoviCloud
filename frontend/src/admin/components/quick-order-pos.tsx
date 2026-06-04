@@ -471,10 +471,17 @@ export function QuickOrderPOS({ open, onOpenChange, onOrderCreated, initialTable
         // Map _id to id for frontend compatibility
         const availableItems = menuData
           .filter((item: MenuItem) => item.available !== false)
-          .map((item: any) => ({
-            ...item,
-            id: item._id || item.id,
-          }));
+          .map((item: any) => {
+            const nameValue = typeof item.name === 'string' ? item.name : String(item.name || '').trim();
+            const categoryValue = typeof item.category === 'string' ? item.category : String(item.category || '').trim();
+            return {
+              ...item,
+              id: item._id || item.id,
+              name: nameValue || 'Unknown Item',
+              category: categoryValue || 'uncategorized',
+              price: Number(item.price) || 0,
+            };
+          });
         setMenuItems(availableItems);
         menuFetched = true;
         console.log('Loaded', availableItems.length, 'menu items from API');
@@ -568,7 +575,20 @@ export function QuickOrderPOS({ open, onOpenChange, onOrderCreated, initialTable
     setTablesLoading(true);
     try {
       const result = await tablesApi.list();
-      const tables: TableData[] = result.data || [];
+      const rawTables = Array.isArray(result) ? result : (result.data || []);
+      const tables: TableData[] = rawTables.map((t: any) => ({
+        _id: t._id || t.id,
+        name: t.name || t.tableNumber || t.table_number || t.displayNumber || t.display_number || '',
+        displayNumber: t.displayNumber || t.display_number || t.name || t.tableNumber || t.table_number || '',
+        capacity: t.capacity ?? 0,
+        location: t.location || 'Other',
+        segment: t.segment || 'General',
+        status: (t.status || 'available') as TableData['status'],
+        reservationType: t.reservationType || t.reservation?.type,
+        guestCount: t.guestCount ?? t.currentGuests,
+        waiterName: t.waiterName || t.assignedWaiterName || null,
+        waiterId: t.waiterId || t.assignedWaiterId || null,
+      }));
       // Show both available tables AND occupied tables (for waiters taking orders on their assigned tables)
       // Filter to only show available and occupied tables (not reserved or cleaning)
       const available = tables.filter(t => {
@@ -578,7 +598,9 @@ export function QuickOrderPOS({ open, onOpenChange, onOrderCreated, initialTable
       // Sort by location and name
       available.sort((a, b) => {
         if (a.location !== b.location) return a.location.localeCompare(b.location);
-        return a.name.localeCompare(b.name);
+        const nameA = a.displayNumber || a.name;
+        const nameB = b.displayNumber || b.name;
+        return nameA.localeCompare(nameB);
       });
       setAvailableTables(available);
     } catch (error) {
@@ -993,18 +1015,20 @@ export function QuickOrderPOS({ open, onOpenChange, onOrderCreated, initialTable
 
   // Filter menu items with Feature #11: Inline Item Search
   const filteredMenuItems = menuItems.filter((item) => {
-    const matchesSearch = item.name
+    const nameValue = (item.name || '').toString();
+    const categoryValue = (item.category || '').toString();
+    const matchesSearch = nameValue
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
     const matchesCategory =
-      selectedCategory === 'all' || item.category === selectedCategory;
+      selectedCategory === 'all' || categoryValue === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
   // Get unique categories
   const categories = [
     'all',
-    ...Array.from(new Set(menuItems.map((item) => item.category))),
+    ...Array.from(new Set(menuItems.map((item) => (item.category || 'uncategorized').toString()))),
   ];
 
   // ========== RENDER ==========
@@ -1015,6 +1039,9 @@ export function QuickOrderPOS({ open, onOpenChange, onOrderCreated, initialTable
       : { 1: 'Table & Order Information', 2: 'Menu Selection' };
 
   const STEP_ICONS = [UtensilsCrossed, ShoppingBag, CheckCircle];
+  const tableLocations = Array.from(new Set(availableTables.map(t => t.location || 'Other'))).sort((a, b) =>
+    a.localeCompare(b)
+  );
 
   return (
     <>
@@ -1200,7 +1227,7 @@ export function QuickOrderPOS({ open, onOpenChange, onOrderCreated, initialTable
                           ) : (
                             <>
                               {/* Group tables by location */}
-                              {['VIP', 'Main Hall', 'AC Hall'].map(location => {
+                              {tableLocations.map(location => {
                                 const locationTables = availableTables.filter(t => t.location === location);
                                 if (locationTables.length === 0) return null;
                                 return (
@@ -1208,8 +1235,15 @@ export function QuickOrderPOS({ open, onOpenChange, onOrderCreated, initialTable
                                     <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground bg-muted">
                                       {location}
                                     </div>
-                                    {locationTables.map(table => (
-                                      <SelectItem key={table._id} value={table.displayNumber || table.name}>
+                                    {locationTables
+                                      .map(table => {
+                                        const rawValue = (table.displayNumber || table.name || table._id || '').toString().trim();
+                                        if (!rawValue) return null;
+                                        return { table, value: rawValue };
+                                      })
+                                      .filter(Boolean)
+                                      .map(({ table, value }) => (
+                                      <SelectItem key={table._id} value={value}>
                                         <span className="flex items-center gap-2">
                                           <span className="font-bold">{table.displayNumber || table.name}</span>
                                           <span className="text-muted-foreground text-xs">
