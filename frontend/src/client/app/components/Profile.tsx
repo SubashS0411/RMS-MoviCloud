@@ -280,7 +280,7 @@ export default function Profile({ user, onUpdateUser, onLogout, orders = [], onR
               {/* Right Column: Loyalty & Membership */}
               <div className="flex flex-col gap-5 lg:gap-6">
                 {/* Loyalty Points Card */}
-              <div className="bg-[#F5F0E8] text-foreground rounded-xl shadow-sm p-6 h-full border border-border">
+              <div className="bg-[#F5F0E8] text-foreground rounded-xl shadow-sm p-6 border border-border">
                 <div className="flex items-center gap-2 mb-4">
                   <Award className="w-6 h-6 text-primary" />
                   <h2 className="!text-xl !font-semibold text-foreground">Loyalty Points</h2>
