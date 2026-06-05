@@ -278,6 +278,9 @@ export default function App() {
 
     const moduleFromUrl = moduleFromPath(location.pathname);
     setActiveModule((prev) => (prev === moduleFromUrl ? prev : moduleFromUrl));
+    
+    // Fix navigation scrolling issue: Ensure page starts at the top
+    window.scrollTo(0, 0);
   }, [location.pathname, navigate]);
 
   useEffect(() => {
